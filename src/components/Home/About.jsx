@@ -1,6 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion'; // Added Import
-import { Quote } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Quote, ArrowRight } from 'lucide-react'; // Added ArrowRight for the link
+import { Link } from 'react-router-dom'; // 1. Import Link
 
 const About = () => {
   return (
@@ -8,7 +9,7 @@ const About = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           
-          {/* Image Side - Slides from Left */}
+          {/* Image Side */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -23,7 +24,6 @@ const About = () => {
               className="rounded-xl shadow-2xl w-full object-cover h-[500px]"
             />
             
-            {/* Floating Badge Animation */}
             <motion.div 
               initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
@@ -35,7 +35,7 @@ const About = () => {
             </motion.div>
           </motion.div>
 
-          {/* Text Side - Slides from Right */}
+          {/* Text Side */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -64,9 +64,14 @@ const About = () => {
               </div>
             </motion.div>
 
-            <button className="text-sv-maroon font-bold border-b-2 border-sv-maroon hover:text-red-900 pb-1 transition-colors">
-              Read Full Message
-            </button>
+            {/* 2. REPLACED BUTTON WITH LINK */}
+            <Link 
+              to="/about/vision" 
+              className="inline-flex items-center gap-2 text-sv-maroon font-bold border-b-2 border-sv-maroon hover:text-red-900 hover:border-red-900 pb-1 transition-all group"
+            >
+              Read Full Message 
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
           </motion.div>
 
         </div>

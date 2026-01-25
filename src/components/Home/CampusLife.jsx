@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion'; // Added Import
+import { Link } from 'react-router-dom';
 
 const CampusLife = () => {
   // Variant for Staggered Animation
@@ -31,9 +32,9 @@ const CampusLife = () => {
             <span className="text-sv-maroon font-bold uppercase tracking-widest text-sm">Gallery</span>
             <h2 className="text-4xl font-bold text-sv-blue mt-2">Life on Campus</h2>
           </div>
-          <button className="text-sv-maroon font-semibold border-b-2 border-sv-maroon hover:text-sv-blue hover:border-sv-blue transition-all">
+          <Link to="/campus-life/gallery" className="text-sv-maroon font-semibold border-b-2 border-sv-maroon hover:text-sv-blue hover:border-sv-blue transition-all">
             View All Photos
-          </button>
+          </Link>
         </motion.div>
 
         {/* Grid Container with Stagger */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FileText, CreditCard, GraduationCap, FileCheck, School, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const AdmissionProcess = () => {
   const steps = [
@@ -106,14 +107,16 @@ const AdmissionProcess = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="text-center mt-16">
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-sv-maroon text-white px-10 py-4 rounded-lg font-bold text-lg shadow-xl shadow-red-900/20 hover:bg-red-900 transition-colors"
-          >
-            Apply Now
-          </motion.button>
+       <div className="text-center mt-16">
+          <Link to="/admissions/process">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-sv-maroon text-white px-10 py-4 rounded-lg font-bold text-lg shadow-xl shadow-red-900/20 hover:bg-red-900 transition-colors"
+            >
+              Apply Now
+            </motion.button>
+          </Link>
         </div>
       </div>
     </section>
