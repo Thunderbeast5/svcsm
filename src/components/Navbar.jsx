@@ -78,15 +78,15 @@ const Navbar = () => {
         >
           <div className="w-full pl-0 pr-4 md:pr-8 h-full flex justify-between items-center">
             <span className="hidden md:flex items-center gap-2 pl-4">
-              <MapPin size={14} className="text-sv-gold" /> 
+              <MapPin size={14} className="text-white" /> 
               Pimpalgaon Baswant, Nashik
             </span>
             <div className="flex justify-between w-full md:w-auto gap-6">
               <span className="flex items-center gap-2">
-                <Phone size={14} className="text-sv-gold" /> +91 98765 43210
+                <Phone size={14} className="text-white" /> +91 98765 43210
               </span>
               <span className="flex items-center gap-2">
-                <Mail size={14} className="text-sv-gold" /> admission@svcms.edu.in
+                <Mail size={14} className="text-white" /> admission@svcms.edu.in
               </span>
             </div>
           </div>
@@ -94,7 +94,7 @@ const Navbar = () => {
 
         {/* MAIN NAVBAR */}
         <nav className="bg-white/95 backdrop-blur-md border-b border-gray-100">
-          <div className="w-full pl-4 pr-4 md:pr-8">
+          <div className="w-full pl-0 pr-4 md:pr-8">
             <div className={`flex justify-between items-center transition-all duration-300 ${isScrolled ? 'py-2' : 'py-2'}`}>
               
               {/* LEFT: BIG LOGO */}
@@ -131,20 +131,60 @@ const Navbar = () => {
                       <AnimatePresence>
                         {hoveredDropdown === item.name && (
                           <motion.div
-                            initial={{ opacity: 0, y: 15 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 15 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute top-full left-0 bg-white shadow-xl border-t-4 border-sv-maroon rounded-b-lg w-56 overflow-hidden"
+                            initial={{ opacity: 0, y: -10, scaleY: 0.8 }}
+                            animate={{ 
+                              opacity: 1, 
+                              y: 0, 
+                              scaleY: 1,
+                              transition: {
+                                duration: 0.3,
+                                ease: [0.4, 0.0, 0.2, 1],
+                              }
+                            }}
+                            exit={{ 
+                              opacity: 0, 
+                              y: -10, 
+                              scaleY: 0.8,
+                              transition: {
+                                duration: 0.2,
+                                ease: [0.4, 0.0, 1, 1]
+                              }
+                            }}
+                            className="absolute top-full left-0 bg-white shadow-2xl border-t-4 border-sv-maroon rounded-b-xl w-64 overflow-hidden origin-top"
+                            style={{
+                              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                            }}
                           >
-                            {item.subLinks.map((subLink) => (
-                              <a
+                            {item.subLinks.map((subLink, index) => (
+                              <motion.a
                                 key={subLink.name}
                                 href={subLink.href}
-                                className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-sv-maroon border-b border-gray-100 last:border-0 transition-colors"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ 
+                                  opacity: 1, 
+                                  x: 0,
+                                  transition: {
+                                    delay: index * 0.05,
+                                    duration: 0.3,
+                                    ease: [0.4, 0.0, 0.2, 1]
+                                  }
+                                }}
+                                whileHover={{ 
+                                  x: 8,
+                                  backgroundColor: 'rgba(249, 250, 251, 1)',
+                                  transition: { duration: 0.2 }
+                                }}
+                                className="block px-5 py-3.5 text-sm text-gray-700 hover:text-sv-maroon border-b border-gray-100 last:border-0 transition-colors relative group"
                               >
-                                {subLink.name}
-                              </a>
+                                <span className="relative z-10">{subLink.name}</span>
+                                <motion.div 
+                                  className="absolute left-0 top-0 h-full w-1 bg-sv-gold"
+                                  initial={{ scaleY: 0 }}
+                                  whileHover={{ scaleY: 1 }}
+                                  transition={{ duration: 0.2 }}
+                                  style={{ originY: 0.5 }}
+                                />
+                              </motion.a>
                             ))}
                           </motion.div>
                         )}
@@ -219,19 +259,62 @@ const Navbar = () => {
                       {item.subLinks && activeMobileDropdown === item.name && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          className="overflow-hidden bg-gray-50 rounded-lg mb-2"
+                          animate={{ 
+                            height: 'auto', 
+                            opacity: 1,
+                            transition: {
+                              height: {
+                                duration: 0.4,
+                                ease: [0.4, 0.0, 0.2, 1]
+                              },
+                              opacity: {
+                                duration: 0.3,
+                                delay: 0.1
+                              }
+                            }
+                          }}
+                          exit={{ 
+                            height: 0, 
+                            opacity: 0,
+                            transition: {
+                              height: {
+                                duration: 0.3,
+                                ease: [0.4, 0.0, 1, 1]
+                              },
+                              opacity: {
+                                duration: 0.2
+                              }
+                            }
+                          }}
+                          className="overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl mb-2 shadow-inner"
                         >
-                          {item.subLinks.map((subLink) => (
-                            <a
+                          {item.subLinks.map((subLink, index) => (
+                            <motion.a
                               key={subLink.name}
                               href={subLink.href}
-                              className="block px-4 py-3 text-gray-600 hover:text-sv-maroon hover:bg-gray-100 text-sm font-medium pl-6 border-l-4 border-transparent hover:border-sv-gold"
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ 
+                                opacity: 1, 
+                                x: 0,
+                                transition: {
+                                  delay: index * 0.05,
+                                  duration: 0.3
+                                }
+                              }}
+                              whileTap={{ scale: 0.98 }}
+                              className="block px-4 py-3.5 text-gray-600 hover:text-sv-maroon hover:bg-white/60 text-sm font-medium pl-6 border-l-4 border-transparent hover:border-sv-gold transition-all relative group"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
-                              {subLink.name}
-                            </a>
+                              <span className="relative z-10 flex items-center gap-2">
+                                <motion.span
+                                  className="w-1.5 h-1.5 rounded-full bg-sv-gold opacity-0 group-hover:opacity-100"
+                                  initial={{ scale: 0 }}
+                                  whileHover={{ scale: 1 }}
+                                  transition={{ duration: 0.2 }}
+                                />
+                                {subLink.name}
+                              </span>
+                            </motion.a>
                           ))}
                         </motion.div>
                       )}
