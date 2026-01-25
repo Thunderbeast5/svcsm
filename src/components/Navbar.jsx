@@ -42,9 +42,9 @@ const Navbar = () => {
       name: 'Admissions', 
       href: '#admissions',
       subLinks: [
-        { name: 'Admission Process', href: '#process' },
-        { name: 'Fee Structure', href: '#fees' },
-        { name: 'Scholarships', href: '#scholarships' },
+        { name: 'Admission Process', href: '/admissions/process' },
+        { name: 'Fee Structure', href: '/admissions/fees' },
+        { name: 'Scholarships', href: '/admissions/scholarships' },
       ]
     },
     { 

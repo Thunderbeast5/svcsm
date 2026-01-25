@@ -18,6 +18,11 @@ import CoursesCurriculum from "./pages/Academics/CourseCurriculum";
 import Faculty from "./pages/Academics/Faculty";
 import Results from "./pages/Academics/Results";
 
+//Admissions Pages
+import AdmissionProcessPage from "./pages/Admission/AdmissionProcessPage";
+import FeeStructure from "./pages/Admission/FeeStructure";
+import Scholarships from "./pages/Admission/Scholarships";
+
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -51,6 +56,11 @@ export default function App() {
           <Route path="/academics/curriculum" element={<CoursesCurriculum />} />
           <Route path="/academics/faculty" element={<Faculty />} />
           <Route path="/academics/results" element={<Results />} />
+
+          {/* Admissions Dropdown Pages */}
+          <Route path="/admissions/process" element={<AdmissionProcessPage />} />
+          <Route path="/admissions/fees" element={<FeeStructure />} />
+          <Route path="/admissions/scholarships" element={<Scholarships />} />  
           
           
         </Routes>
