@@ -51,9 +51,9 @@ const Navbar = () => {
       name: 'Campus Life', 
       href: '#campus',
       subLinks: [
-        { name: 'Activities & Events', href: '#activities' },
-        { name: 'Gallery', href: '#gallery' },
-        { name: 'Testimonials', href: '#testimonials' },
+        { name: 'Activities & Events', href: '/campus-life/activities-events' },
+        { name: 'Gallery', href: '/campus-life/gallery' },
+        { name: 'Testimonials', href: '/campus-life/testimonials' },
       ]
     },
   ];

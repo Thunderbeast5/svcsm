@@ -23,6 +23,11 @@ import AdmissionProcessPage from "./pages/Admission/AdmissionProcessPage";
 import FeeStructure from "./pages/Admission/FeeStructure";
 import Scholarships from "./pages/Admission/Scholarships";
 
+//Campus Life Pages
+import ActivitiesEvents from "./pages/CampusLife/ActivitiesEvents";
+import GalleryPage from "./pages/CampusLife/GalleryPage";
+import TestimonialsPage from "./pages/CampusLife/TestimonialsPage";
+
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -62,6 +67,10 @@ export default function App() {
           <Route path="/admissions/fees" element={<FeeStructure />} />
           <Route path="/admissions/scholarships" element={<Scholarships />} />  
           
+          {/* Campus Life Dropdown Pages */}
+          <Route path="/campus-life/activities-events" element={<ActivitiesEvents />} />
+          <Route path="/campus-life/gallery" element={<GalleryPage />} />
+          <Route path="/campus-life/testimonials" element={<TestimonialsPage />} />
           
         </Routes>
 
