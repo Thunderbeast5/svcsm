@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, GraduationCap, Mail, MapPin } from 'lucide-react';
+import logoName from '../assets/logo-name.png';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
   const [hoveredDropdown, setHoveredDropdown] = useState(null);
+
+  void motion;
 
   // Handle scroll effect
   useEffect(() => {
@@ -100,7 +103,7 @@ const Navbar = () => {
               {/* LEFT: BIG LOGO */}
               <div className="flex-shrink-0">
                 <img 
-                  src="/public/images/logo-name.png" 
+                  src={logoName}
                   alt="SVCMS Logo" 
                   // Bigger logo size
                   className={`w-auto object-contain transition-all duration-300 ${
