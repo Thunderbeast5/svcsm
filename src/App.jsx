@@ -5,11 +5,18 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-// Page Components
+// Main Landing Page
 import HomePage from "./pages/HomePage"; 
+
+//About Us Pages
 import AboutSVCMS from "./pages/AboutUs/AboutSVCSMS"; 
 import VisionMission from "./pages/AboutUs/VisionMission"; 
 import Leadership from "./pages/AboutUs/LeaderShip"; 
+
+//Academics Pages
+import CoursesCurriculum from "./pages/Academics/CourseCurriculum";
+import Faculty from "./pages/Academics/Faculty";
+import Results from "./pages/Academics/Results";
 
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
@@ -28,8 +35,7 @@ export default function App() {
       <div className="relative font-sans antialiased text-gray-900 bg-white">
         {/* ScrollToTop ensures we start at the top of the page when navigating */}
         <ScrollToTop />
-        
-        {/* Navbar stays persistent across all pages */}
+
         <Navbar />
         
         <Routes>
@@ -40,6 +46,11 @@ export default function App() {
           <Route path="/about/svcms" element={<AboutSVCMS />} />
           <Route path="/about/vision" element={<VisionMission />} />
           <Route path="/about/leadership" element={<Leadership />} />
+
+          {/* Academics Dropdown Pages */}
+          <Route path="/academics/curriculum" element={<CoursesCurriculum />} />
+          <Route path="/academics/faculty" element={<Faculty />} />
+          <Route path="/academics/results" element={<Results />} />
           
           
         </Routes>
