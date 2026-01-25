@@ -19,14 +19,14 @@ const Navbar = () => {
 
   // Navigation Data Structure
   const navItems = [
-    { name: 'Home', href: '#' },
+    { name: 'Home', href: '/' },
     { 
       name: 'About Us', 
       href: '#about',
       subLinks: [
-        { name: 'About SVCMS', href: '#about-svcms' },
-        { name: 'Vision & Mission', href: '#vision' },
-        { name: 'Leadership', href: '#leadership' },
+        { name: 'About SVCMS', href: '/about/svcms' },
+        { name: 'Vision & Mission', href: '/about/vision' },
+        { name: 'Leadership', href: '/about/leadership' },
       ]
     },
     { 
