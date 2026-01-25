@@ -94,7 +94,7 @@ const Navbar = () => {
 
         {/* MAIN NAVBAR */}
         <nav className="bg-white/95 backdrop-blur-md border-b border-gray-100">
-          <div className="w-full pl-0 pr-4 md:pr-8">
+          <div className="w-full pl-4 pr-4 md:pr-8">
             <div className={`flex justify-between items-center transition-all duration-300 ${isScrolled ? 'py-2' : 'py-2'}`}>
               
               {/* LEFT: BIG LOGO */}

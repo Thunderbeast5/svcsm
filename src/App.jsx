@@ -1,8 +1,11 @@
 import Navbar from "./components/Navbar";
-import Hero from "./components/home-comp/Hero";
-import About from "./components/home-comp/About";
-import Courses from "./components/home-comp/Courses";
-import Stats from "./components/home-comp/Stats"
+import Hero from "./components/Home/Hero";
+import About from "./components/Home/About";
+import Courses from "./components/Home/Courses";
+import Stats from "./components/Home/Stats"
+import AdmissionProcess from "./components/Home/AdmissionProcess";
+import CampusLife from "./components/Home/CampusLife";
+import Footer from "./components/Footer"; 
 
 export default function App() {
   return (
@@ -12,6 +15,9 @@ export default function App() {
       <About />
       <Courses />
       <Stats />
+      <AdmissionProcess />
+      <CampusLife />
+      <Footer />
       {/* <main className="min-h-screen bg-sv-blue">
       </main> */}
     </div>
