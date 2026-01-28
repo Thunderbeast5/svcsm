@@ -1,35 +1,50 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Image, Font } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 
-// Define styles to match the physical form's dense layout
+// IMPORT YOUR LOGO HERE (Ensure this path is correct)
+import logo from '../../assets/logo-name.png'; 
+
 const styles = StyleSheet.create({
   page: { padding: 30, fontSize: 9, fontFamily: 'Helvetica' },
-  header: { borderBottomWidth: 2, borderBottomColor: '#800000', paddingBottom: 5, marginBottom: 10, flexDirection: 'row' },
-  headerLeft: { width: '80%' },
+  
+  // Header Layout: Logo (15%) | Text (65%) | Photo (20%)
+  header: { 
+    borderBottomWidth: 2, 
+    borderBottomColor: '#800000', 
+    paddingBottom: 5, 
+    marginBottom: 10, 
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  logoSection: { width: '15%', paddingRight: 10 },
+  logoImage: { width: 60, height: 60, objectFit: 'contain' },
+  headerLeft: { width: '65%' },
   headerRight: { width: '20%', alignItems: 'center' },
+
+  // Typography
   title: { fontSize: 14, fontWeight: 'bold', color: '#1a365d', textTransform: 'uppercase' },
   subTitle: { fontSize: 10, color: '#800000', marginBottom: 2 },
   address: { fontSize: 8, color: '#444' },
   
-  // Form Structure
+  // Form Styling
   sectionTitle: { backgroundColor: '#eee', padding: 3, fontSize: 10, fontWeight: 'bold', marginTop: 8, marginBottom: 4 },
   row: { flexDirection: 'row', marginBottom: 2 },
   col: { flexDirection: 'row', alignItems: 'center' },
   label: { width: 90, fontSize: 9, fontWeight: 'bold' },
   value: { borderBottomWidth: 1, borderBottomColor: '#ccc', flex: 1, paddingLeft: 2, height: 12 },
   
-  // Specific Boxes
+  // Specific Elements
   photoBox: { width: 80, height: 90, borderWidth: 1, borderColor: '#000', alignItems: 'center', justifyContent: 'center', marginBottom: 5 },
   checkbox: { width: 10, height: 10, borderWidth: 1, borderColor: '#000', marginRight: 4 },
   checkedBox: { width: 10, height: 10, backgroundColor: '#000', marginRight: 4 },
   
-  // Table
+  // Tables
   table: { display: "table", width: "auto", borderStyle: "solid", borderWidth: 1, borderColor: '#000', marginTop: 5 },
   tableRow: { margin: "auto", flexDirection: "row" },
   tableColHeader: { width: "25%", borderRightWidth: 1, borderBottomWidth: 1, padding: 4, backgroundColor: '#f0f0f0', fontWeight: 'bold' },
   tableCol: { width: "25%", borderRightWidth: 1, borderBottomWidth: 1, padding: 4 },
 
-  // Declaration Text
+  // Declaration
   declarationSection: { marginTop: 10, borderTopWidth: 1, paddingTop: 10 },
   declTitle: { fontSize: 11, fontWeight: 'bold', textAlign: 'center', marginBottom: 6 },
   declText: { fontSize: 8, textAlign: 'justify', marginBottom: 3, lineHeight: 1.2 },
@@ -37,7 +52,7 @@ const styles = StyleSheet.create({
   signLine: { borderTopWidth: 1, width: 150, textAlign: 'center', paddingTop: 4 }
 });
 
-// Helper for Checkboxes in PDF
+// Helper component for checkboxes
 const Checkbox = ({ label, checked }) => (
   <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
     <View style={checked ? styles.checkedBox : styles.checkbox} />
@@ -49,8 +64,14 @@ const JuniorAdmissionPDF = ({ data }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       
-      [cite_start]{/* HEADER [cite: 161, 163, 170] */}
+      {/* --- HEADER --- */}
       <View style={styles.header}>
+        {/* 1. Logo */}
+        <View style={styles.logoSection}>
+           <Image src={logo} style={styles.logoImage} />
+        </View>
+
+        {/* 2. College Info */}
         <View style={styles.headerLeft}>
           <Text style={styles.title}>SWAMI VIVEKANANDA JUNIOR INSTITUTE</Text>
           <Text style={styles.subTitle}>Arts, Commerce & Science, Pimpalgaon Baswant</Text>
@@ -58,6 +79,8 @@ const JuniorAdmissionPDF = ({ data }) => (
           <Text style={styles.address}>Email: swamivivekanandainstitute2021@gmail.com | Ph: 82086 65658</Text>
           <Text style={{ marginTop: 5, fontSize: 12, fontWeight: 'bold', textDecoration: 'underline' }}>ADMISSION FORM: 2026-27</Text>
         </View>
+
+        {/* 3. Photo Box */}
         <View style={styles.headerRight}>
           <View style={styles.photoBox}>
             <Text style={{ fontSize: 8 }}>Photo</Text>
@@ -66,7 +89,7 @@ const JuniorAdmissionPDF = ({ data }) => (
         </View>
       </View>
 
-      [cite_start]{/* COURSE SELECTION [cite: 173-180] */}
+      {/* --- COURSE SELECTION --- */}
       <View style={styles.row}>
         <Text style={styles.label}>Course:</Text>
         <Checkbox label="11th" checked={data.standard === '11th'} />
@@ -77,7 +100,7 @@ const JuniorAdmissionPDF = ({ data }) => (
         <Checkbox label="Science" checked={data.stream === 'Science'} />
       </View>
 
-      [cite_start]{/* 1. PERSONAL INFORMATION [cite: 181-188, 202-206] */}
+      {/* --- 1. PERSONAL INFORMATION --- */}
       <Text style={styles.sectionTitle}>1. STUDENT DETAILS</Text>
       
       <View style={styles.row}>
@@ -117,7 +140,7 @@ const JuniorAdmissionPDF = ({ data }) => (
         <Text style={styles.value}>{data.category} ({data.casteName})</Text>
       </View>
 
-      [cite_start]{/* 2. CONTACT DETAILS [cite: 192, 201] */}
+      {/* --- 2. ADDRESS & CONTACT --- */}
       <Text style={styles.sectionTitle}>2. ADDRESS & CONTACT</Text>
       <View style={styles.row}>
         <Text style={styles.label}>Perm. Address:</Text>
@@ -138,7 +161,7 @@ const JuniorAdmissionPDF = ({ data }) => (
         </View>
       </View>
 
-      [cite_start]{/* 3. PARENT DETAILS [cite: 189-197] */}
+      {/* --- 3. PARENT DETAILS --- */}
       <Text style={styles.sectionTitle}>3. PARENT / GUARDIAN INFO</Text>
       <View style={styles.row}>
         <Text style={styles.label}>Father Name:</Text>
@@ -155,7 +178,7 @@ const JuniorAdmissionPDF = ({ data }) => (
         </View>
       </View>
 
-      [cite_start]{/* 4. ACADEMIC RECORD [cite: 224, 225] */}
+      {/* --- 4. ACADEMIC RECORD --- */}
       <Text style={styles.sectionTitle}>4. PREVIOUS YEAR DETAILS</Text>
       <View style={styles.table}>
         <View style={styles.tableRow}>
@@ -178,10 +201,9 @@ const JuniorAdmissionPDF = ({ data }) => (
         </View>
       </View>
 
-      [cite_start]{/* 5. COMPULSORY DECLARATION [cite: 237-258] */}
+      {/* --- 5. COMPULSORY DECLARATION --- */}
       <View style={styles.declarationSection} break>
          <Text style={styles.declTitle}>DECLARATION BY STUDENT & PARENT</Text>
-         
          <Text style={styles.declText}>1. I have read the Rules of Admission for the year 2026-27 and I have consulted my guardian.</Text>
          <Text style={styles.declText}>2. The information given by me in this application is true to the best of my knowledge.</Text>
          <Text style={styles.declText}>3. I have not been debarred from appearing at any examination held by any Government authority.</Text>
@@ -204,7 +226,7 @@ const JuniorAdmissionPDF = ({ data }) => (
          </View>
       </View>
 
-      [cite_start]{/* OFFICE USE SECTION [cite: 271] */}
+      {/* --- OFFICE USE --- */}
       <View style={{ marginTop: 20, borderWidth: 1, padding: 5, borderStyle: 'dashed' }}>
          <Text style={{ fontSize: 9, fontWeight: 'bold' }}>FOR OFFICE USE ONLY</Text>
          <View style={{ height: 40 }}></View>
