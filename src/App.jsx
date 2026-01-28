@@ -24,7 +24,7 @@ import Results from "./pages/Academics/Results";
 import AdmissionProcessPage from "./pages/Admission/AdmissionProcessPage";
 import FeeStructure from "./pages/Admission/FeeStructure";
 import Scholarships from "./pages/Admission/Scholarships";
-import AdmissionForm from "./pages/Admission/AdmissionForm";
+import JuniorAdmissionForm from "./pages/Admission/AdmissionForm";
 
 //Campus Life Pages
 import ActivitiesEvents from "./pages/CampusLife/ActivitiesEvents";
@@ -93,7 +93,7 @@ const Layout = () => {
         <Route path="/admissions/process" element={<AdmissionProcessPage />} />
         <Route path="/admissions/fees" element={<FeeStructure />} />
         <Route path="/admissions/scholarships" element={<Scholarships />} />  
-        <Route path="/admissions/form" element={<AdmissionForm />} />
+        <Route path="/admissions/form" element={<JuniorAdmissionForm />} />
         
         {/* Campus Life */}
         <Route path="/campus-life/activities-events" element={<ActivitiesEvents />} />
