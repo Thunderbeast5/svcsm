@@ -35,57 +35,67 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
   return null;
+};
+
+// Main Layout Component to handle Conditional Rendering
+const Layout = () => {
+  const location = useLocation();
+  
+  // Check if the current route is an Admin route
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  return (
+    <div className="relative font-sans antialiased text-gray-900 bg-white">
+      <ScrollToTop />
+
+      {/* HIDE Navbar on Admin Pages.
+        Only show Navbar if isAdminRoute is false.
+      */}
+      {!isAdminRoute && <Navbar />}
+      
+      <Routes>
+        {/* Main Landing Page */}
+        <Route path="/" element={<HomePage />} />
+        
+        {/* About Us */}
+        <Route path="/about/svcms" element={<AboutSVCMS />} />
+        <Route path="/about/vision" element={<VisionMission />} />
+        <Route path="/about/leadership" element={<Leadership />} />
+
+        {/* Academics */}
+        <Route path="/curriculum" element={<CoursesCurriculum />} />
+        <Route path="/academics/faculty" element={<Faculty />} />
+        <Route path="/academics/results" element={<Results />} />
+
+        {/* Admissions */}
+        <Route path="/admissions/process" element={<AdmissionProcessPage />} />
+        <Route path="/admissions/fees" element={<FeeStructure />} />
+        <Route path="/admissions/scholarships" element={<Scholarships />} />  
+        
+        {/* Campus Life */}
+        <Route path="/campus-life/activities-events" element={<ActivitiesEvents />} />
+        <Route path="/campus-life/gallery" element={<GalleryPage />} />
+        <Route path="/campus-life/testimonials" element={<TestimonialsPage />} />
+
+        {/* --- ADMIN ROUTES --- */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      </Routes>
+
+      {/* HIDE Footer on Admin Pages */}
+      {!isAdminRoute && <Footer />}
+    </div>
+  );
 };
 
 export default function App() {
   return (
     <Router>
-      <div className="relative font-sans antialiased text-gray-900 bg-white">
-        {/* ScrollToTop ensures we start at the top of the page when navigating */}
-        <ScrollToTop />
-
-        <Navbar />
-        
-        <Routes>
-          {/* Main Landing Page */}
-          <Route path="/" element={<HomePage />} />
-          
-          {/* About Us Dropdown Pages */}
-          <Route path="/about/svcms" element={<AboutSVCMS />} />
-          <Route path="/about/vision" element={<VisionMission />} />
-          <Route path="/about/leadership" element={<Leadership />} />
-
-          {/* Academics Dropdown Pages */}
-          {/* --- FIX: Changed path to "/curriculum" to match the links in Courses.jsx --- */}
-          <Route path="/curriculum" element={<CoursesCurriculum />} />
-          
-          <Route path="/academics/faculty" element={<Faculty />} />
-          <Route path="/academics/results" element={<Results />} />
-
-          {/* Admissions Dropdown Pages */}
-          <Route path="/admissions/process" element={<AdmissionProcessPage />} />
-          <Route path="/admissions/fees" element={<FeeStructure />} />
-          <Route path="/admissions/scholarships" element={<Scholarships />} />  
-          
-          {/* Campus Life Dropdown Pages */}
-          <Route path="/campus-life/activities-events" element={<ActivitiesEvents />} />
-          <Route path="/campus-life/gallery" element={<GalleryPage />} />
-          <Route path="/campus-life/testimonials" element={<TestimonialsPage />} />
-          
-          {/* Admin Pages */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        </Routes>
-
-        {/* Footer stays persistent across all pages */}
-        <Footer />
-      </div>
+      <Layout />
     </Router>
   );
 }
