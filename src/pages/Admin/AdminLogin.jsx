@@ -1,22 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, User, Eye, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   
-  // Mock Login Handler
-  const handleLogin = (e) => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) navigate('/admin/dashboard', { replace: true });
+    });
+    return unsubscribe;
+  }, [navigate]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setErrorMessage('');
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       navigate('/admin/dashboard');
-    }, 1500);
+    } catch (err) {
+      setErrorMessage(err?.message || 'Login failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -51,6 +66,8 @@ const AdminLogin = () => {
               <input 
                 type="text" 
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sv-blue focus:border-sv-blue transition-all"
                 placeholder="admin@svcms.edu.in"
               />
@@ -67,6 +84,8 @@ const AdminLogin = () => {
               <input 
                 type={showPassword ? "text" : "password"} 
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sv-blue focus:border-sv-blue transition-all"
                 placeholder="••••••••"
               />
@@ -84,6 +103,11 @@ const AdminLogin = () => {
           </div>
 
           {/* Login Button */}
+          {errorMessage && (
+            <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+              {errorMessage}
+            </div>
+          )}
           <button 
             type="submit"
             disabled={isLoading}

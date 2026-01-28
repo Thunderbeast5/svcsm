@@ -5,6 +5,8 @@ import {
   Menu, Bell, Search, GraduationCap, AlertCircle, CheckCircle, XCircle 
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -20,8 +22,8 @@ const AdminDashboard = () => {
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
-  const handleLogout = () => {
-    // Add logic to clear auth tokens here
+  const handleLogout = async () => {
+    await signOut(auth);
     navigate('/admin/login');
   };
 

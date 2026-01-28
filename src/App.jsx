@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
 
 // Layout Components
 import Navbar from "./components/Navbar";
@@ -39,6 +41,21 @@ const ScrollToTop = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return null;
+};
+
+const RequireAdminAuth = ({ children }) => {
+  const [status, setStatus] = useState({ loading: true, user: null });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setStatus({ loading: false, user });
+    });
+    return unsubscribe;
+  }, []);
+
+  if (status.loading) return null;
+  if (!status.user) return <Navigate to="/admin/login" replace />;
+  return children;
 };
 
 // Main Layout Component to handle Conditional Rendering
@@ -83,7 +100,14 @@ const Layout = () => {
 
         {/* --- ADMIN ROUTES --- */}
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <RequireAdminAuth>
+              <AdminDashboard />
+            </RequireAdminAuth>
+          }
+        />
       </Routes>
 
       {/* HIDE Footer on Admin Pages */}
