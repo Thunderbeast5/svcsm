@@ -28,6 +28,10 @@ import ActivitiesEvents from "./pages/CampusLife/ActivitiesEvents";
 import GalleryPage from "./pages/CampusLife/GalleryPage";
 import TestimonialsPage from "./pages/CampusLife/TestimonialsPage";
 
+//Admin Pages
+import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -74,6 +78,9 @@ export default function App() {
           <Route path="/campus-life/gallery" element={<GalleryPage />} />
           <Route path="/campus-life/testimonials" element={<TestimonialsPage />} />
           
+          {/* Admin Pages */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Routes>
 
         {/* Footer stays persistent across all pages */}
