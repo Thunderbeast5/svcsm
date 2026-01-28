@@ -36,7 +36,7 @@ const Navbar = () => {
       name: 'Academics', 
       href: '#academics',
       subLinks: [
-        { name: 'Courses & Curriculum', href: '/academics/curriculum' },
+        { name: 'Courses & Curriculum', href: '/curriculum' },
         { name: 'Faculty', href: '/academics/faculty' },
         { name: 'Results & Achievements', href: '/academics/results' },
       ]

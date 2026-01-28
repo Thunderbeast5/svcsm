@@ -14,7 +14,7 @@ import VisionMission from "./pages/AboutUs/VisionMission";
 import Leadership from "./pages/AboutUs/LeaderShip"; 
 
 //Academics Pages
-import CoursesCurriculum from "./pages/Academics/CourseCurriculum";
+import CoursesCurriculum from "./pages/Academics/CourseCurriculum"; // Ensure this matches your actual filename (CourseCurriculum.jsx)
 import Faculty from "./pages/Academics/Faculty";
 import Results from "./pages/Academics/Results";
 
@@ -58,7 +58,9 @@ export default function App() {
           <Route path="/about/leadership" element={<Leadership />} />
 
           {/* Academics Dropdown Pages */}
-          <Route path="/academics/curriculum" element={<CoursesCurriculum />} />
+          {/* --- FIX: Changed path to "/curriculum" to match the links in Courses.jsx --- */}
+          <Route path="/curriculum" element={<CoursesCurriculum />} />
+          
           <Route path="/academics/faculty" element={<Faculty />} />
           <Route path="/academics/results" element={<Results />} />
 
