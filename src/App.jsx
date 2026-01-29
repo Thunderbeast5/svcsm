@@ -36,6 +36,8 @@ import TestimonialsPage from "./pages/CampusLife/TestimonialsPage";
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 
+import TestAdmissionForm from "./pages/Admission/TestAddForm";
+
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -96,6 +98,7 @@ const Layout = () => {
         <Route path="/admissions/scholarships" element={<Scholarships />} />  
         <Route path="/admissions/form" element={<JuniorAdmissionForm />} />
         <Route path="/admissions/senior-form" element={<AdmissionForm />} />
+        <Route path="/admissions/test" element={<TestAdmissionForm />} />
         
         {/* Campus Life */}
         <Route path="/campus-life/activities-events" element={<ActivitiesEvents />} />
