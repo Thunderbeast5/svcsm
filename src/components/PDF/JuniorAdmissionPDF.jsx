@@ -6,41 +6,41 @@ import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/render
 
 const styles = StyleSheet.create({
   page: { 
-    padding: 20, 
-    fontSize: 9, 
-    fontFamily: 'Helvetica',
-    lineHeight: 1.4
+    padding: 30, 
+    fontSize: 11, 
+    fontFamily: 'Times-Roman',
+    lineHeight: 1.6
   },
   
   // Header with Logo
   header: { 
     borderBottomWidth: 2, 
     borderBottomColor: '#8B0000', 
-    paddingBottom: 8, 
-    marginBottom: 12, 
+    paddingBottom: 12, 
+    marginBottom: 18, 
     flexDirection: 'row',
     alignItems: 'flex-start'
   },
   logoSection: { 
     width: '70%', 
-    paddingRight: 8
+    paddingRight: 10
   },
   instituteName: {
-    fontSize: 13,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontFamily: 'Times-Bold',
+    textAlign: 'center',
+    marginBottom: 5
+  },
+  instituteSubtitle: {
+    fontSize: 11,
     textAlign: 'center',
     marginBottom: 3
   },
-  instituteSubtitle: {
-    fontSize: 9,
-    textAlign: 'center',
-    marginBottom: 2
-  },
   contactInfo: { 
-    fontSize: 7.5, 
+    fontSize: 9, 
     color: '#333',
     textAlign: 'center',
-    marginTop: 3
+    marginTop: 5
   },
   headerRight: { 
     width: '30%', 
@@ -50,14 +50,14 @@ const styles = StyleSheet.create({
   
   // Photo Box
   photoBox: { 
-    width: 80, 
-    height: 95, 
-    borderWidth: 1.5, 
+    width: 90, 
+    height: 110, 
+    borderWidth: 2, 
     borderColor: '#000', 
     alignItems: 'center', 
     justifyContent: 'center',
     backgroundColor: '#f9f9f9',
-    marginBottom: 4
+    marginBottom: 6
   },
   photoImage: {
     width: '100%',
@@ -65,59 +65,59 @@ const styles = StyleSheet.create({
     objectFit: 'cover'
   },
   photoText: {
-    fontSize: 7,
+    fontSize: 9,
     textAlign: 'center',
     color: '#666'
   },
   appNoText: {
-    fontSize: 7.5,
-    marginTop: 3,
+    fontSize: 10,
+    marginTop: 5,
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontFamily: 'Times-Bold',
     borderWidth: 1,
     borderColor: '#000',
-    padding: 3
+    padding: 5
   },
 
   formTitle: { 
-    marginTop: 6, 
-    fontSize: 11, 
-    fontWeight: 'bold',
+    marginTop: 8, 
+    fontSize: 13, 
+    fontFamily: 'Times-Bold',
     textAlign: 'center',
-    marginBottom: 2
+    marginBottom: 4
   },
   formFees: {
-    fontSize: 8.5,
+    fontSize: 11,
     textAlign: 'center',
-    marginBottom: 8,
-    fontWeight: 'bold'
+    marginBottom: 12,
+    fontFamily: 'Times-Bold'
   },
 
   // Course Selection Row
   courseRow: {
     flexDirection: 'row',
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: '#666',
-    marginBottom: 8,
+    marginBottom: 12,
     alignItems: 'center',
     backgroundColor: '#f5f5f5'
   },
   courseItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 12
+    marginRight: 14
   },
   
   // Form Sections
   sectionTitle: { 
     backgroundColor: '#e8e8e8', 
-    padding: 4, 
-    fontSize: 9.5, 
-    fontWeight: 'bold', 
-    marginTop: 10, 
-    marginBottom: 5,
+    padding: 6, 
+    fontSize: 12, 
+    fontFamily: 'Times-Bold', 
+    marginTop: 15, 
+    marginBottom: 10,
     borderWidth: 1,
     borderColor: '#999'
   },
@@ -125,9 +125,9 @@ const styles = StyleSheet.create({
   // Form Fields
   row: { 
     flexDirection: 'row', 
-    marginBottom: 5,
+    marginBottom: 8,
     alignItems: 'flex-start',
-    minHeight: 16
+    minHeight: 20
   },
   col: { 
     flexDirection: 'row', 
@@ -135,90 +135,90 @@ const styles = StyleSheet.create({
     flex: 1
   },
   label: { 
-    fontSize: 8.5, 
-    fontWeight: 'bold',
-    marginRight: 4
+    fontSize: 11, 
+    fontFamily: 'Times-Bold',
+    marginRight: 5
   },
   value: { 
     borderBottomWidth: 1, 
     borderBottomColor: '#666', 
     flex: 1, 
-    paddingLeft: 3,
-    paddingBottom: 2,
-    paddingTop: 1,
-    fontSize: 8.5,
-    minHeight: 12
+    paddingLeft: 4,
+    paddingBottom: 3,
+    paddingTop: 2,
+    fontSize: 11,
+    minHeight: 16
   },
   valueFixed: {
     borderBottomWidth: 1, 
     borderBottomColor: '#666', 
-    paddingLeft: 3,
-    paddingBottom: 2,
-    paddingTop: 1,
-    fontSize: 8.5,
-    minHeight: 12
+    paddingLeft: 4,
+    paddingBottom: 3,
+    paddingTop: 2,
+    fontSize: 11,
+    minHeight: 16
   },
   
   // Checkboxes
   checkbox: { 
-    width: 8, 
-    height: 8, 
+    width: 10, 
+    height: 10, 
     borderWidth: 1, 
     borderColor: '#000', 
-    marginRight: 3,
-    marginLeft: 4
+    marginRight: 4,
+    marginLeft: 5
   },
   checkedBox: { 
-    width: 8, 
-    height: 8, 
+    width: 10, 
+    height: 10, 
     backgroundColor: '#000', 
     borderWidth: 1,
     borderColor: '#000',
-    marginRight: 3,
-    marginLeft: 4
+    marginRight: 4,
+    marginLeft: 5
   },
   checkboxLabel: {
-    fontSize: 8.5,
-    marginRight: 6
+    fontSize: 11,
+    marginRight: 8
   },
 
   // Digit Boxes for Mobile/Date
   digitBoxContainer: {
     flexDirection: 'row',
-    gap: 2
+    gap: 3
   },
   digitBox: {
-    width: 14,
-    height: 16,
+    width: 18,
+    height: 20,
     borderWidth: 1,
     borderColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 9,
-    fontWeight: 'bold'
+    fontSize: 11,
+    fontFamily: 'Times-Bold'
   },
   
   // Tables
   table: { 
     borderWidth: 1,
     borderColor: '#000',
-    marginTop: 5,
-    marginBottom: 5
+    marginTop: 8,
+    marginBottom: 8
   },
   tableRow: { 
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: '#000',
-    minHeight: 18
+    minHeight: 22
   },
   tableColHeader: { 
     flex: 1,
     borderRightWidth: 1,
     borderRightColor: '#000',
-    padding: 3,
+    padding: 5,
     backgroundColor: '#e8e8e8',
-    fontWeight: 'bold',
-    fontSize: 8,
+    fontFamily: 'Times-Bold',
+    fontSize: 10,
     textAlign: 'center',
     justifyContent: 'center'
   },
@@ -226,95 +226,95 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRightWidth: 1,
     borderRightColor: '#000',
-    padding: 3,
-    fontSize: 7.5,
+    padding: 5,
+    fontSize: 10,
     textAlign: 'center',
     justifyContent: 'center'
   },
   tableColLast: {
     flex: 1,
-    padding: 3,
-    fontSize: 7.5,
+    padding: 5,
+    fontSize: 10,
     textAlign: 'center',
     justifyContent: 'center'
   },
 
   // Documents Box
   docsBox: {
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: '#666',
-    padding: 6,
-    marginTop: 8,
-    marginBottom: 6,
-    backgroundColor: '#fffef0'
+    padding: 10,
+    marginTop: 15,
+    marginBottom: 10,
+    backgroundColor: '#d3d3d3'
   },
   docsTitle: {
-    fontSize: 8.5,
-    fontWeight: 'bold',
-    marginBottom: 3
+    fontSize: 11,
+    fontFamily: 'Times-Bold',
+    marginBottom: 5
   },
   docItem: {
-    fontSize: 7.5,
-    marginBottom: 2,
-    paddingLeft: 4
+    fontSize: 10,
+    marginBottom: 3,
+    paddingLeft: 5
   },
 
   // Signature Section
   signatureRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
-    marginBottom: 6
+    marginTop: 15,
+    marginBottom: 10
   },
   signBox: {
     width: '48%'
   },
   signLine: {
-    marginTop: 15,
-    paddingTop: 3,
-    fontSize: 7.5,
+    marginTop: 20,
+    paddingTop: 4,
+    fontSize: 10,
     textAlign: 'center'
   },
 
   // Declaration Section
   declarationSection: { 
-    marginTop: 10,
-    paddingTop: 8
+    marginTop: 15,
+    paddingTop: 12
   },
   declTitle: { 
-    fontSize: 10, 
-    fontWeight: 'bold', 
+    fontSize: 13, 
+    fontFamily: 'Times-Bold', 
     textAlign: 'center', 
-    marginBottom: 6,
+    marginBottom: 10,
     textDecoration: 'underline'
   },
   declPoint: {
-    fontSize: 7.5,
-    marginBottom: 3,
+    fontSize: 10,
+    marginBottom: 5,
     textAlign: 'justify',
-    lineHeight: 1.3
+    lineHeight: 1.5
   },
 
   // Office Use Section
   officeUse: {
-    marginTop: 12,
+    marginTop: 18,
     borderWidth: 1,
     borderColor: '#999',
-    padding: 6,
+    padding: 10,
     backgroundColor: '#f9f9f9'
   },
   officeTitle: {
-    fontSize: 9,
-    fontWeight: 'bold',
-    marginBottom: 4
+    fontSize: 11,
+    fontFamily: 'Times-Bold',
+    marginBottom: 6
   },
   officeRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 3
+    marginBottom: 5
   },
   officeField: {
-    fontSize: 7.5
+    fontSize: 10
   }
 });
 
@@ -375,7 +375,7 @@ const JuniorAdmissionPDF = ({ data }) => {
 
         {/* Course Selection */}
         <View style={styles.courseRow}>
-          <Text style={{ fontSize: 8.5, fontWeight: 'bold', marginRight: 8 }}>Course:</Text>
+          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginRight: 10 }}>Course:</Text>
           
           <View style={styles.courseItem}>
             <View style={data.standard === '11th' ? styles.checkedBox : styles.checkbox} />
@@ -386,7 +386,7 @@ const JuniorAdmissionPDF = ({ data }) => {
             <Text style={styles.checkboxLabel}>12th</Text>
           </View>
 
-          <Text style={{ fontSize: 8, marginLeft: 10, marginRight: 4 }}>Board:</Text>
+          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginLeft: 12, marginRight: 5 }}>Board:</Text>
           <View style={styles.courseItem}>
             <View style={data.boardStateBoard ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>State Board</Text>
@@ -400,7 +400,7 @@ const JuniorAdmissionPDF = ({ data }) => {
             <Text style={styles.checkboxLabel}>JEE</Text>
           </View>
 
-          <Text style={{ fontSize: 8, marginLeft: 10, marginRight: 4 }}>Stream:</Text>
+          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginLeft: 12, marginRight: 5 }}>Stream:</Text>
           <View style={styles.courseItem}>
             <View style={data.streamArts ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>Arts</Text>
@@ -422,16 +422,16 @@ const JuniorAdmissionPDF = ({ data }) => {
           <Text style={styles.label}>A) Full Name of Candidate: Mr./Miss.</Text>
         </View>
         <View style={styles.row}>
-          <View style={{ ...styles.col, marginRight: 8 }}>
-            <Text style={{ fontSize: 7.5, marginRight: 3 }}>(Surname)</Text>
+          <View style={{ ...styles.col, marginRight: 10 }}>
+            <Text style={{ fontSize: 9, marginRight: 4 }}>(Surname)</Text>
             <Text style={styles.value}>{data.surname || ''}</Text>
           </View>
-          <View style={{ ...styles.col, marginRight: 8 }}>
-            <Text style={{ fontSize: 7.5, marginRight: 3 }}>(Middle Name)</Text>
+          <View style={{ ...styles.col, marginRight: 10 }}>
+            <Text style={{ fontSize: 9, marginRight: 4 }}>(Middle Name)</Text>
             <Text style={styles.value}>{data.middleName || ''}</Text>
           </View>
           <View style={styles.col}>
-            <Text style={{ fontSize: 7.5, marginRight: 3 }}>(Father's Name)</Text>
+            <Text style={{ fontSize: 9, marginRight: 4 }}>(Father's Name)</Text>
             <Text style={styles.value}>{data.fathersName || ''}</Text>
           </View>
         </View>
@@ -481,7 +481,7 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
 
         <View style={styles.row}>
-          <View style={{ ...styles.col, marginRight: 8 }}>
+          <View style={{ ...styles.col, marginRight: 10 }}>
             <Text style={styles.label}>(A) Occupation & Designation:</Text>
             <Text style={styles.value}>{data.occupation || ''}</Text>
           </View>
@@ -493,18 +493,18 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
 
         <View style={styles.row}>
-          <View style={{ width: '48%', marginRight: 10 }}>
-            <Text style={{ ...styles.label, marginBottom: 3 }}>(C) Parent/Guardian's Mobile No.:</Text>
+          <View style={{ width: '48%', marginRight: 15 }}>
+            <Text style={{ ...styles.label, marginBottom: 5 }}>(C) Parent/Guardian's Mobile No.:</Text>
             {renderDigitBoxes('parentMobile', 10)}
           </View>
           <View style={{ width: '48%' }}>
-            <Text style={{ ...styles.label, marginBottom: 3 }}>(D) Candidate Mobile No.:</Text>
+            <Text style={{ ...styles.label, marginBottom: 5 }}>(D) Candidate Mobile No.:</Text>
             {renderDigitBoxes('candidateMobile', 10)}
           </View>
         </View>
 
         <View style={styles.row}>
-          <View style={{ ...styles.col, marginRight: 8 }}>
+          <View style={{ ...styles.col, marginRight: 10 }}>
             <Text style={styles.label}>(E) Telephone No. (With STD Code):</Text>
             <Text style={styles.value}>{data.telephone || ''}</Text>
           </View>
@@ -524,22 +524,22 @@ const JuniorAdmissionPDF = ({ data }) => {
         <Text style={styles.sectionTitle}>4. DATE OF BIRTH & PLACE</Text>
         
         <View style={styles.row}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 15 }}>
-            <Text style={{ ...styles.label, marginBottom: 3, marginRight: 5 }}>(i) Date:</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 20 }}>
+            <Text style={{ ...styles.label, marginBottom: 5, marginRight: 6 }}>(i) Date:</Text>
             {renderDigitBoxes('birthDate', 2)}
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 15 }}>
-            <Text style={{ ...styles.label, marginBottom: 3, marginRight: 5 }}>(ii) Month:</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 20 }}>
+            <Text style={{ ...styles.label, marginBottom: 5, marginRight: 6 }}>(ii) Month:</Text>
             {renderDigitBoxes('birthMonth', 2)}
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ ...styles.label, marginBottom: 3, marginRight: 5 }}>(iii) Year:</Text>
+            <Text style={{ ...styles.label, marginBottom: 5, marginRight: 6 }}>(iii) Year:</Text>
             {renderDigitBoxes('birthYear', 4)}
           </View>
         </View>
 
         <View style={styles.row}>
-          <View style={{ ...styles.col, marginRight: 8 }}>
+          <View style={{ ...styles.col, marginRight: 10 }}>
             <Text style={styles.label}>Place of Birth:</Text>
             <Text style={styles.value}>{data.birthPlace || ''}</Text>
           </View>
@@ -658,16 +658,16 @@ const JuniorAdmissionPDF = ({ data }) => {
         {/* DOCUMENTS REQUIRED */}
         <View style={styles.docsBox}>
           <Text style={styles.docsTitle}>• DOCUMENTS REQUIRED AT THE TIME OF ADMISSION (Original + 2 Xerox Copies)</Text>
-          <View style={{ marginTop: 4 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 2 }}>
+          <View style={{ marginTop: 6 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
               <View style={data.docLeavingCert ? styles.checkedBox : styles.checkbox} />
               <Text style={styles.docItem}>1. School/College Leaving Certificate (Duly counter signed by Principal/College Authorities)</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 2 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
               <View style={data.docMigration ? styles.checkedBox : styles.checkbox} />
               <Text style={styles.docItem}>2. Migration Certificate (If necessary)</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 2 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
               <View style={data.docMarksheet ? styles.checkedBox : styles.checkbox} />
               <Text style={styles.docItem}>3. Previous Year Marksheet (SSC/11th)</Text>
             </View>
@@ -678,8 +678,8 @@ const JuniorAdmissionPDF = ({ data }) => {
           </View>
         </View>
 
-        <View style={{ marginTop: 6, marginBottom: 4 }}>
-          <Text style={{ fontSize: 7.5, textAlign: 'justify', lineHeight: 1.3 }}>
+        <View style={{ marginTop: 10, marginBottom: 8 }}>
+          <Text style={{ fontSize: 10, textAlign: 'justify', lineHeight: 1.5 }}>
             I hereby agree that, I have attached copies of only mentioned documents to my application and understand that my application will be approved on the basis of above documents supplied by me at the time of submitting this application.
           </Text>
         </View>
@@ -687,21 +687,21 @@ const JuniorAdmissionPDF = ({ data }) => {
         {/* Signature Section */}
         <View style={styles.signatureRow}>
           <View style={styles.signBox}>
-            <Text style={{ fontSize: 7, marginBottom: 2 }}>Date: ____ / ____ / ____</Text>
-            <Text style={{ fontSize: 7, marginBottom: 2 }}>Place: _______________</Text>
+            <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
+            <Text style={{ fontSize: 10, marginBottom: 3 }}>Place: _______________</Text>
           </View>
           <View style={styles.signBox}>
             <Text style={styles.signLine}>Signature of Applicant</Text>
           </View>
         </View>
 
-        {/* PAGE BREAK FOR DECLARATION */}
-        <View break style={{ marginTop: 15 }}>
+        {/* PAGE BREAK FOR DECLARATION - PAGE 3 */}
+        <View break style={{ marginTop: 20 }}>
           <Text style={styles.declTitle}>
             DECLARATION TO BE SIGNED BY THE CANDIDATE & PARENT/GUARDIAN AT THE TIME OF ADMISSION TO Institute
           </Text>
 
-          <View style={{ marginBottom: 5 }}>
+          <View style={{ marginBottom: 8 }}>
             <Text style={styles.declPoint}>
               1. I have read the Rules of Admission for the year 2026-27 and I have consulted my father/guardian and after understanding these rules, I have filled in the application form.
             </Text>
@@ -726,19 +726,19 @@ const JuniorAdmissionPDF = ({ data }) => {
             <Text style={styles.declPoint}>
               8. I know that my ward will not be permitted to appear for his/her college/university examination if he/she fails to satisfy the college authorities on any of the following counts:
             </Text>
-            <Text style={{ fontSize: 7, paddingLeft: 15, marginBottom: 2 }}>
+            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
               • At least 75% attendance at lectures and practical
             </Text>
-            <Text style={{ fontSize: 7, paddingLeft: 15, marginBottom: 2 }}>
+            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
               • Attendance and performance at the college examination/tutorials
             </Text>
-            <Text style={{ fontSize: 7, paddingLeft: 15, marginBottom: 2 }}>
+            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
               • Good and disciplined behaviour in the college premises
             </Text>
-            <Text style={{ fontSize: 7, paddingLeft: 15, marginBottom: 2 }}>
+            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
               • Obedience of the instruction of teachers, staff and other college authorities
             </Text>
-            <Text style={{ fontSize: 7, paddingLeft: 15, marginBottom: 2 }}>
+            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
               • Payment of college fees as prescribed and on time
             </Text>
             <Text style={styles.declPoint}>
@@ -761,58 +761,58 @@ const JuniorAdmissionPDF = ({ data }) => {
             </Text>
           </View>
 
-          <View style={{ marginTop: 6, borderWidth: 1, borderColor: '#999', padding: 5 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 2 }}>
-              <Text style={{ fontSize: 7.5, fontWeight: 'bold' }}>Submission Mode (Non-refundable)</Text>
-              <Text style={{ fontSize: 7.5, fontWeight: 'bold' }}>Dates</Text>
-              <Text style={{ fontSize: 7.5, fontWeight: 'bold' }}>Fees Amount</Text>
+          <View style={{ marginTop: 10, borderWidth: 1, borderColor: '#999', padding: 8 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
+              <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Submission Mode (Non-refundable)</Text>
+              <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Dates</Text>
+              <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Fees Amount</Text>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 2 }}>
-              <Text style={{ fontSize: 7 }}>One Time</Text>
-              <Text style={{ fontSize: 7 }}>_________________</Text>
-              <Text style={{ fontSize: 7 }}>_________________</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 }}>
+              <Text style={{ fontSize: 9 }}>One Time</Text>
+              <Text style={{ fontSize: 9 }}>_________________</Text>
+              <Text style={{ fontSize: 9 }}>_________________</Text>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 2 }}>
-              <Text style={{ fontSize: 7 }}>Two Instalments</Text>
-              <Text style={{ fontSize: 7 }}>_________________</Text>
-              <Text style={{ fontSize: 7 }}>_________________</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 }}>
+              <Text style={{ fontSize: 9 }}>Two Instalments</Text>
+              <Text style={{ fontSize: 9 }}>_________________</Text>
+              <Text style={{ fontSize: 9 }}>_________________</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ fontSize: 7 }}>Multi Instalments</Text>
-              <Text style={{ fontSize: 7 }}>_________________</Text>
-              <Text style={{ fontSize: 7 }}>_________________</Text>
+              <Text style={{ fontSize: 9 }}>Multi Instalments</Text>
+              <Text style={{ fontSize: 9 }}>_________________</Text>
+              <Text style={{ fontSize: 9 }}>_________________</Text>
             </View>
           </View>
 
-          <Text style={{ fontSize: 7, marginTop: 5, fontWeight: 'bold', textAlign: 'center' }}>
+          <Text style={{ fontSize: 10, marginTop: 8, fontFamily: 'Times-Bold', textAlign: 'center' }}>
             Note: Admission will be finalized only after submission of all documents & full payment of fees.
           </Text>
 
           {/* Candidate & Parent Signatures */}
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 15 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 25 }}>
             <View style={{ width: '48%' }}>
-              <Text style={{ fontSize: 7, marginBottom: 2 }}>Date: ____ / ____ / ____</Text>
-              <Text style={{ fontSize: 7, marginBottom: 2 }}>Place: _______________</Text>
+              <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
+              <Text style={{ fontSize: 10, marginBottom: 3 }}>Place: _______________</Text>
               <Text style={styles.signLine}>(Signature of Parent/Guardian)</Text>
             </View>
             <View style={{ width: '48%', alignItems: 'flex-end' }}>
-              <Text style={{ ...styles.signLine, marginTop: 15 }}>(Signature of Candidate)</Text>
+              <Text style={{ ...styles.signLine, marginTop: 20 }}>(Signature of Candidate)</Text>
             </View>
           </View>
 
           {/* Parent Declaration */}
-          <View style={{ marginTop: 15, borderTopWidth: 1, paddingTop: 8 }}>
-            <Text style={{ fontSize: 8.5, fontWeight: 'bold', marginBottom: 4 }}>I hereby declare that:</Text>
-            <Text style={{ fontSize: 7, marginBottom: 2 }}>
+          <View style={{ marginTop: 25, borderTopWidth: 1, paddingTop: 12 }}>
+            <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginBottom: 6 }}>I hereby declare that:</Text>
+            <Text style={{ fontSize: 10, marginBottom: 4, lineHeight: 1.5 }}>
               1. The particulars furnished by my ward in this application form are correct to the best of my knowledge.
             </Text>
-            <Text style={{ fontSize: 7, marginBottom: 2 }}>
+            <Text style={{ fontSize: 10, marginBottom: 4, lineHeight: 1.5 }}>
               2. I undertake and abide myself to pay on behalf of my ward such fees, charges etc. by due date which the college may declare from time to time. In the event of failure on my part and/or my ward the Principal of the College may take such action against my ward, as he may deem fit.
             </Text>
             
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 15 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 25 }}>
               <View>
-                <Text style={{ fontSize: 7, marginBottom: 2 }}>Date: ____ / ____ / ____</Text>
+                <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
                 <Text style={styles.signLine}>(Signature of Parent/Guardian)</Text>
               </View>
             </View>
@@ -821,31 +821,31 @@ const JuniorAdmissionPDF = ({ data }) => {
           {/* Office Use Section */}
           <View style={styles.officeUse}>
             <Text style={styles.officeTitle}>For office use only</Text>
-            <View style={{ height: 25, marginTop: 4 }}></View>
-            <View style={{ borderTopWidth: 1, borderTopColor: '#999', paddingTop: 5 }}>
+            <View style={{ height: 35, marginTop: 6 }}></View>
+            <View style={{ borderTopWidth: 1, borderTopColor: '#999', paddingTop: 8 }}>
               <View style={styles.officeRow}>
                 <Text style={styles.officeField}>Date: _____________</Text>
                 <Text style={styles.officeField}>Particular: _____________</Text>
                 <Text style={styles.officeField}>Remark: _____________</Text>
               </View>
-              <Text style={{ ...styles.officeField, marginTop: 12, textAlign: 'right' }}>
+              <Text style={{ ...styles.officeField, marginTop: 18, textAlign: 'right' }}>
                 Name, Designation & Signature with Stamp
               </Text>
             </View>
           </View>
 
           {/* Footer Contact Info */}
-          <View style={{ marginTop: 12, padding: 6, backgroundColor: '#f5f5f5', borderWidth: 1, borderColor: '#ddd' }}>
-            <Text style={{ fontSize: 7.5, fontWeight: 'bold', textAlign: 'center', marginBottom: 2 }}>
+          <View style={{ marginTop: 18, padding: 10, backgroundColor: '#f5f5f5', borderWidth: 1, borderColor: '#ddd' }}>
+            <Text style={{ fontSize: 10, fontFamily: 'Times-Bold', textAlign: 'center', marginBottom: 3 }}>
               Swami Vivekananda Institute of Arts, Commerce, Science & Management
             </Text>
-            <Text style={{ fontSize: 7, textAlign: 'center', marginBottom: 1 }}>
+            <Text style={{ fontSize: 9, textAlign: 'center', marginBottom: 2 }}>
               Near Post Office (SBI Bank), Chatrapati Shivaji Maharaj Nagar,
             </Text>
-            <Text style={{ fontSize: 7, textAlign: 'center', marginBottom: 1 }}>
+            <Text style={{ fontSize: 9, textAlign: 'center', marginBottom: 2 }}>
               Pimpalgaon Baswant. Niphad, Nashik. 422 209.
             </Text>
-            <Text style={{ fontSize: 7, textAlign: 'center' }}>
+            <Text style={{ fontSize: 9, textAlign: 'center' }}>
               ☎ 82086 65658 | ✉ swamivivekanandainstitute2021@gmail.com
             </Text>
           </View>
