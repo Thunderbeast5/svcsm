@@ -48,6 +48,101 @@ const JuniorAdmissionForm = () => {
     reset();
   };
 
+  const quickFillForm = () => {
+    // Personal Information
+    setValue("surname", "Sharma");
+    setValue("fathersName", "Rajesh");
+    setValue("mothersName", "Priya");
+    setValue("firstName", "Amit");
+    setValue("middleName", "Kumar");
+    setValue("placeOfBirth", "Nashik");
+    setValue("gender", "Male");
+    setValue("religion", "Hindu");
+    setValue("caste", "Open");
+    setValue("subCaste", "N/A");
+    setValue("motherTongue", "Marathi");
+    setValue("nationality", "Indian");
+    
+    // Date of Birth
+    for (let i = 0; i < 2; i++) setValue(`dobDay${i}`, i === 0 ? "1" : "5");
+    for (let i = 0; i < 2; i++) setValue(`dobMonth${i}`, i === 0 ? "0" : "6");
+    for (let i = 0; i < 4; i++) {
+      const year = "2008";
+      setValue(`dobYear${i}`, year[i]);
+    }
+    
+    // Age
+    for (let i = 0; i < 2; i++) setValue(`ageYears${i}`, i === 0 ? "1" : "7");
+    for (let i = 0; i < 2; i++) setValue(`ageMonths${i}`, i === 0 ? "0" : "6");
+    for (let i = 0; i < 2; i++) setValue(`ageDays${i}`, i === 0 ? "1" : "5");
+    
+    // Blood Group
+    setValue("bloodGroup", "O+");
+    
+    // Aadhar Number
+    for (let i = 0; i < 12; i++) {
+      const aadhar = "123456789012";
+      setValue(`aadhar${i}`, aadhar[i]);
+    }
+    
+    // Mobile Numbers
+    for (let i = 0; i < 10; i++) {
+      const mobile = "9876543210";
+      setValue(`mobile${i}`, mobile[i]);
+    }
+    for (let i = 0; i < 10; i++) {
+      const altMobile = "8765432109";
+      setValue(`altMobile${i}`, altMobile[i]);
+    }
+    
+    // Address
+    setValue("addressLine1", "123, Shivaji Nagar");
+    setValue("addressLine2", "Near Main Market");
+    setValue("city", "Pimpalgaon Baswant");
+    setValue("district", "Nashik");
+    setValue("state", "Maharashtra");
+    setValue("pincode", "422209");
+    
+    // Course Selection
+    setValue("standard", "11th");
+    setValue("boardStateBoard", true);
+    setValue("stream", "Science");
+    
+    // Previous Education
+    setValue("previousSchool", "Govt. High School, Nashik");
+    setValue("previousClass", "10th");
+    setValue("previousBoard", "SSC");
+    setValue("previousYear", "2025");
+    setValue("previousPercentage", "85.50");
+    
+    // Parent/Guardian Information
+    setValue("fatherOccupation", "Business");
+    setValue("fatherIncome", "500000");
+    setValue("motherOccupation", "Teacher");
+    setValue("motherIncome", "300000");
+    setValue("guardianName", "");
+    setValue("guardianRelation", "");
+    setValue("guardianOccupation", "");
+    setValue("guardianIncome", "");
+    
+    // Emergency Contact
+    setValue("emergencyName", "Rajesh Sharma");
+    setValue("emergencyRelation", "Father");
+    for (let i = 0; i < 10; i++) {
+      const emergency = "9876543210";
+      setValue(`emergencyMobile${i}`, emergency[i]);
+    }
+    
+    // Documents
+    setValue("docLC", true);
+    setValue("docMigration", false);
+    setValue("docMarksheet", true);
+    setValue("docAadhar", true);
+    
+    // Declaration
+    setValue("declarationAccepted", true);
+  };
+
   // Helper component for individual digit boxes
   const DigitBoxes = ({ name, count, label }) => {
     return (
@@ -103,7 +198,17 @@ const JuniorAdmissionForm = () => {
                 <p className="text-sm text-red-100">Academic Year 2026-27</p>
               </div>
             </div>
-            <span className="text-sm bg-white/20 px-4 py-2 rounded-full">Official Application</span>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={quickFillForm}
+                className="text-sm bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full transition-all flex items-center gap-2"
+              >
+                <RefreshCcw size={16} />
+                Quick Fill Demo
+              </button>
+              <span className="text-sm bg-white/20 px-4 py-2 rounded-full">Official Application</span>
+            </div>
           </div>
 
           <div className="p-8 md:p-10">
@@ -184,32 +289,33 @@ const JuniorAdmissionForm = () => {
                       <div className="flex gap-6">
                         <label className="flex items-center gap-2 cursor-pointer">
                           <input 
-                            type="checkbox" 
+                            type="radio" 
                             value="Arts"
-                            {...register("streamArts")}
+                            {...register("stream", { required: "Please select a stream" })}
                             className="w-5 h-5 cursor-pointer"
                           />
                           <span className="text-gray-800 font-medium">Arts</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer">
                           <input 
-                            type="checkbox" 
+                            type="radio" 
                             value="Commerce"
-                            {...register("streamCommerce")}
+                            {...register("stream", { required: "Please select a stream" })}
                             className="w-5 h-5 cursor-pointer"
                           />
                           <span className="text-gray-800 font-medium">Commerce</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer">
                           <input 
-                            type="checkbox" 
+                            type="radio" 
                             value="Science"
-                            {...register("streamScience")}
+                            {...register("stream", { required: "Please select a stream" })}
                             className="w-5 h-5 cursor-pointer"
                           />
                           <span className="text-gray-800 font-medium">Science</span>
                         </label>
                       </div>
+                      {errors.stream && <p className="text-red-600 text-xs mt-1">{errors.stream.message}</p>}
                     </div>
 
                     {/* Photo Upload */}
@@ -349,6 +455,28 @@ const JuniorAdmissionForm = () => {
                       {errors.fullNameFather && <p className="text-red-600 text-xs mt-1">{errors.fullNameFather.message}</p>}
                     </div>
 
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-bold mb-2 text-gray-700">Occupation & Designation</label>
+                        <input 
+                          type="text" 
+                          {...register("occupation")}
+                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          placeholder="Occupation & Designation"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-bold mb-2 text-gray-700">Office Address</label>
+                        <input 
+                          type="text" 
+                          {...register("officeAddress")}
+                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          placeholder="Office Address"
+                        />
+                      </div>
+                    </div>
+
                     <div>
                       <label className="block text-sm font-bold mb-2 text-gray-700">Full Name of Guardian (For non-localities)</label>
                       <input 
@@ -388,28 +516,6 @@ const JuniorAdmissionForm = () => {
                         placeholder="Complete Address with Village/City, Taluka, District, State, PIN"
                       />
                       {errors.permanentAddress && <p className="text-red-600 text-xs mt-1">{errors.permanentAddress.message}</p>}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-bold mb-2 text-gray-700">Occupation & Designation</label>
-                        <input 
-                          type="text" 
-                          {...register("occupation")}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                          placeholder="Occupation & Designation"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-bold mb-2 text-gray-700">Office Address</label>
-                        <input 
-                          type="text" 
-                          {...register("officeAddress")}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                          placeholder="Office Address"
-                        />
-                      </div>
                     </div>
 
                     {/* Parent/Guardian Mobile with digit boxes */}
@@ -826,9 +932,34 @@ const JuniorAdmissionForm = () => {
                       <li>I am aware that use of mobile phones is prohibited wherever academic activity is going on (Classroom, Laboratories and Library) & shall abide by the same.</li>
                       <li>The student should carry identity card regularly and it should be produced when demanded by the authority of the college or institute.</li>
                       <li><strong>About Fees Submission:</strong> (Uniform/Books/Exam Fees are not Included)
-                        <div className="ml-6 mt-2 text-xs">
-                          <p><strong>Submission Mode (Non-refundable):</strong> One Time / Two Instalments / Multi Instalments</p>
-                          <p className="mt-1"><strong>Note:</strong> Admission will be finalized only after submission of all documents & full payment of fees.</p>
+                        <div className="ml-6 mt-2">
+                          <table className="w-full border border-gray-400 text-xs">
+                            <thead>
+                              <tr className="bg-gray-200">
+                                <th className="border border-gray-400 p-2 text-left">Submission Mode (Non-refundable)</th>
+                                <th className="border border-gray-400 p-2 text-left">Dates</th>
+                                <th className="border border-gray-400 p-2 text-left">Fees Amount</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td className="border border-gray-400 p-2">One Time</td>
+                                <td className="border border-gray-400 p-2">_______________</td>
+                                <td className="border border-gray-400 p-2">_______________</td>
+                              </tr>
+                              <tr>
+                                <td className="border border-gray-400 p-2">Two Instalments</td>
+                                <td className="border border-gray-400 p-2">_______________</td>
+                                <td className="border border-gray-400 p-2">_______________</td>
+                              </tr>
+                              <tr>
+                                <td className="border border-gray-400 p-2">Multi Instalments</td>
+                                <td className="border border-gray-400 p-2">_______________</td>
+                                <td className="border border-gray-400 p-2">_______________</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <p className="mt-2 text-xs"><strong>Note:</strong> Admission will be finalized only after submission of all documents & full payment of fees.</p>
                         </div>
                       </li>
                     </ol>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import logo from '../../assets/logo-name.png'; 
 
 // Import your logo if available
-// import logo from '../../assets/logo-name.png'; 
 
 const styles = StyleSheet.create({
   page: { 
@@ -21,9 +21,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start'
   },
+  headerLeft: { 
+    width: '25%', 
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
   logoSection: { 
-    width: '70%', 
-    paddingRight: 10
+    width: '50%', 
+    paddingHorizontal: 10
   },
   instituteName: {
     fontSize: 16,
@@ -43,7 +48,7 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   headerRight: { 
-    width: '30%', 
+    width: '25%', 
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
@@ -339,11 +344,26 @@ const JuniorAdmissionPDF = ({ data }) => {
         
         {/* Header */}
         <View style={styles.header}>
+          {/* Photo on Left */}
+          <View style={styles.headerLeft}>
+            <View style={styles.photoBox}>
+              {data.photoData ? (
+                <Image src={data.photoData} style={styles.photoImage} />
+              ) : (
+                <Text style={styles.photoText}>Self Attested Photo</Text>
+              )}
+            </View>
+          </View>
+          
+          {/* Logo in Middle */}
           <View style={styles.logoSection}>
             {/* If you have logo, uncomment this: */}
-            {/* <Image src={logo} style={styles.logoImage} /> */}
+            <Image src={logo} style={styles.logoImage} />
             <Text style={styles.instituteName}>
-              Swami Vivekananda Junior Inst. of Arts, Commerce & Science, Pimpalgaon Baswant.
+              Swami Vivekananda Junior inst. of Arts, commerce & Science,
+            </Text>
+            <Text style={styles.instituteName}>
+              Pimpalgaon Baswant.
             </Text>
             <Text style={styles.instituteSubtitle}>
               Admission Form: 2026-27
@@ -353,25 +373,15 @@ const JuniorAdmissionPDF = ({ data }) => {
             </Text>
           </View>
           
+          {/* Application Number on Right */}
           <View style={styles.headerRight}>
-            <View style={styles.photoBox}>
-              {data.photoData ? (
-                <Image src={data.photoData} style={styles.photoImage} />
-              ) : (
-                <Text style={styles.photoText}>Self Attested Photo</Text>
-              )}
-            </View>
             <View style={styles.appNoText}>
               <Text>Application Form No.</Text>
               <Text style={{ marginTop: 2 }}>{data.appNo || '________'}</Text>
             </View>
+            <Text style={{ fontSize: 11, marginTop: 8, fontFamily: 'Times-Bold' }}>Form Fees: Rs. 100/-</Text>
           </View>
         </View>
-
-        <Text style={styles.formTitle}>
-          Swami Vivekananda Institute of Arts, Commerce & Science, Pimpalgaon Baswant, Nashik
-        </Text>
-        <Text style={styles.formFees}>Form Fees: Rs. 100/-</Text>
 
         {/* Course Selection */}
         <View style={styles.courseRow}>
@@ -402,15 +412,15 @@ const JuniorAdmissionPDF = ({ data }) => {
 
           <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginLeft: 12, marginRight: 5 }}>Stream:</Text>
           <View style={styles.courseItem}>
-            <View style={data.streamArts ? styles.checkedBox : styles.checkbox} />
+            <View style={data.stream === 'Arts' ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>Arts</Text>
           </View>
           <View style={styles.courseItem}>
-            <View style={data.streamCommerce ? styles.checkedBox : styles.checkbox} />
+            <View style={data.stream === 'Commerce' ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>Commerce</Text>
           </View>
           <View style={styles.courseItem}>
-            <View style={data.streamScience ? styles.checkedBox : styles.checkbox} />
+            <View style={data.stream === 'Science' ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>Science</Text>
           </View>
         </View>
@@ -463,12 +473,24 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.label}>(B) Full Name of Guardian (For non-localities):</Text>
+          <View style={{ ...styles.col, marginRight: 10 }}>
+            <Text style={styles.label}>(B) Occupation & Designation:</Text>
+            <Text style={styles.value}>{data.occupation || ''}</Text>
+          </View>
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.label}>(C) Office Address:</Text>
+          <Text style={styles.value}>{data.officeAddress || ''}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.label}>(D) Full Name of Guardian (For non-localities):</Text>
           <Text style={styles.value}>{data.guardianName || ''}</Text>
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.label}>(C) Relationship of Guardian with the Candidate:</Text>
+          <Text style={styles.label}>(E) Relationship of Guardian with the Candidate:</Text>
           <Text style={styles.value}>{data.guardianRelation || ''}</Text>
         </View>
 
@@ -481,37 +503,25 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
 
         <View style={styles.row}>
-          <View style={{ ...styles.col, marginRight: 10 }}>
-            <Text style={styles.label}>(A) Occupation & Designation:</Text>
-            <Text style={styles.value}>{data.occupation || ''}</Text>
-          </View>
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.label}>(B) Office Address:</Text>
-          <Text style={styles.value}>{data.officeAddress || ''}</Text>
-        </View>
-
-        <View style={styles.row}>
           <View style={{ width: '48%', marginRight: 15 }}>
-            <Text style={{ ...styles.label, marginBottom: 5 }}>(C) Parent/Guardian's Mobile No.:</Text>
+            <Text style={{ ...styles.label, marginBottom: 5 }}>(A) Parent/Guardian's Mobile No.:</Text>
             {renderDigitBoxes('parentMobile', 10)}
           </View>
           <View style={{ width: '48%' }}>
-            <Text style={{ ...styles.label, marginBottom: 5 }}>(D) Candidate Mobile No.:</Text>
+            <Text style={{ ...styles.label, marginBottom: 5 }}>(B) Candidate Mobile No.:</Text>
             {renderDigitBoxes('candidateMobile', 10)}
           </View>
         </View>
 
         <View style={styles.row}>
           <View style={{ ...styles.col, marginRight: 10 }}>
-            <Text style={styles.label}>(E) Telephone No. (With STD Code):</Text>
+            <Text style={styles.label}>(C) Telephone No. (With STD Code):</Text>
             <Text style={styles.value}>{data.telephone || ''}</Text>
           </View>
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.label}>(F) E-Mail ID:</Text>
+          <Text style={styles.label}>(D) E-Mail ID:</Text>
           <Text style={styles.value}>{data.email || ''}</Text>
         </View>
 
@@ -682,16 +692,9 @@ const JuniorAdmissionPDF = ({ data }) => {
           <Text style={{ fontSize: 10, textAlign: 'justify', lineHeight: 1.5 }}>
             I hereby agree that, I have attached copies of only mentioned documents to my application and understand that my application will be approved on the basis of above documents supplied by me at the time of submitting this application.
           </Text>
-        </View>
-
-        {/* Signature Section */}
-        <View style={styles.signatureRow}>
-          <View style={styles.signBox}>
-            <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
-            <Text style={{ fontSize: 10, marginBottom: 3 }}>Place: _______________</Text>
-          </View>
-          <View style={styles.signBox}>
-            <Text style={styles.signLine}>Signature of Applicant</Text>
+          <View style={{ flexDirection: 'row', marginTop: 6, justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 10 }}>Date: ____ / ____ / ____</Text>
+            <Text style={{ fontSize: 10 }}>Place: _______________</Text>
           </View>
         </View>
 
@@ -761,26 +764,51 @@ const JuniorAdmissionPDF = ({ data }) => {
             </Text>
           </View>
 
-          <View style={{ marginTop: 10, borderWidth: 1, borderColor: '#999', padding: 8 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
-              <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Submission Mode (Non-refundable)</Text>
-              <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Dates</Text>
-              <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Fees Amount</Text>
+          {/* Submission Mode Table */}
+          <View style={styles.table}>
+            <View style={styles.tableRow}>
+              <View style={styles.tableColHeader}>
+                <Text>Submission Mode (Non-refundable)</Text>
+              </View>
+              <View style={styles.tableColHeader}>
+                <Text>Dates</Text>
+              </View>
+              <View style={{ ...styles.tableColHeader, borderRightWidth: 0 }}>
+                <Text>Fees Amount</Text>
+              </View>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 }}>
-              <Text style={{ fontSize: 9 }}>One Time</Text>
-              <Text style={{ fontSize: 9 }}>_________________</Text>
-              <Text style={{ fontSize: 9 }}>_________________</Text>
+            <View style={styles.tableRow}>
+              <View style={styles.tableCol}>
+                <Text>One Time</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>_______________</Text>
+              </View>
+              <View style={{ ...styles.tableColLast, borderRightWidth: 0 }}>
+                <Text>_______________</Text>
+              </View>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 }}>
-              <Text style={{ fontSize: 9 }}>Two Instalments</Text>
-              <Text style={{ fontSize: 9 }}>_________________</Text>
-              <Text style={{ fontSize: 9 }}>_________________</Text>
+            <View style={styles.tableRow}>
+              <View style={styles.tableCol}>
+                <Text>Two Instalments</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>_______________</Text>
+              </View>
+              <View style={{ ...styles.tableColLast, borderRightWidth: 0 }}>
+                <Text>_______________</Text>
+              </View>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ fontSize: 9 }}>Multi Instalments</Text>
-              <Text style={{ fontSize: 9 }}>_________________</Text>
-              <Text style={{ fontSize: 9 }}>_________________</Text>
+            <View style={{ ...styles.tableRow, borderBottomWidth: 0 }}>
+              <View style={styles.tableCol}>
+                <Text>Multi Instalments</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>_______________</Text>
+              </View>
+              <View style={{ ...styles.tableColLast, borderRightWidth: 0 }}>
+                <Text>_______________</Text>
+              </View>
             </View>
           </View>
 
