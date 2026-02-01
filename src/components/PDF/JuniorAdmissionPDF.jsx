@@ -239,6 +239,58 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
+  // Fee Distribution Table Styles
+  feeTableContainer: {
+    marginTop: 12,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#999'
+  },
+  feeTableRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#999',
+    minHeight: 24
+  },
+  feeTableHeaderCell: {
+    flex: 1,
+    borderRightWidth: 1,
+    borderRightColor: '#999',
+    padding: 6,
+    backgroundColor: '#c0c0c0',
+    fontFamily: 'Times-Bold',
+    fontSize: 9,
+    textAlign: 'center',
+    justifyContent: 'center'
+  },
+  feeTableHeaderCellLast: {
+    flex: 1,
+    padding: 6,
+    backgroundColor: '#c0c0c0',
+    fontFamily: 'Times-Bold',
+    fontSize: 9,
+    textAlign: 'center',
+    justifyContent: 'center'
+  },
+  feeTableDataCell: {
+    flex: 1,
+    borderRightWidth: 1,
+    borderRightColor: '#999',
+    padding: 6,
+    backgroundColor: '#e8e8e8',
+    fontSize: 9,
+    textAlign: 'center',
+    justifyContent: 'center'
+  },
+  feeTableDataCellLast: {
+    flex: 1,
+    padding: 6,
+    backgroundColor: '#e8e8e8',
+    fontSize: 9,
+    textAlign: 'center',
+    justifyContent: 'center'
+  },
+
   // Documents Box
   docsBox: {
     borderWidth: 1.5,
@@ -297,7 +349,7 @@ const styles = StyleSheet.create({
 
   // Office Use Section
   officeUse: {
-    marginTop: 18,
+    marginTop: 12,
     borderWidth: 1,
     borderColor: '#999',
     padding: 10,
@@ -315,6 +367,28 @@ const styles = StyleSheet.create({
   },
   officeField: {
     fontSize: 10
+  },
+
+  // Submission Mode Table
+  submissionTableContainer: {
+    marginTop: 10,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#999',
+    padding: 8
+  },
+  submissionTableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4
+  },
+  submissionTableHeader: {
+    fontSize: 10,
+    fontFamily: 'Times-Bold',
+    color: '#000'
+  },
+  submissionTableData: {
+    fontSize: 9
   }
 });
 
@@ -697,13 +771,13 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
       </Page>
 
-      {/* PAGE 2 - DECLARATION */}
+      {/* PAGE 2 - DECLARATION & FEE DISTRIBUTION */}
       <Page size="A4" style={styles.page}>
         <Text style={styles.declTitle}>
           DECLARATION TO BE SIGNED BY THE CANDIDATE & PARENT/GUARDIAN AT THE TIME OF ADMISSION TO Institute
         </Text>
 
-        <View style={{ marginBottom: 8 }}>
+        <View style={{ marginBottom: 6 }}>
           <Text style={styles.declPoint}>
             1. I have read the Rules of Admission for the year 2026-27 and I have consulted my father/guardian and after understanding these rules, I have filled in the application form.
           </Text>
@@ -764,38 +838,196 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
 
         {/* Fee Distribution Table */}
-        <View style={{ marginTop: 10, borderWidth: 1, borderColor: '#999', padding: 8 }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
-            <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Submission Mode (Non-refundable)</Text>
-            <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Dates</Text>
-            <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Fees Amount</Text>
+        <View style={styles.feeTableContainer}>
+          {/* Header Row */}
+          <View style={styles.feeTableRow}>
+            <View style={styles.feeTableHeaderCell}>
+              <Text>Batches</Text>
+            </View>
+            <View style={styles.feeTableHeaderCell}>
+              <Text>Admission Fees</Text>
+            </View>
+            <View style={styles.feeTableHeaderCell}>
+              <Text>Tuition Fees</Text>
+            </View>
+            <View style={styles.feeTableHeaderCell}>
+              <Text>CO-curricular Activities</Text>
+            </View>
+            <View style={styles.feeTableHeaderCell}>
+              <Text>Exam Fees</Text>
+            </View>
+            <View style={styles.feeTableHeaderCell}>
+              <Text>Total Fees</Text>
+            </View>
+            <View style={styles.feeTableHeaderCell}>
+              <Text>One Time</Text>
+            </View>
+            <View style={styles.feeTableHeaderCell}>
+              <Text>Installments -1</Text>
+            </View>
+            <View style={styles.feeTableHeaderCellLast}>
+              <Text>Installments -2</Text>
+            </View>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 }}>
-            <Text style={{ fontSize: 9 }}>One Time</Text>
-            <Text style={{ fontSize: 9 }}>_________________</Text>
-            <Text style={{ fontSize: 9 }}>_________________</Text>
+
+          {/* 11 COM Row */}
+          <View style={styles.feeTableRow}>
+            <View style={styles.feeTableDataCell}>
+              <Text>11COM</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>1000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>14500</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>3000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>3000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>21500</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>20000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>11500</Text>
+            </View>
+            <View style={styles.feeTableDataCellLast}>
+              <Text>10000</Text>
+            </View>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 }}>
-            <Text style={{ fontSize: 9 }}>Two Instalments</Text>
-            <Text style={{ fontSize: 9 }}>_________________</Text>
-            <Text style={{ fontSize: 9 }}>_________________</Text>
+
+          {/* 12 COM Row */}
+          <View style={styles.feeTableRow}>
+            <View style={styles.feeTableDataCell}>
+              <Text>12COM</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>1000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>14500</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>3000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>3000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>21500</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>20000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>11500</Text>
+            </View>
+            <View style={styles.feeTableDataCellLast}>
+              <Text>10000</Text>
+            </View>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{ fontSize: 9 }}>Multi Instalments</Text>
-            <Text style={{ fontSize: 9 }}>_________________</Text>
-            <Text style={{ fontSize: 9 }}>_________________</Text>
+
+          {/* 11 SCI Row */}
+          <View style={styles.feeTableRow}>
+            <View style={styles.feeTableDataCell}>
+              <Text>11SCI</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>1000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>25000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>6000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>3000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>35000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>32500</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>20000</Text>
+            </View>
+            <View style={styles.feeTableDataCellLast}>
+              <Text>15000</Text>
+            </View>
+          </View>
+
+          {/* 12 SCI Row */}
+          <View style={styles.feeTableRow}>
+            <View style={styles.feeTableDataCell}>
+              <Text>12SCI</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>1000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>25000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>6000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>3000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>35000</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>32500</Text>
+            </View>
+            <View style={styles.feeTableDataCell}>
+              <Text>20000</Text>
+            </View>
+            <View style={styles.feeTableDataCellLast}>
+              <Text>15000</Text>
+            </View>
           </View>
         </View>
 
-        <Text style={{ fontSize: 10, marginTop: 8, fontFamily: 'Times-Bold', textAlign: 'center' }}>
+        {/* Submission Mode Table */}
+        <View style={styles.submissionTableContainer}>
+          <View style={styles.submissionTableRow}>
+            <Text style={styles.submissionTableHeader}>Submission Mode (Non-refundable)</Text>
+            <Text style={styles.submissionTableHeader}>Dates</Text>
+            <Text style={styles.submissionTableHeader}>Fees Amount</Text>
+          </View>
+          <View style={styles.submissionTableRow}>
+            <Text style={styles.submissionTableData}>One Time</Text>
+            <Text style={styles.submissionTableData}>_________________</Text>
+            <Text style={styles.submissionTableData}>_________________</Text>
+          </View>
+          <View style={styles.submissionTableRow}>
+            <Text style={styles.submissionTableData}>Two Instalments</Text>
+            <Text style={styles.submissionTableData}>_________________</Text>
+            <Text style={styles.submissionTableData}>_________________</Text>
+          </View>
+          <View style={styles.submissionTableRow}>
+            <Text style={styles.submissionTableData}>Multi Instalments</Text>
+            <Text style={styles.submissionTableData}>_________________</Text>
+            <Text style={styles.submissionTableData}>_________________</Text>
+          </View>
+        </View>
+
+        <Text style={{ fontSize: 10, marginTop: 6, fontFamily: 'Times-Bold', textAlign: 'center' }}>
           Note: Admission will be finalized only after submission of all documents & full payment of fees.
         </Text>
 
         {/* Candidate & Parent Signatures */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12 }}>
           <View style={{ width: '48%' }}>
-            <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
-            <Text style={{ fontSize: 10, marginBottom: 3 }}>Place: _______________</Text>
+            <Text style={{ fontSize: 10, marginBottom: 2 }}>Date: ____ / ____ / ____</Text>
+            <Text style={{ fontSize: 10, marginBottom: 2 }}>Place: _______________</Text>
             <Text style={styles.signLine}>(Signature of Parent/Guardian)</Text>
           </View>
           <View style={{ width: '48%', alignItems: 'flex-end' }}>
@@ -804,18 +1036,18 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
 
         {/* Parent Declaration */}
-        <View style={{ marginTop: 20, borderTopWidth: 1, paddingTop: 12 }}>
-          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginBottom: 6 }}>I hereby declare that:</Text>
-          <Text style={{ fontSize: 10, marginBottom: 4, lineHeight: 1.5 }}>
+        <View style={{ marginTop: 12, borderTopWidth: 1, paddingTop: 8 }}>
+          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginBottom: 4 }}>I hereby declare that:</Text>
+          <Text style={{ fontSize: 10, marginBottom: 2, lineHeight: 1.5 }}>
             1. The particulars furnished by my ward in this application form are correct to the best of my knowledge.
           </Text>
           <Text style={{ fontSize: 10, marginBottom: 4, lineHeight: 1.5 }}>
             2. I undertake and abide myself to pay on behalf of my ward such fees, charges etc. by due date which the college may declare from time to time. In the event of failure on my part and/or[...]
           </Text>
           
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 12 }}>
             <View>
-              <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
+              <Text style={{ fontSize: 10, marginBottom: 2 }}>Date: ____ / ____ / ____</Text>
               <Text style={styles.signLine}>(Signature of Parent/Guardian)</Text>
             </View>
           </View>
@@ -824,35 +1056,28 @@ const JuniorAdmissionPDF = ({ data }) => {
         {/* Office Use Section */}
         <View style={styles.officeUse}>
           <Text style={styles.officeTitle}>For office use only</Text>
-          <View style={{ height: 30, marginTop: 6 }}></View>
-          <View style={{ borderTopWidth: 1, borderTopColor: '#999', paddingTop: 8 }}>
+          <View style={{ height: 20, marginTop: 6 }}></View>
+          <View style={{ borderTopWidth: 1, borderTopColor: '#999', paddingTop: 6 }}>
             <View style={styles.officeRow}>
               <Text style={styles.officeField}>Date: _____________</Text>
               <Text style={styles.officeField}>Particular: _____________</Text>
               <Text style={styles.officeField}>Remark: _____________</Text>
             </View>
-            <Text style={{ ...styles.officeField, marginTop: 15, textAlign: 'right' }}>
+            <Text style={{ ...styles.officeField, marginTop: 10, textAlign: 'right' }}>
               Name, Designation & Signature with Stamp
             </Text>
           </View>
         </View>
-
-        {/* Footer Contact Info */}
-        <View style={{ marginTop: 15, padding: 10, backgroundColor: '#f5f5f5', borderWidth: 1, borderColor: '#ddd' }}>
-          <Text style={{ fontSize: 10, fontFamily: 'Times-Bold', textAlign: 'center', marginBottom: 3 }}>
-            Swami Vivekananda Institute of Arts, Commerce, Science & Management
-          </Text>
-          <Text style={{ fontSize: 9, textAlign: 'center', marginBottom: 2 }}>
-            Near Post Office (SBI Bank), Chatrapati Shivaji Maharaj Nagar,
-          </Text>
-          <Text style={{ fontSize: 9, textAlign: 'center', marginBottom: 2 }}>
-            Pimpalgaon Baswant. Niphad, Nashik. 422 209.
-          </Text>
-          <Text style={{ fontSize: 9, textAlign: 'center' }}>
-            ☎ 82086 65658 | ✉ swamivivekanandainstitute2021@gmail.com
-          </Text>
-        </View>
       </Page>
+
+      {/* PAGE 3 - EXTRA DECLARATION SPACE */}
+     
+
+      {/* PAGE 4 - BLANK PAGE FOR DOCUMENTS */}
+      
+
+      {/* PAGE 5 - BLANK SIGNATURE PAGE */}
+      
     </Document>
   );
 };
