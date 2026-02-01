@@ -407,6 +407,24 @@ const JuniorAdmissionPDF = ({ data }) => {
     return <View style={styles.digitBoxContainer}>{digits}</View>;
   };
 
+  // Get fee structure based on selected course
+  const getFeeStructure = () => {
+    const standard = data.standard;
+    const stream = data.streamScience ? 'Science' : 'Commerce';
+    
+    const fees = {
+      '11thCom': { admission: 1000, tuition: 14500, coActivity: 3000, exam: 3000, total: 21500, oneTime: 20000, inst1: 11500, inst2: 10000 },
+      '12thCom': { admission: 1000, tuition: 14500, coActivity: 3000, exam: 3000, total: 21500, oneTime: 20000, inst1: 11500, inst2: 10000 },
+      '11thSci': { admission: 1000, tuition: 25000, coActivity: 6000, exam: 3000, total: 35000, oneTime: 32500, inst1: 20000, inst2: 15000 },
+      '12thSci': { admission: 1000, tuition: 25000, coActivity: 6000, exam: 3000, total: 35000, oneTime: 32500, inst1: 20000, inst2: 15000 }
+    };
+
+    const courseKey = `${standard}${stream === 'Science' ? 'Sci' : 'Com'}`;
+    return fees[courseKey] || fees['11thCom'];
+  };
+
+  const currentFees = getFeeStructure();
+
   return (
     <Document>
       {/* PAGE 1 - ADMISSION FORM */}
@@ -448,9 +466,9 @@ const JuniorAdmissionPDF = ({ data }) => {
         </Text>
         <Text style={styles.formFees}>Form Fees: Rs. 100/-</Text>
 
-        {/* Course Selection */}
+        {/* Course Selection - Updated */}
         <View style={styles.courseRow}>
-          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginRight: 10 }}>Course:</Text>
+          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginRight: 10 }}>Standard:</Text>
           
           <View style={styles.courseItem}>
             <View style={data.standard === '11th' ? styles.checkedBox : styles.checkbox} />
@@ -461,33 +479,18 @@ const JuniorAdmissionPDF = ({ data }) => {
             <Text style={styles.checkboxLabel}>12th</Text>
           </View>
 
-          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginLeft: 12, marginRight: 5 }}>Board:</Text>
+          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginLeft: 20, marginRight: 10 }}>Stream:</Text>
           <View style={styles.courseItem}>
-            <View style={data.boardStateBoard ? styles.checkedBox : styles.checkbox} />
-            <Text style={styles.checkboxLabel}>State Board</Text>
-          </View>
-          <View style={styles.courseItem}>
-            <View style={data.boardCET ? styles.checkedBox : styles.checkbox} />
-            <Text style={styles.checkboxLabel}>CET</Text>
-          </View>
-          <View style={styles.courseItem}>
-            <View style={data.boardJEE ? styles.checkedBox : styles.checkbox} />
-            <Text style={styles.checkboxLabel}>JEE</Text>
-          </View>
-
-          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginLeft: 12, marginRight: 5 }}>Stream:</Text>
-          <View style={styles.courseItem}>
-            <View style={data.streamArts ? styles.checkedBox : styles.checkbox} />
-            <Text style={styles.checkboxLabel}>Arts</Text>
+            <View style={data.streamScience ? styles.checkedBox : styles.checkbox} />
+            <Text style={styles.checkboxLabel}>Science</Text>
           </View>
           <View style={styles.courseItem}>
             <View style={data.streamCommerce ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>Commerce</Text>
           </View>
-          <View style={styles.courseItem}>
-            <View style={data.streamScience ? styles.checkedBox : styles.checkbox} />
-            <Text style={styles.checkboxLabel}>Science</Text>
-          </View>
+
+          <View style={data.boardStateBoard ? styles.checkedBox : styles.checkbox} />
+          <Text style={{ fontSize: 9, marginLeft: 4 }}>State Board</Text>
         </View>
 
         {/* Section 1: Personal Information */}
@@ -663,13 +666,13 @@ const JuniorAdmissionPDF = ({ data }) => {
               <Text>Class</Text>
             </View>
             <View style={styles.tableColHeader}>
-              <Text>Art/Com/Sci</Text>
+              <Text>Stream</Text>
             </View>
             <View style={styles.tableColHeader}>
               <Text>Year of Passing</Text>
             </View>
             <View style={styles.tableColHeader}>
-              <Text>Marks Obtained/Total Marks</Text>
+              <Text>Marks Obtained/Total</Text>
             </View>
             <View style={styles.tableColHeader}>
               <Text>Percentage</Text>
@@ -837,185 +840,90 @@ const JuniorAdmissionPDF = ({ data }) => {
           </Text>
         </View>
 
-        {/* Fee Distribution Table */}
+        {/* Dynamic Fee Distribution Table - Only for selected course */}
         <View style={styles.feeTableContainer}>
           {/* Header Row */}
           <View style={styles.feeTableRow}>
-            <View style={styles.feeTableHeaderCell}>
-              <Text>Batches</Text>
-            </View>
-            <View style={styles.feeTableHeaderCell}>
-              <Text>Admission Fees</Text>
-            </View>
-            <View style={styles.feeTableHeaderCell}>
-              <Text>Tuition Fees</Text>
-            </View>
-            <View style={styles.feeTableHeaderCell}>
-              <Text>CO-curricular Activities</Text>
-            </View>
-            <View style={styles.feeTableHeaderCell}>
-              <Text>Exam Fees</Text>
-            </View>
-            <View style={styles.feeTableHeaderCell}>
-              <Text>Total Fees</Text>
-            </View>
-            <View style={styles.feeTableHeaderCell}>
-              <Text>One Time</Text>
-            </View>
-            <View style={styles.feeTableHeaderCell}>
-              <Text>Installments -1</Text>
+            <View style={{ ...styles.feeTableHeaderCell, flex: 2 }}>
+              <Text>Fee Type</Text>
             </View>
             <View style={styles.feeTableHeaderCellLast}>
-              <Text>Installments -2</Text>
+              <Text>Amount</Text>
             </View>
           </View>
 
-          {/* 11 COM Row */}
+          {/* Admission Fees */}
           <View style={styles.feeTableRow}>
-            <View style={styles.feeTableDataCell}>
-              <Text>11COM</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>1000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>14500</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>3000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>3000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>21500</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>20000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>11500</Text>
+            <View style={{ ...styles.feeTableDataCell, flex: 2 }}>
+              <Text>Admission Fees</Text>
             </View>
             <View style={styles.feeTableDataCellLast}>
-              <Text>10000</Text>
+              <Text>Rs. {currentFees.admission}</Text>
             </View>
           </View>
 
-          {/* 12 COM Row */}
+          {/* Tuition Fees */}
           <View style={styles.feeTableRow}>
-            <View style={styles.feeTableDataCell}>
-              <Text>12COM</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>1000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>14500</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>3000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>3000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>21500</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>20000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>11500</Text>
+            <View style={{ ...styles.feeTableDataCell, flex: 2 }}>
+              <Text>Tuition Fees</Text>
             </View>
             <View style={styles.feeTableDataCellLast}>
-              <Text>10000</Text>
+              <Text>Rs. {currentFees.tuition}</Text>
             </View>
           </View>
 
-          {/* 11 SCI Row */}
+          {/* Co-curricular Activities */}
           <View style={styles.feeTableRow}>
-            <View style={styles.feeTableDataCell}>
-              <Text>11SCI</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>1000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>25000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>6000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>3000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>35000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>32500</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>20000</Text>
+            <View style={{ ...styles.feeTableDataCell, flex: 2 }}>
+              <Text>Co-curricular Activities</Text>
             </View>
             <View style={styles.feeTableDataCellLast}>
-              <Text>15000</Text>
+              <Text>Rs. {currentFees.coActivity}</Text>
             </View>
           </View>
 
-          {/* 12 SCI Row */}
+          {/* Exam Fees */}
           <View style={styles.feeTableRow}>
-            <View style={styles.feeTableDataCell}>
-              <Text>12SCI</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>1000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>25000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>6000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>3000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>35000</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>32500</Text>
-            </View>
-            <View style={styles.feeTableDataCell}>
-              <Text>20000</Text>
+            <View style={{ ...styles.feeTableDataCell, flex: 2 }}>
+              <Text>Exam Fees</Text>
             </View>
             <View style={styles.feeTableDataCellLast}>
-              <Text>15000</Text>
+              <Text>Rs. {currentFees.exam}</Text>
+            </View>
+          </View>
+
+          {/* Total Fees */}
+          <View style={styles.feeTableRow}>
+            <View style={{ ...styles.feeTableDataCell, flex: 2, backgroundColor: '#b0b0b0' }}>
+              <Text style={{ fontFamily: 'Times-Bold' }}>TOTAL FEES</Text>
+            </View>
+            <View style={{ ...styles.feeTableDataCellLast, backgroundColor: '#b0b0b0' }}>
+              <Text style={{ fontFamily: 'Times-Bold' }}>Rs. {currentFees.total}</Text>
             </View>
           </View>
         </View>
 
-        {/* Submission Mode Table */}
+        {/* Payment Mode Table */}
         <View style={styles.submissionTableContainer}>
           <View style={styles.submissionTableRow}>
-            <Text style={styles.submissionTableHeader}>Submission Mode (Non-refundable)</Text>
+            <Text style={styles.submissionTableHeader}>Payment Mode (Non-refundable)</Text>
             <Text style={styles.submissionTableHeader}>Dates</Text>
             <Text style={styles.submissionTableHeader}>Fees Amount</Text>
           </View>
           <View style={styles.submissionTableRow}>
             <Text style={styles.submissionTableData}>One Time</Text>
             <Text style={styles.submissionTableData}>_________________</Text>
-            <Text style={styles.submissionTableData}>_________________</Text>
+            <Text style={styles.submissionTableData}>Rs. {currentFees.oneTime}</Text>
           </View>
           <View style={styles.submissionTableRow}>
-            <Text style={styles.submissionTableData}>Two Instalments</Text>
+            <Text style={styles.submissionTableData}>Installment 1</Text>
             <Text style={styles.submissionTableData}>_________________</Text>
-            <Text style={styles.submissionTableData}>_________________</Text>
+            <Text style={styles.submissionTableData}>Rs. {currentFees.inst1}</Text>
           </View>
           <View style={styles.submissionTableRow}>
-            <Text style={styles.submissionTableData}>Multi Instalments</Text>
+            <Text style={styles.submissionTableData}>Installment 2</Text>
             <Text style={styles.submissionTableData}>_________________</Text>
-            <Text style={styles.submissionTableData}>_________________</Text>
+            <Text style={styles.submissionTableData}>Rs. {currentFees.inst2}</Text>
           </View>
         </View>
 
@@ -1071,7 +979,7 @@ const JuniorAdmissionPDF = ({ data }) => {
       </Page>
 
       {/* PAGE 3 - EXTRA DECLARATION SPACE */}
-     
+      
 
       {/* PAGE 4 - BLANK PAGE FOR DOCUMENTS */}
       

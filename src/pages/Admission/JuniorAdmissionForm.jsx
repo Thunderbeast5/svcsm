@@ -11,9 +11,68 @@ const JuniorAdmissionForm = () => {
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
 
-  // Watch standard to conditionally show fields
+  // Watch standard and stream to conditionally show fields
   const selectedStandard = watch("standard");
-  const selectedCourse = watch("course");
+  const selectedStream = watch("stream");
+
+  // Fee structure for different courses
+  const feeStructure = {
+    '11thCom': {
+      name: '11th Commerce',
+      admission: 1000,
+      tuition: 14500,
+      coActivity: 3000,
+      exam: 3000,
+      total: 21500,
+      oneTime: 20000,
+      inst1: 11500,
+      inst2: 10000
+    },
+    '12thCom': {
+      name: '12th Commerce',
+      admission: 1000,
+      tuition: 14500,
+      coActivity: 3000,
+      exam: 3000,
+      total: 21500,
+      oneTime: 20000,
+      inst1: 11500,
+      inst2: 10000
+    },
+    '11thSci': {
+      name: '11th Science',
+      admission: 1000,
+      tuition: 25000,
+      coActivity: 6000,
+      exam: 3000,
+      total: 35000,
+      oneTime: 32500,
+      inst1: 20000,
+      inst2: 15000
+    },
+    '12thSci': {
+      name: '12th Science',
+      admission: 1000,
+      tuition: 25000,
+      coActivity: 6000,
+      exam: 3000,
+      total: 35000,
+      oneTime: 32500,
+      inst1: 20000,
+      inst2: 15000
+    }
+  };
+
+  // Get current selected course fees
+  const getSelectedCourseFees = () => {
+    if (selectedStandard && selectedStream) {
+      const courseKey = `${selectedStandard}${selectedStream === 'Science' ? 'Sci' : 'Com'}`;
+      return feeStructure[courseKey];
+    }
+    return null;
+  };
+
+  const currentCourseFees = getSelectedCourseFees();
 
   const onSubmit = (data) => {
     // Generate Application Number
@@ -22,6 +81,15 @@ const JuniorAdmissionForm = () => {
     // Add photo if uploaded
     if (photoPreview) {
       data.photoData = photoPreview;
+    }
+
+    // Add selected stream name for proper data handling
+    if (selectedStream === 'Science') {
+      data.streamScience = true;
+      data.streamCommerce = false;
+    } else {
+      data.streamCommerce = true;
+      data.streamScience = false;
     }
     
     setFormData(data);
@@ -88,53 +156,48 @@ const JuniorAdmissionForm = () => {
     // Mobile Numbers
     for (let i = 0; i < 10; i++) {
       const mobile = "9876543210";
-      setValue(`mobile${i}`, mobile[i]);
-    }
-    for (let i = 0; i < 10; i++) {
+      setValue(`parentMobile${i}`, mobile[i]);
       const altMobile = "8765432109";
-      setValue(`altMobile${i}`, altMobile[i]);
+      setValue(`candidateMobile${i}`, altMobile[i]);
     }
     
     // Address
-    setValue("addressLine1", "123, Shivaji Nagar");
-    setValue("addressLine2", "Near Main Market");
-    setValue("city", "Pimpalgaon Baswant");
-    setValue("district", "Nashik");
-    setValue("state", "Maharashtra");
-    setValue("pincode", "422209");
+    setValue("permanentAddress", "123, Shivaji Nagar\nNear Main Market\nPimpalgaon Baswant, Nashik - 422209");
+    setValue("correspondenceAddress", "123, Shivaji Nagar\nNear Main Market\nPimpalgaon Baswant, Nashik - 422209");
     
     // Course Selection
     setValue("standard", "11th");
+    setValue("stream", "Commerce");
     setValue("boardStateBoard", true);
-    setValue("stream", "Science");
     
     // Previous Education
-    setValue("previousSchool", "Govt. High School, Nashik");
-    setValue("previousClass", "10th");
-    setValue("previousBoard", "SSC");
-    setValue("previousYear", "2025");
-    setValue("previousPercentage", "85.50");
+    setValue("sscStream", "General");
+    setValue("sscYear", "2024");
+    setValue("sscMarksObtained", "450");
+    setValue("sscTotalMarks", "600");
+    setValue("sscPercentage", "75.00");
+    setValue("sscBoard", "Maharashtra State Board");
     
     // Parent/Guardian Information
-    setValue("fatherOccupation", "Business");
-    setValue("fatherIncome", "500000");
-    setValue("motherOccupation", "Teacher");
-    setValue("motherIncome", "300000");
+    setValue("fullNameFather", "Rajesh Sharma");
+    setValue("occupation", "Business");
+    setValue("officeAddress", "Market Area, Nashik");
     setValue("guardianName", "");
     setValue("guardianRelation", "");
-    setValue("guardianOccupation", "");
-    setValue("guardianIncome", "");
     
-    // Emergency Contact
-    setValue("emergencyName", "Rajesh Sharma");
-    setValue("emergencyRelation", "Father");
-    for (let i = 0; i < 10; i++) {
-      const emergency = "9876543210";
-      setValue(`emergencyMobile${i}`, emergency[i]);
+    // Birth Details
+    for (let i = 0; i < 2; i++) setValue(`birthDate${i}`, i === 0 ? "1" : "5");
+    for (let i = 0; i < 2; i++) setValue(`birthMonth${i}`, i === 0 ? "0" : "6");
+    for (let i = 0; i < 4; i++) {
+      const year = "2008";
+      setValue(`birthYear${i}`, year[i]);
     }
     
+    setValue("birthPlace", "Nashik");
+    setValue("birthState", "Maharashtra");
+    
     // Documents
-    setValue("docLC", true);
+    setValue("docLeavingCert", true);
     setValue("docMigration", false);
     setValue("docMarksheet", true);
     setValue("docAadhar", true);
@@ -222,100 +285,70 @@ const JuniorAdmissionForm = () => {
                     Course Selection
                   </h3>
                   
-                  <div className="space-y-4">
-                    {/* Standard Selection */}
+                  <div className="space-y-6">
+                    {/* Standard Selection - Only 11th and 12th */}
                     <div>
                       <label className="block text-sm font-bold mb-3 text-gray-700">Standard *</label>
-                      <div className="flex gap-6">
-                        <label className="flex items-center gap-2 cursor-pointer">
+                      <div className="flex gap-8 md:gap-12">
+                        <label className="flex items-center gap-3 cursor-pointer">
                           <input 
                             type="radio" 
                             value="11th"
                             {...register("standard", { required: "Please select a standard" })}
-                            className="w-5 h-5 cursor-pointer"
+                            className="w-6 h-6 cursor-pointer"
                           />
-                          <span className="text-gray-800 font-medium">11th</span>
+                          <span className="text-gray-800 font-bold text-lg">11th Standard</span>
                         </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
+                        <label className="flex items-center gap-3 cursor-pointer">
                           <input 
                             type="radio" 
                             value="12th"
                             {...register("standard", { required: "Please select a standard" })}
-                            className="w-5 h-5 cursor-pointer"
+                            className="w-6 h-6 cursor-pointer"
                           />
-                          <span className="text-gray-800 font-medium">12th</span>
+                          <span className="text-gray-800 font-bold text-lg">12th Standard</span>
                         </label>
                       </div>
-                      {errors.standard && <p className="text-red-600 text-xs mt-1">{errors.standard.message}</p>}
+                      {errors.standard && <p className="text-red-600 text-xs mt-2">{errors.standard.message}</p>}
                     </div>
 
-                    {/* Board Selection */}
+                    {/* Stream Selection - Only Science and Commerce */}
                     <div>
-                      <label className="block text-sm font-bold mb-3 text-gray-700">Board/Exam *</label>
-                      <div className="flex gap-6 flex-wrap">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input 
-                            type="checkbox" 
-                            value="State Board"
-                            {...register("boardStateBoard")}
-                            className="w-5 h-5 cursor-pointer"
-                          />
-                          <span className="text-gray-800 font-medium">State Board</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input 
-                            type="checkbox" 
-                            value="CET"
-                            {...register("boardCET")}
-                            className="w-5 h-5 cursor-pointer"
-                          />
-                          <span className="text-gray-800 font-medium">CET</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input 
-                            type="checkbox" 
-                            value="JEE"
-                            {...register("boardJEE")}
-                            className="w-5 h-5 cursor-pointer"
-                          />
-                          <span className="text-gray-800 font-medium">JEE</span>
-                        </label>
-                      </div>
-                    </div>
-
-                    {/* Stream Selection */}
-                    <div>
-                      <label className="block text-sm font-bold mb-3 text-gray-700">Stream *</label>
-                      <div className="flex gap-6">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input 
-                            type="radio" 
-                            value="Arts"
-                            {...register("stream", { required: "Please select a stream" })}
-                            className="w-5 h-5 cursor-pointer"
-                          />
-                          <span className="text-gray-800 font-medium">Arts</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input 
-                            type="radio" 
-                            value="Commerce"
-                            {...register("stream", { required: "Please select a stream" })}
-                            className="w-5 h-5 cursor-pointer"
-                          />
-                          <span className="text-gray-800 font-medium">Commerce</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
+                      <label className="block text-sm font-bold mb-3 text-gray-700">Stream/Subject *</label>
+                      <div className="flex gap-8 md:gap-12">
+                        <label className="flex items-center gap-3 cursor-pointer">
                           <input 
                             type="radio" 
                             value="Science"
                             {...register("stream", { required: "Please select a stream" })}
-                            className="w-5 h-5 cursor-pointer"
+                            className="w-6 h-6 cursor-pointer"
                           />
-                          <span className="text-gray-800 font-medium">Science</span>
+                          <span className="text-gray-800 font-bold text-lg">Science (PCM/PCB)</span>
+                        </label>
+                        <label className="flex items-center gap-3 cursor-pointer">
+                          <input 
+                            type="radio" 
+                            value="Commerce"
+                            {...register("stream", { required: "Please select a stream" })}
+                            className="w-6 h-6 cursor-pointer"
+                          />
+                          <span className="text-gray-800 font-bold text-lg">Commerce</span>
                         </label>
                       </div>
-                      {errors.stream && <p className="text-red-600 text-xs mt-1">{errors.stream.message}</p>}
+                      {errors.stream && <p className="text-red-600 text-xs mt-2">{errors.stream.message}</p>}
+                    </div>
+
+                    {/* State Board Checkbox */}
+                    <div>
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input 
+                          type="checkbox" 
+                          {...register("boardStateBoard")}
+                          className="w-5 h-5 cursor-pointer"
+                          defaultChecked
+                        />
+                        <span className="text-gray-800 font-medium">State Board (HSC)</span>
+                      </label>
                     </div>
 
                     {/* Photo Upload */}
@@ -346,7 +379,86 @@ const JuniorAdmissionForm = () => {
                   </div>
                 </section>
 
-                {/* Personal Information - Section 1 */}
+                {/* Course Fees Display - Show only when both standard and stream are selected */}
+                {currentCourseFees && (
+                  <section className="bg-gradient-to-r from-gray-50 to-slate-50 p-6 rounded-xl border-2 border-gray-300">
+                    <h3 className="text-xl font-bold text-gray-900 mb-5">💰 Fee Structure for {currentCourseFees.name}</h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Fee Breakdown Table */}
+                      <div className="overflow-x-auto">
+                        <table className="w-full border-collapse border border-gray-400">
+                          <thead>
+                            <tr className="bg-gray-300">
+                              <th className="border border-gray-400 p-3 text-left font-bold">Fee Type</th>
+                              <th className="border border-gray-400 p-3 text-right font-bold">Amount</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="bg-white hover:bg-gray-50">
+                              <td className="border border-gray-400 p-3">Admission Fees</td>
+                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.admission}</td>
+                            </tr>
+                            <tr className="bg-white hover:bg-gray-50">
+                              <td className="border border-gray-400 p-3">Tuition Fees</td>
+                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.tuition}</td>
+                            </tr>
+                            <tr className="bg-white hover:bg-gray-50">
+                              <td className="border border-gray-400 p-3">Co-curricular Activities</td>
+                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.coActivity}</td>
+                            </tr>
+                            <tr className="bg-white hover:bg-gray-50">
+                              <td className="border border-gray-400 p-3">Exam Fees</td>
+                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.exam}</td>
+                            </tr>
+                            <tr className="bg-blue-100 hover:bg-blue-150">
+                              <td className="border border-gray-400 p-3 font-bold">TOTAL FEES</td>
+                              <td className="border border-gray-400 p-3 text-right font-bold text-lg">Rs. {currentCourseFees.total}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {/* Payment Options Table */}
+                      <div className="overflow-x-auto">
+                        <table className="w-full border-collapse border border-gray-400">
+                          <thead>
+                            <tr className="bg-gray-300">
+                              <th className="border border-gray-400 p-3 text-left font-bold">Payment Mode</th>
+                              <th className="border border-gray-400 p-3 text-right font-bold">Amount</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="bg-white hover:bg-gray-50">
+                              <td className="border border-gray-400 p-3">One Time Payment</td>
+                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.oneTime}</td>
+                            </tr>
+                            <tr className="bg-white hover:bg-gray-50">
+                              <td className="border border-gray-400 p-3">First Installment</td>
+                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.inst1}</td>
+                            </tr>
+                            <tr className="bg-white hover:bg-gray-50">
+                              <td className="border border-gray-400 p-3">Second Installment</td>
+                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.inst2}</td>
+                            </tr>
+                            <tr className="bg-yellow-50 hover:bg-yellow-100">
+                              <td className="border border-gray-400 p-3 text-sm italic">Form Fees (Non-Refundable)</td>
+                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. 100/-</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 p-4 bg-red-50 border-l-4 border-red-500 rounded">
+                      <p className="text-sm text-red-800">
+                        <strong>Note:</strong> Uniform/Books/Exam Fees are not included in the above fees. Admission will be finalized only after submission of all documents & full payment of fees.
+                      </p>
+                    </div>
+                  </section>
+                )}
+
+                {/* Personal Information - Section 2 */}
                 <section className="bg-gray-50 p-6 rounded-xl border border-gray-200">
                   <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
                     <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
@@ -436,7 +548,7 @@ const JuniorAdmissionForm = () => {
                   </div>
                 </section>
 
-                {/* Father and Guardian Information - Section 2 */}
+                {/* Father and Guardian Information - Section 3 */}
                 <section className="bg-gray-50 p-6 rounded-xl border border-gray-200">
                   <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
                     <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
@@ -499,7 +611,7 @@ const JuniorAdmissionForm = () => {
                   </div>
                 </section>
 
-                {/* Address Information - Section 3 */}
+                {/* Address Information - Section 4 */}
                 <section className="bg-gray-50 p-6 rounded-xl border border-gray-200">
                   <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
                     <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">4</span>
@@ -709,15 +821,14 @@ const JuniorAdmissionForm = () => {
                     <h4 className="font-bold text-gray-800 mb-3">Standard X (10th) Details *</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       <div>
-                        <label className="block text-sm font-bold mb-2 text-gray-700">Art/Com/Sci</label>
+                        <label className="block text-sm font-bold mb-2 text-gray-700">Stream</label>
                         <select 
                           {...register("sscStream")}
                           className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                         >
                           <option value="">Select</option>
-                          <option value="Arts">Arts</option>
-                          <option value="Commerce">Commerce</option>
                           <option value="Science">Science</option>
+                          <option value="Commerce">Commerce</option>
                           <option value="General">General</option>
                         </select>
                       </div>
@@ -782,15 +893,14 @@ const JuniorAdmissionForm = () => {
                       <h4 className="font-bold text-gray-800 mb-3">Standard XI (11th) Details *</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div>
-                          <label className="block text-sm font-bold mb-2 text-gray-700">Art/Com/Sci</label>
+                          <label className="block text-sm font-bold mb-2 text-gray-700">Stream</label>
                           <select 
                             {...register("hscStream")}
                             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                           >
                             <option value="">Select</option>
-                            <option value="Arts">Arts</option>
-                            <option value="Commerce">Commerce</option>
                             <option value="Science">Science</option>
+                            <option value="Commerce">Commerce</option>
                           </select>
                         </div>
                         <div>
@@ -897,7 +1007,7 @@ const JuniorAdmissionForm = () => {
                   </div>
                   <div className="mt-5 pt-4 border-t-2 border-yellow-200">
                     <p className="text-xs text-gray-600 italic">
-                      I hereby agree that, I have attached copies of only mentioned documents to my application and understand that my application will be approved on the basis of above documents supplied by me at the time of submitting this application.
+                      I hereby agree that, I have attached copies of only mentioned documents to my application and understand that my application will be approved on the basis of above documents supplied by me.
                     </p>
                   </div>
                 </section>
@@ -914,54 +1024,16 @@ const JuniorAdmissionForm = () => {
                       <li>The information given by me in this application is true to the best of my knowledge.</li>
                       <li>I have not been debarred from appearing at any examination held by any Government or Statutory examination authority in India.</li>
                       <li>I fully understand that I will be offered admission strictly on the basis of my merit and availability of seat.</li>
-                      <li>I hereby abide by all the Rules, Acts and Laws enforced by Government/College Principal/College Authorities of the Institute from time to time and I also hereby give an undertaking that as long as I am student of the College, I will do nothing either inside or outside the college/Institute/Society against the existing rules, Acts. I am fully aware that this may result into disciplinary action against me as per the Rules, Act and Laws.</li>
-                      <li>The Institute will deal strictly with students who organize, assist or lead in strikes or any way found guilty of serious breach of discipline in or outside the College campus.</li>
-                      <li>I fully understand that the Principal/Management of the college will have full right to expel me from College for my infringement of the rules and conduct and discipline as per the understanding given above or involvement in any illegal activities.</li>
-                      <li>I know that my ward will not be permitted to appear for his/her college/university examination if he/she fails to satisfy the college authorities on any of the following counts:
-                        <ul className="list-disc list-inside ml-6 mt-1">
-                          <li>At least 75% attendance at lectures and practical</li>
-                          <li>Attendance and performance at the college examination/tutorials</li>
-                          <li>Good and disciplined behaviour in the college premises</li>
-                          <li>Obedience of the instruction of teachers, staff and other college authorities</li>
-                          <li>Payment of college fees as prescribed and on time</li>
-                        </ul>
-                      </li>
-                      <li>I have noted that it may not be possible for the college authorities to inform me about the progress of my ward from time to time. I shall therefore keep myself in touch with my ward and the teachers concerned about his/her attendance of lectures, practical and tutorials.</li>
-                      <li>I am aware that in any case my ward desires to leave the college for any reason, I shall inform the college authorities in writing so as to enable him/her to cancel the admission. (only within 15 days)</li>
-                      <li>I hold myself responsible for full payment of the fees at the time of the admission. In case any dues are not cleared within the stipulated time declared/notified by the head of the institution, the college can take the necessary action against me.</li>
-                      <li>I am aware that use of mobile phones is prohibited wherever academic activity is going on (Classroom, Laboratories and Library) & shall abide by the same.</li>
-                      <li>The student should carry identity card regularly and it should be produced when demanded by the authority of the college or institute.</li>
-                      <li><strong>About Fees Submission:</strong> (Uniform/Books/Exam Fees are not Included)
-                        <div className="ml-6 mt-2">
-                          <table className="w-full border border-gray-400 text-xs">
-                            <thead>
-                              <tr className="bg-gray-200">
-                                <th className="border border-gray-400 p-2 text-left">Submission Mode (Non-refundable)</th>
-                                <th className="border border-gray-400 p-2 text-left">Dates</th>
-                                <th className="border border-gray-400 p-2 text-left">Fees Amount</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td className="border border-gray-400 p-2">One Time</td>
-                                <td className="border border-gray-400 p-2">_______________</td>
-                                <td className="border border-gray-400 p-2">_______________</td>
-                              </tr>
-                              <tr>
-                                <td className="border border-gray-400 p-2">Two Instalments</td>
-                                <td className="border border-gray-400 p-2">_______________</td>
-                                <td className="border border-gray-400 p-2">_______________</td>
-                              </tr>
-                              <tr>
-                                <td className="border border-gray-400 p-2">Multi Instalments</td>
-                                <td className="border border-gray-400 p-2">_______________</td>
-                                <td className="border border-gray-400 p-2">_______________</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          <p className="mt-2 text-xs"><strong>Note:</strong> Admission will be finalized only after submission of all documents & full payment of fees.</p>
-                        </div>
-                      </li>
+                      <li>I hereby abide by all the Rules, Acts and Laws enforced by Government/College Principal/College Authorities of the Institute from time to time and I also hereby give an undertaking.</li>
+                      <li>The Institute will deal strictly with students who organize, assist or lead in strikes or any way found guilty of serious breach of discipline.</li>
+                      <li>I fully understand that the Principal/Management of the college will have full right to expel me from College for infringement of rules.</li>
+                      <li>I know that my ward will not be permitted to appear for examination if not meeting requirements.</li>
+                      <li>I have noted that it may not be possible for the college authorities to inform me about progress regularly.</li>
+                      <li>I am aware that if my ward desires to leave the college, I shall inform the college authorities in writing.</li>
+                      <li>I hold myself responsible for full payment of fees at the time of admission.</li>
+                      <li>I am aware that use of mobile phones is prohibited during academic activities.</li>
+                      <li>The student should carry identity card regularly.</li>
+                      <li><strong>About Fees Submission:</strong> (Uniform/Books/Exam Fees are not Included)</li>
                     </ol>
                   </div>
                   
@@ -978,21 +1050,13 @@ const JuniorAdmissionForm = () => {
                     </label>
                     {errors.declarationAccepted && <p className="text-red-600 text-sm mt-2">{errors.declarationAccepted.message}</p>}
                   </div>
-
-                  <div className="mt-6 pt-4 border-t-2 border-red-200">
-                    <p className="font-semibold text-gray-800 mb-3">Parent/Guardian Declaration:</p>
-                    <div className="text-sm text-gray-700 space-y-2">
-                      <p>1. The particulars furnished by my ward in this application form are correct to the best of my knowledge.</p>
-                      <p>2. I undertake and abide myself to pay on behalf of my ward such fees, charges etc. by due date which the college may declare from time to time. In the event of failure on my part and/or my ward the Principal of the College may take such action against my ward, as he may deem fit.</p>
-                    </div>
-                  </div>
                 </section>
 
                 {/* Submit Button */}
                 <div className="flex justify-center pt-6">
                   <button 
                     type="submit" 
-                    className="bg-gradient-to-r from-red-800 to-red-900 hover:from-red-900 hover:to-red-950 text-white text-lg px-12 py-5 rounded-full font-bold shadow-2xl flex items-center gap-3 transition-all transform hover:scale-105"
+                    className="bg-gradient-to-r from-red-800 to-red-900 hover:from-red-900 hover:to-red-950 text-white text-lg px-12 py-5 rounded-full font-bold shadow-2xl flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95"
                   >
                     <Save size={24} /> 
                     Generate Application PDF
@@ -1011,7 +1075,7 @@ const JuniorAdmissionForm = () => {
                   Application No: <span className="font-bold text-blue-900">{formData.appNo}</span>
                 </p>
                 <p className="text-gray-500 mb-10 max-w-2xl mx-auto">
-                  Your admission form for <strong>{formData.standard}</strong> has been generated successfully. Please download the PDF, print it, affix your photograph, and sign at the designated places before submission.
+                  Your admission form for <strong>{formData.standard} {formData.stream}</strong> has been generated successfully. Please download the PDF, print it, affix your photograph, and sign at the designated places.
                 </p>
                 
                 <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
@@ -1044,6 +1108,8 @@ const JuniorAdmissionForm = () => {
                   <ul className="text-left text-sm text-gray-700 space-y-2">
                     <li>✓ Download and print the application form</li>
                     <li>✓ Affix your recent passport-size photograph in the designated box</li>
+                    <li>✓ Sign at the designated places (Date and signature to be filled after printing)</li>
+                    
                     <li>✓ Sign at the designated places (Date and signature to be filled after printing)</li>
                     <li>✓ Parent/Guardian should also sign at the designated places</li>
                     <li>✓ Attach all required documents (originals + 2 photocopies)</li>
