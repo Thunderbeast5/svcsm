@@ -1,8 +1,8 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
-import logo from '../../assets/logo-name.png'; 
 
 // Import your logo if available
+import logo from '../../assets/logo-name.png'; 
 
 const styles = StyleSheet.create({
   page: { 
@@ -21,17 +21,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start'
   },
-  headerLeft: { 
-    width: '25%', 
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
   logoSection: { 
-    width: '50%', 
-    paddingHorizontal: 10
+    width: '70%', 
+    paddingRight: 10
   },
   instituteName: {
-    fontSize: 16,
+    fontSize: 12,
     fontFamily: 'Times-Bold',
     textAlign: 'center',
     marginBottom: 5
@@ -48,7 +43,7 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   headerRight: { 
-    width: '25%', 
+    width: '30%', 
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
@@ -340,30 +335,16 @@ const JuniorAdmissionPDF = ({ data }) => {
 
   return (
     <Document>
+      {/* PAGE 1 - ADMISSION FORM */}
       <Page size="A4" style={styles.page}>
         
         {/* Header */}
         <View style={styles.header}>
-          {/* Photo on Left */}
-          <View style={styles.headerLeft}>
-            <View style={styles.photoBox}>
-              {data.photoData ? (
-                <Image src={data.photoData} style={styles.photoImage} />
-              ) : (
-                <Text style={styles.photoText}>Self Attested Photo</Text>
-              )}
-            </View>
-          </View>
-          
-          {/* Logo in Middle */}
           <View style={styles.logoSection}>
             {/* If you have logo, uncomment this: */}
             <Image src={logo} style={styles.logoImage} />
             <Text style={styles.instituteName}>
-              Swami Vivekananda Junior inst. of Arts, commerce & Science,
-            </Text>
-            <Text style={styles.instituteName}>
-              Pimpalgaon Baswant.
+              Swami Vivekananda Junior Inst. of Arts, Commerce & Science, Pimpalgaon Baswant.
             </Text>
             <Text style={styles.instituteSubtitle}>
               Admission Form: 2026-27
@@ -373,15 +354,25 @@ const JuniorAdmissionPDF = ({ data }) => {
             </Text>
           </View>
           
-          {/* Application Number on Right */}
           <View style={styles.headerRight}>
+            <View style={styles.photoBox}>
+              {data.photoData ? (
+                <Image src={data.photoData} style={styles.photoImage} />
+              ) : (
+                <Text style={styles.photoText}>Self Attested Photo</Text>
+              )}
+            </View>
             <View style={styles.appNoText}>
               <Text>Application Form No.</Text>
               <Text style={{ marginTop: 2 }}>{data.appNo || '________'}</Text>
             </View>
-            <Text style={{ fontSize: 11, marginTop: 8, fontFamily: 'Times-Bold' }}>Form Fees: Rs. 100/-</Text>
           </View>
         </View>
+
+        <Text style={styles.formTitle}>
+          Swami Vivekananda Institute of Arts, Commerce & Science, Pimpalgaon Baswant, Nashik
+        </Text>
+        <Text style={styles.formFees}>Form Fees: Rs. 100/-</Text>
 
         {/* Course Selection */}
         <View style={styles.courseRow}>
@@ -412,15 +403,15 @@ const JuniorAdmissionPDF = ({ data }) => {
 
           <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginLeft: 12, marginRight: 5 }}>Stream:</Text>
           <View style={styles.courseItem}>
-            <View style={data.stream === 'Arts' ? styles.checkedBox : styles.checkbox} />
+            <View style={data.streamArts ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>Arts</Text>
           </View>
           <View style={styles.courseItem}>
-            <View style={data.stream === 'Commerce' ? styles.checkedBox : styles.checkbox} />
+            <View style={data.streamCommerce ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>Commerce</Text>
           </View>
           <View style={styles.courseItem}>
-            <View style={data.stream === 'Science' ? styles.checkedBox : styles.checkbox} />
+            <View style={data.streamScience ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>Science</Text>
           </View>
         </View>
@@ -473,24 +464,12 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
 
         <View style={styles.row}>
-          <View style={{ ...styles.col, marginRight: 10 }}>
-            <Text style={styles.label}>(B) Occupation & Designation:</Text>
-            <Text style={styles.value}>{data.occupation || ''}</Text>
-          </View>
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.label}>(C) Office Address:</Text>
-          <Text style={styles.value}>{data.officeAddress || ''}</Text>
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.label}>(D) Full Name of Guardian (For non-localities):</Text>
+          <Text style={styles.label}>(B) Full Name of Guardian (For non-localities):</Text>
           <Text style={styles.value}>{data.guardianName || ''}</Text>
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.label}>(E) Relationship of Guardian with the Candidate:</Text>
+          <Text style={styles.label}>(C) Relationship of Guardian with the Candidate:</Text>
           <Text style={styles.value}>{data.guardianRelation || ''}</Text>
         </View>
 
@@ -503,25 +482,37 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
 
         <View style={styles.row}>
+          <View style={{ ...styles.col, marginRight: 10 }}>
+            <Text style={styles.label}>(A) Occupation & Designation:</Text>
+            <Text style={styles.value}>{data.occupation || ''}</Text>
+          </View>
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.label}>(B) Office Address:</Text>
+          <Text style={styles.value}>{data.officeAddress || ''}</Text>
+        </View>
+
+        <View style={styles.row}>
           <View style={{ width: '48%', marginRight: 15 }}>
-            <Text style={{ ...styles.label, marginBottom: 5 }}>(A) Parent/Guardian's Mobile No.:</Text>
+            <Text style={{ ...styles.label, marginBottom: 5 }}>(C) Parent/Guardian's Mobile No.:</Text>
             {renderDigitBoxes('parentMobile', 10)}
           </View>
           <View style={{ width: '48%' }}>
-            <Text style={{ ...styles.label, marginBottom: 5 }}>(B) Candidate Mobile No.:</Text>
+            <Text style={{ ...styles.label, marginBottom: 5 }}>(D) Candidate Mobile No.:</Text>
             {renderDigitBoxes('candidateMobile', 10)}
           </View>
         </View>
 
         <View style={styles.row}>
           <View style={{ ...styles.col, marginRight: 10 }}>
-            <Text style={styles.label}>(C) Telephone No. (With STD Code):</Text>
+            <Text style={styles.label}>(E) Telephone No. (With STD Code):</Text>
             <Text style={styles.value}>{data.telephone || ''}</Text>
           </View>
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.label}>(D) E-Mail ID:</Text>
+          <Text style={styles.label}>(F) E-Mail ID:</Text>
           <Text style={styles.value}>{data.email || ''}</Text>
         </View>
 
@@ -690,195 +681,177 @@ const JuniorAdmissionPDF = ({ data }) => {
 
         <View style={{ marginTop: 10, marginBottom: 8 }}>
           <Text style={{ fontSize: 10, textAlign: 'justify', lineHeight: 1.5 }}>
-            I hereby agree that, I have attached copies of only mentioned documents to my application and understand that my application will be approved on the basis of above documents supplied by me at the time of submitting this application.
+            I hereby agree that, I have attached copies of only mentioned documents to my application and understand that my application will be approved on the basis of above documents supplied by me[...]
           </Text>
-          <View style={{ flexDirection: 'row', marginTop: 6, justifyContent: 'space-between' }}>
-            <Text style={{ fontSize: 10 }}>Date: ____ / ____ / ____</Text>
-            <Text style={{ fontSize: 10 }}>Place: _______________</Text>
+        </View>
+
+        {/* Signature Section */}
+        <View style={styles.signatureRow}>
+          <View style={styles.signBox}>
+            <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
+            <Text style={{ fontSize: 10, marginBottom: 3 }}>Place: _______________</Text>
+          </View>
+          <View style={styles.signBox}>
+            <Text style={styles.signLine}>Signature of Applicant</Text>
+          </View>
+        </View>
+      </Page>
+
+      {/* PAGE 2 - DECLARATION */}
+      <Page size="A4" style={styles.page}>
+        <Text style={styles.declTitle}>
+          DECLARATION TO BE SIGNED BY THE CANDIDATE & PARENT/GUARDIAN AT THE TIME OF ADMISSION TO Institute
+        </Text>
+
+        <View style={{ marginBottom: 8 }}>
+          <Text style={styles.declPoint}>
+            1. I have read the Rules of Admission for the year 2026-27 and I have consulted my father/guardian and after understanding these rules, I have filled in the application form.
+          </Text>
+          <Text style={styles.declPoint}>
+            2. The information given by me in this application is true to the best of my knowledge.
+          </Text>
+          <Text style={styles.declPoint}>
+            3. I have not been debarred from appearing at any examination held by any Government or Statutory examination authority in India.
+          </Text>
+          <Text style={styles.declPoint}>
+            4. I fully understand that I will be offered admission strictly on the basis of my merit and availability of seat.
+          </Text>
+          <Text style={styles.declPoint}>
+            5. I hereby abide by all the Rules, Acts and Laws enforced by Government/College Principal/College Authorities of the Institute from time to time and I also hereby give an undertaking th[...]
+          </Text>
+          <Text style={styles.declPoint}>
+            6. The Institute will deal strictly with students who organize, assist or lead in strikes or any way found guilty of serious breach of discipline in or outside the College campus.
+          </Text>
+          <Text style={styles.declPoint}>
+            7. I fully understand that the Principal/Management of the college will have full right to expel me from College for my infringement of the rules and conduct and discipline as per the un[...]
+          </Text>
+          <Text style={styles.declPoint}>
+            8. I know that my ward will not be permitted to appear for his/her college/university examination if he/she fails to satisfy the college authorities on any of the following counts:
+          </Text>
+          <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
+            • At least 75% attendance at lectures and practical
+          </Text>
+          <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
+            • Attendance and performance at the college examination/tutorials
+          </Text>
+          <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
+            • Good and disciplined behaviour in the college premises
+          </Text>
+          <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
+            • Obedience of the instruction of teachers, staff and other college authorities
+          </Text>
+          <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
+            • Payment of college fees as prescribed and on time
+          </Text>
+          <Text style={styles.declPoint}>
+            9. I have noted that it may not be possible for the college authorities to inform me about the progress of my ward from time to time. I shall therefore keep myself in touch with my ward [...]
+          </Text>
+          <Text style={styles.declPoint}>
+            10. I am aware that in any case my ward desires to leave the college for any reason, I shall inform the college authorities in writing so as to enable him/her to cancel the admission. (o[...]
+          </Text>
+          <Text style={styles.declPoint}>
+            11. I hold myself responsible for full payment of the fees at the time of the admission. In case any dues are not cleared within the stipulated time declared/notified by the head of the [...]
+          </Text>
+          <Text style={styles.declPoint}>
+            12. I am aware that use of mobile phones is prohibited wherever academic activity is going on (Classroom, Laboratories and Library) & shall abide by the same.
+          </Text>
+          <Text style={styles.declPoint}>
+            13. The student should carry identity card regularly and it should be produced when demanded by the authority of the college or institute.
+          </Text>
+          <Text style={styles.declPoint}>
+            14. About Fees Submission: (Uniform/Books/Exam Fees are not Included)
+          </Text>
+        </View>
+
+        {/* Fee Distribution Table */}
+        <View style={{ marginTop: 10, borderWidth: 1, borderColor: '#999', padding: 8 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
+            <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Submission Mode (Non-refundable)</Text>
+            <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Dates</Text>
+            <Text style={{ fontSize: 10, fontFamily: 'Times-Bold' }}>Fees Amount</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 }}>
+            <Text style={{ fontSize: 9 }}>One Time</Text>
+            <Text style={{ fontSize: 9 }}>_________________</Text>
+            <Text style={{ fontSize: 9 }}>_________________</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 }}>
+            <Text style={{ fontSize: 9 }}>Two Instalments</Text>
+            <Text style={{ fontSize: 9 }}>_________________</Text>
+            <Text style={{ fontSize: 9 }}>_________________</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 9 }}>Multi Instalments</Text>
+            <Text style={{ fontSize: 9 }}>_________________</Text>
+            <Text style={{ fontSize: 9 }}>_________________</Text>
           </View>
         </View>
 
-        {/* PAGE BREAK FOR DECLARATION - PAGE 3 */}
-        <View break style={{ marginTop: 20 }}>
-          <Text style={styles.declTitle}>
-            DECLARATION TO BE SIGNED BY THE CANDIDATE & PARENT/GUARDIAN AT THE TIME OF ADMISSION TO Institute
-          </Text>
+        <Text style={{ fontSize: 10, marginTop: 8, fontFamily: 'Times-Bold', textAlign: 'center' }}>
+          Note: Admission will be finalized only after submission of all documents & full payment of fees.
+        </Text>
 
-          <View style={{ marginBottom: 8 }}>
-            <Text style={styles.declPoint}>
-              1. I have read the Rules of Admission for the year 2026-27 and I have consulted my father/guardian and after understanding these rules, I have filled in the application form.
-            </Text>
-            <Text style={styles.declPoint}>
-              2. The information given by me in this application is true to the best of my knowledge.
-            </Text>
-            <Text style={styles.declPoint}>
-              3. I have not been debarred from appearing at any examination held by any Government or Statutory examination authority in India.
-            </Text>
-            <Text style={styles.declPoint}>
-              4. I fully understand that I will be offered admission strictly on the basis of my merit and availability of seat.
-            </Text>
-            <Text style={styles.declPoint}>
-              5. I hereby abide by all the Rules, Acts and Laws enforced by Government/College Principal/College Authorities of the Institute from time to time and I also hereby give an undertaking that as long as I am student of the College, I will do nothing either inside or outside the college/Institute/Society against the existing rules, Acts. I am fully aware that this may result into disciplinary action against me as per the Rules, Act and Laws.
-            </Text>
-            <Text style={styles.declPoint}>
-              6. The Institute will deal strictly with students who organize, assist or lead in strikes or any way found guilty of serious breach of discipline in or outside the College campus.
-            </Text>
-            <Text style={styles.declPoint}>
-              7. I fully understand that the Principal/Management of the college will have full right to expel me from College for my infringement of the rules and conduct and discipline as per the understanding given above or involvement in any illegal activities.
-            </Text>
-            <Text style={styles.declPoint}>
-              8. I know that my ward will not be permitted to appear for his/her college/university examination if he/she fails to satisfy the college authorities on any of the following counts:
-            </Text>
-            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
-              • At least 75% attendance at lectures and practical
-            </Text>
-            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
-              • Attendance and performance at the college examination/tutorials
-            </Text>
-            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
-              • Good and disciplined behaviour in the college premises
-            </Text>
-            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
-              • Obedience of the instruction of teachers, staff and other college authorities
-            </Text>
-            <Text style={{ fontSize: 9, paddingLeft: 20, marginBottom: 3 }}>
-              • Payment of college fees as prescribed and on time
-            </Text>
-            <Text style={styles.declPoint}>
-              9. I have noted that it may not be possible for the college authorities to inform me about the progress of my ward from time to time. I shall therefore keep myself in touch with my ward and the teachers concerned about his/her attendance of lectures, practical and tutorials.
-            </Text>
-            <Text style={styles.declPoint}>
-              10. I am aware that in any case my ward desires to leave the college for any reason, I shall inform the college authorities in writing so as to enable him/her to cancel the admission. (only within 15 days)
-            </Text>
-            <Text style={styles.declPoint}>
-              11. I hold myself responsible for full payment of the fees at the time of the admission. In case any dues are not cleared within the stipulated time declared/notified by the head of the institution, the college can take the necessary action against me.
-            </Text>
-            <Text style={styles.declPoint}>
-              12. I am aware that use of mobile phones is prohibited wherever academic activity is going on (Classroom, Laboratories and Library) & shall abide by the same.
-            </Text>
-            <Text style={styles.declPoint}>
-              13. The student should carry identity card regularly and it should be produced when demanded by the authority of the college or institute.
-            </Text>
-            <Text style={styles.declPoint}>
-              14. About Fees Submission: (Uniform/Books/Exam Fees are not Included)
-            </Text>
+        {/* Candidate & Parent Signatures */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+          <View style={{ width: '48%' }}>
+            <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
+            <Text style={{ fontSize: 10, marginBottom: 3 }}>Place: _______________</Text>
+            <Text style={styles.signLine}>(Signature of Parent/Guardian)</Text>
           </View>
-
-          {/* Submission Mode Table */}
-          <View style={styles.table}>
-            <View style={styles.tableRow}>
-              <View style={styles.tableColHeader}>
-                <Text>Submission Mode (Non-refundable)</Text>
-              </View>
-              <View style={styles.tableColHeader}>
-                <Text>Dates</Text>
-              </View>
-              <View style={{ ...styles.tableColHeader, borderRightWidth: 0 }}>
-                <Text>Fees Amount</Text>
-              </View>
-            </View>
-            <View style={styles.tableRow}>
-              <View style={styles.tableCol}>
-                <Text>One Time</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text>_______________</Text>
-              </View>
-              <View style={{ ...styles.tableColLast, borderRightWidth: 0 }}>
-                <Text>_______________</Text>
-              </View>
-            </View>
-            <View style={styles.tableRow}>
-              <View style={styles.tableCol}>
-                <Text>Two Instalments</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text>_______________</Text>
-              </View>
-              <View style={{ ...styles.tableColLast, borderRightWidth: 0 }}>
-                <Text>_______________</Text>
-              </View>
-            </View>
-            <View style={{ ...styles.tableRow, borderBottomWidth: 0 }}>
-              <View style={styles.tableCol}>
-                <Text>Multi Instalments</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text>_______________</Text>
-              </View>
-              <View style={{ ...styles.tableColLast, borderRightWidth: 0 }}>
-                <Text>_______________</Text>
-              </View>
-            </View>
+          <View style={{ width: '48%', alignItems: 'flex-end' }}>
+            <Text style={styles.signLine}>(Signature of Candidate)</Text>
           </View>
+        </View>
 
-          <Text style={{ fontSize: 10, marginTop: 8, fontFamily: 'Times-Bold', textAlign: 'center' }}>
-            Note: Admission will be finalized only after submission of all documents & full payment of fees.
+        {/* Parent Declaration */}
+        <View style={{ marginTop: 20, borderTopWidth: 1, paddingTop: 12 }}>
+          <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginBottom: 6 }}>I hereby declare that:</Text>
+          <Text style={{ fontSize: 10, marginBottom: 4, lineHeight: 1.5 }}>
+            1. The particulars furnished by my ward in this application form are correct to the best of my knowledge.
           </Text>
-
-          {/* Candidate & Parent Signatures */}
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 25 }}>
-            <View style={{ width: '48%' }}>
+          <Text style={{ fontSize: 10, marginBottom: 4, lineHeight: 1.5 }}>
+            2. I undertake and abide myself to pay on behalf of my ward such fees, charges etc. by due date which the college may declare from time to time. In the event of failure on my part and/or[...]
+          </Text>
+          
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
+            <View>
               <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
-              <Text style={{ fontSize: 10, marginBottom: 3 }}>Place: _______________</Text>
               <Text style={styles.signLine}>(Signature of Parent/Guardian)</Text>
             </View>
-            <View style={{ width: '48%', alignItems: 'flex-end' }}>
-              <Text style={{ ...styles.signLine, marginTop: 20 }}>(Signature of Candidate)</Text>
-            </View>
           </View>
+        </View>
 
-          {/* Parent Declaration */}
-          <View style={{ marginTop: 25, borderTopWidth: 1, paddingTop: 12 }}>
-            <Text style={{ fontSize: 11, fontFamily: 'Times-Bold', marginBottom: 6 }}>I hereby declare that:</Text>
-            <Text style={{ fontSize: 10, marginBottom: 4, lineHeight: 1.5 }}>
-              1. The particulars furnished by my ward in this application form are correct to the best of my knowledge.
-            </Text>
-            <Text style={{ fontSize: 10, marginBottom: 4, lineHeight: 1.5 }}>
-              2. I undertake and abide myself to pay on behalf of my ward such fees, charges etc. by due date which the college may declare from time to time. In the event of failure on my part and/or my ward the Principal of the College may take such action against my ward, as he may deem fit.
-            </Text>
-            
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 25 }}>
-              <View>
-                <Text style={{ fontSize: 10, marginBottom: 3 }}>Date: ____ / ____ / ____</Text>
-                <Text style={styles.signLine}>(Signature of Parent/Guardian)</Text>
-              </View>
+        {/* Office Use Section */}
+        <View style={styles.officeUse}>
+          <Text style={styles.officeTitle}>For office use only</Text>
+          <View style={{ height: 30, marginTop: 6 }}></View>
+          <View style={{ borderTopWidth: 1, borderTopColor: '#999', paddingTop: 8 }}>
+            <View style={styles.officeRow}>
+              <Text style={styles.officeField}>Date: _____________</Text>
+              <Text style={styles.officeField}>Particular: _____________</Text>
+              <Text style={styles.officeField}>Remark: _____________</Text>
             </View>
-          </View>
-
-          {/* Office Use Section */}
-          <View style={styles.officeUse}>
-            <Text style={styles.officeTitle}>For office use only</Text>
-            <View style={{ height: 35, marginTop: 6 }}></View>
-            <View style={{ borderTopWidth: 1, borderTopColor: '#999', paddingTop: 8 }}>
-              <View style={styles.officeRow}>
-                <Text style={styles.officeField}>Date: _____________</Text>
-                <Text style={styles.officeField}>Particular: _____________</Text>
-                <Text style={styles.officeField}>Remark: _____________</Text>
-              </View>
-              <Text style={{ ...styles.officeField, marginTop: 18, textAlign: 'right' }}>
-                Name, Designation & Signature with Stamp
-              </Text>
-            </View>
-          </View>
-
-          {/* Footer Contact Info */}
-          <View style={{ marginTop: 18, padding: 10, backgroundColor: '#f5f5f5', borderWidth: 1, borderColor: '#ddd' }}>
-            <Text style={{ fontSize: 10, fontFamily: 'Times-Bold', textAlign: 'center', marginBottom: 3 }}>
-              Swami Vivekananda Institute of Arts, Commerce, Science & Management
-            </Text>
-            <Text style={{ fontSize: 9, textAlign: 'center', marginBottom: 2 }}>
-              Near Post Office (SBI Bank), Chatrapati Shivaji Maharaj Nagar,
-            </Text>
-            <Text style={{ fontSize: 9, textAlign: 'center', marginBottom: 2 }}>
-              Pimpalgaon Baswant. Niphad, Nashik. 422 209.
-            </Text>
-            <Text style={{ fontSize: 9, textAlign: 'center' }}>
-              ☎ 82086 65658 | ✉ swamivivekanandainstitute2021@gmail.com
+            <Text style={{ ...styles.officeField, marginTop: 15, textAlign: 'right' }}>
+              Name, Designation & Signature with Stamp
             </Text>
           </View>
         </View>
 
+        {/* Footer Contact Info */}
+        <View style={{ marginTop: 15, padding: 10, backgroundColor: '#f5f5f5', borderWidth: 1, borderColor: '#ddd' }}>
+          <Text style={{ fontSize: 10, fontFamily: 'Times-Bold', textAlign: 'center', marginBottom: 3 }}>
+            Swami Vivekananda Institute of Arts, Commerce, Science & Management
+          </Text>
+          <Text style={{ fontSize: 9, textAlign: 'center', marginBottom: 2 }}>
+            Near Post Office (SBI Bank), Chatrapati Shivaji Maharaj Nagar,
+          </Text>
+          <Text style={{ fontSize: 9, textAlign: 'center', marginBottom: 2 }}>
+            Pimpalgaon Baswant. Niphad, Nashik. 422 209.
+          </Text>
+          <Text style={{ fontSize: 9, textAlign: 'center' }}>
+            ☎ 82086 65658 | ✉ swamivivekanandainstitute2021@gmail.com
+          </Text>
+        </View>
       </Page>
     </Document>
   );
