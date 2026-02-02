@@ -25,6 +25,7 @@ import AdmissionProcessPage from "./pages/Admission/AdmissionProcessPage";
 import FeeStructure from "./pages/Admission/FeeStructure";
 import Scholarships from "./pages/Admission/Scholarships";
 import JuniorAdmissionForm from "./pages/Admission/JuniorAdmissionForm";
+import SeniorAdmissionForm from "./pages/Admission/SeniorAdmissionForm";
 import AdmissionForm from "./pages/Admission/SeniorAdmissionForm";
 
 //Campus Life Pages
@@ -97,8 +98,9 @@ const Layout = () => {
         <Route path="/admissions/process" element={<AdmissionProcessPage />} />
         <Route path="/admissions/fees" element={<FeeStructure />} />
         <Route path="/admissions/scholarships" element={<Scholarships />} />  
-        <Route path="/admissions/form" element={<JuniorAdmissionForm />} />
-        <Route path="/admissions/senior-form" element={<AdmissionForm />} />
+        <Route path="/admissions/junior-form" element={<JuniorAdmissionForm />} />
+        <Route path="/admissions/senior-form" element={<SeniorAdmissionForm />} />
+        {/* <Route path="/admissions/senior-form" element={<AdmissionForm />} /> */}
         <Route path="/admissions/test" element={<TestAdmissionForm />} />
         <Route path="/admissions/junior-admission-pdf" element={<JuniorAdmissionPDF />} />
         

@@ -225,14 +225,14 @@ const JuniorAdmissionForm = () => {
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}
-        <div className="text-center mb-6">
+        {/* <div className="text-center mb-6">
           <h1 className="text-4xl font-bold mb-2" style={{ color: '#002147' }}>
             Swami Vivekananda Junior Institute
           </h1>
           <p className="text-lg text-gray-700">Arts, Commerce & Science, Pimpalgaon Baswant</p>
           <p className="text-md text-gray-600">Admission Form: 2026-27</p>
           <p className="text-sm font-semibold mt-2" style={{ color: '#800020' }}>Form Fees: Rs. 100/-</p>
-        </div>
+        </div> */}
 
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden" style={{ borderColor: '#002147', borderWidth: '3px' }}>
           
@@ -1105,27 +1105,28 @@ const JuniorAdmissionForm = () => {
                 </div>
 
               </form>
-            ) : (
+                        ) : (
               // Success View
               <div className="text-center py-16">
-                <div className="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg" style={{ backgroundColor: '#e8f5e9', color: '#004d00' }}>
+                <div className="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg" style={{ backgroundColor: '#f0f4f8', color: '#800020' }}>
                   <CheckCircle size={64} />
                 </div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-3">Application Generated Successfully!</h2>
-                <p className="text-lg text-gray-600 mb-4">
-                  Application No: <span className="font-bold" style={{ color: '#002147' }}>{formData.appNo}</span>
+                <h2 className="text-4xl font-bold mb-3" style={{ color: '#002147' }}>Application Generated Successfully!</h2>
+                <p className="text-lg mb-4" style={{ color: '#002147' }}>
+                  Application No: <span className="font-bold" style={{ color: '#B8860B' }}>{formData.appNo}</span>
                 </p>
-                <p className="text-gray-500 mb-10 max-w-2xl mx-auto">
+                <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
                   Your admission form for <strong>{formData.standard} {formData.stream}</strong> has been generated successfully. Please download the PDF, print it, affix your photograph, and sign at designated places.
                 </p>
-                
-                
                 
                 <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
                   <PDFDownloadLink 
                     document={<JuniorAdmissionPDF data={formData} />} 
                     fileName={`SV_Admission_${formData.surname}_${formData.fathersName}_${formData.appNo}.pdf`}
-                    className="flex items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-10 py-5 rounded-xl font-bold shadow-2xl transition-all transform hover:scale-105"
+                    className="flex items-center gap-3 text-white px-10 py-5 rounded-xl font-bold shadow-2xl transition-all transform hover:scale-105"
+                    style={{ backgroundColor: '#800020' }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = '#600015'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = '#800020'}
                   >
                     {({ loading }) => (
                       loading ? 'Generating PDF...' : (
@@ -1139,20 +1140,25 @@ const JuniorAdmissionForm = () => {
 
                   <button 
                     onClick={resetForm} 
-                    className="flex items-center gap-3 text-gray-600 hover:text-gray-900 px-8 py-5 font-semibold border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-all"
+                    className="flex items-center gap-3 px-8 py-5 font-semibold border-2 rounded-xl transition-all"
+                    style={{ borderColor: '#B8860B', color: '#002147' }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = 'rgba(184, 134, 11, 0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = 'transparent';
+                    }}
                   >
                     <RefreshCcw size={20} /> 
                     Fill Another Form
                   </button>
                 </div>
 
-                <div className="mt-12 p-6 bg-blue-50 rounded-xl max-w-2xl mx-auto border-2 border-blue-200">
-                  <h4 className="font-bold text-blue-900 mb-3">📋 Next Steps:</h4>
+                <div className="mt-12 p-6 rounded-xl max-w-2xl mx-auto border-2" style={{ backgroundColor: '#f0f4f8', borderColor: '#002147' }}>
+                  <h4 className="font-bold mb-3" style={{ color: '#002147' }}>📋 Next Steps:</h4>
                   <ul className="text-left text-sm text-gray-700 space-y-2">
                     <li>✓ Download and print the application form</li>
                     <li>✓ Affix your recent passport-size photograph in the designated box</li>
-                    <li>✓ Sign at the designated places (Date and signature to be filled after printing)</li>
-                    
                     <li>✓ Sign at the designated places (Date and signature to be filled after printing)</li>
                     <li>✓ Parent/Guardian should also sign at the designated places</li>
                     <li>✓ Attach all required documents (originals + 2 photocopies)</li>
@@ -1165,14 +1171,14 @@ const JuniorAdmissionForm = () => {
         </div>
 
         {/* Footer Info */}
-        <div className="mt-8 text-center text-sm text-gray-600 bg-white p-6 rounded-xl shadow">
-          <p className="font-semibold text-gray-800 mb-2">Swami Vivekananda Institute of Arts, Commerce, Science & Management</p>
+        {/* <div className="mt-8 text-center text-sm text-gray-600 bg-white p-6 rounded-xl shadow" style={{ borderTop: '3px solid #800020' }}>
+          <p className="font-semibold mb-2" style={{ color: '#002147' }}>Swami Vivekananda Institute of Arts, Commerce, Science & Management</p>
           <p>Near Post Office (SBI Bank), Chatrapati Shivaji Maharaj Nagar, Pimpalgaon Baswant, Niphad, Nashik - 422 209</p>
           <p className="mt-2">
             📞 82086 65658 | 
             ✉️ swamivivekanandainstitute2021@gmail.com
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
