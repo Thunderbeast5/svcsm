@@ -268,49 +268,54 @@ const styles = StyleSheet.create({
 
   // Fee Tables
   feeTableContainer: {
-    borderWidth: 1,
-    borderColor: '#B8860B',
-    marginTop: 10,
-    marginBottom: 15
-  },
-  feeTableRow: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#B8860B'
-  },
-  feeTableHeaderCell: {
-    flex: 1,
-    padding: 6,
-    backgroundColor: '#f0e6d2',
-    fontFamily: 'Times-Bold',
-    fontSize: 10,
-    textAlign: 'center',
-    borderRightWidth: 1,
-    borderRightColor: '#B8860B',
-    color: '#002147'
-  },
-  feeTableHeaderCellLast: {
-    flex: 1,
-    padding: 6,
-    backgroundColor: '#f0e6d2',
-    fontFamily: 'Times-Bold',
-    fontSize: 10,
-    textAlign: 'center',
-    color: '#002147'
-  },
-  feeTableDataCell: {
-    flex: 1,
-    padding: 6,
-    fontSize: 10,
-    borderRightWidth: 1,
-    borderRightColor: '#B8860B'
-  },
-  feeTableDataCellLast: {
-    flex: 1,
-    padding: 6,
-    fontSize: 10,
-    textAlign: 'center'
-  },
+  borderWidth: 1,
+  borderColor: '#B0B0B0',
+  backgroundColor: '#F2F2F2', // 👈 grey box
+  marginTop: 10,
+  marginBottom: 15,
+  borderRadius: 4
+},
+feeTableRow: {
+  flexDirection: 'row',
+  borderBottomWidth: 1,
+  borderBottomColor: '#C0C0C0'
+},
+feeTableHeaderCell: {
+  flex: 1,
+  padding: 6,
+  backgroundColor: '#D9D9D9', // darker grey header
+  fontFamily: 'Times-Bold',
+  fontSize: 10,
+  textAlign: 'center',
+  borderRightWidth: 1,
+  borderRightColor: '#B0B0B0',
+  color: '#000'
+},
+feeTableHeaderCellLast: {
+  flex: 1,
+  padding: 6,
+  backgroundColor: '#D9D9D9',
+  fontFamily: 'Times-Bold',
+  fontSize: 10,
+  textAlign: 'center',
+  color: '#000'
+},
+feeTableDataCell: {
+  flex: 1,
+  padding: 6,
+  fontSize: 10,
+  borderRightWidth: 1,
+  borderRightColor: '#B0B0B0',
+  backgroundColor: '#F2F2F2'
+},
+feeTableDataCellLast: {
+  flex: 1,
+  padding: 6,
+  fontSize: 10,
+  textAlign: 'center',
+  backgroundColor: '#F2F2F2'
+},
+
 
   // Declaration
   declTitle: {
@@ -761,13 +766,31 @@ const SeniorAdmissionPDF = ({ data }) => {
 
               {/* Total Fees */}
               <View style={styles.feeTableRow}>
-                <View style={{ ...styles.feeTableDataCell, flex: 2, backgroundColor: '#e6d5a8', fontFamily: 'Times-Bold' }}>
-                  <Text style={{ fontFamily: 'Times-Bold', color: '#002147' }}>TOTAL FEES</Text>
-                </View>
-                <View style={{ ...styles.feeTableDataCellLast, backgroundColor: '#e6d5a8' }}>
-                  <Text style={{ fontFamily: 'Times-Bold', color: '#800020' }}>Rs. {currentFees.total}</Text>
-                </View>
-              </View>
+  <View
+    style={{
+      ...styles.feeTableDataCell,
+      flex: 2,
+      backgroundColor: '#D9D9D9', // 👈 grey
+      fontFamily: 'Times-Bold'
+    }}
+  >
+    <Text style={{ fontFamily: 'Times-Bold', color: '#002147' }}>
+      TOTAL FEES
+    </Text>
+  </View>
+
+  <View
+    style={{
+      ...styles.feeTableDataCellLast,
+      backgroundColor: '#D9D9D9' // 👈 same grey
+    }}
+  >
+    <Text style={{ fontFamily: 'Times-Bold', color: '#800020' }}>
+      Rs. {currentFees.total}
+    </Text>
+  </View>
+</View>
+
             </View>
 
             {/* Payment Mode Table */}
