@@ -11,11 +11,9 @@ const JuniorAdmissionForm = () => {
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
 
-  // Watch standard and stream to conditionally show fields
   const selectedStandard = watch("standard");
   const selectedStream = watch("stream");
 
-  // Fee structure for different courses
   const feeStructure = {
     '11thCom': {
       name: '11th Commerce',
@@ -63,7 +61,6 @@ const JuniorAdmissionForm = () => {
     }
   };
 
-  // Get current selected course fees
   const getSelectedCourseFees = () => {
     if (selectedStandard && selectedStream) {
       const courseKey = `${selectedStandard}${selectedStream === 'Science' ? 'Sci' : 'Com'}`;
@@ -75,15 +72,12 @@ const JuniorAdmissionForm = () => {
   const currentCourseFees = getSelectedCourseFees();
 
   const onSubmit = (data) => {
-    // Generate Application Number
     data.appNo = `SV-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
     
-    // Add photo if uploaded
     if (photoPreview) {
       data.photoData = photoPreview;
     }
 
-    // Add selected stream name for proper data handling
     if (selectedStream === 'Science') {
       data.streamScience = true;
       data.streamCommerce = false;
@@ -117,7 +111,6 @@ const JuniorAdmissionForm = () => {
   };
 
   const quickFillForm = () => {
-    // Personal Information
     setValue("surname", "Sharma");
     setValue("fathersName", "Rajesh");
     setValue("mothersName", "Priya");
@@ -131,7 +124,6 @@ const JuniorAdmissionForm = () => {
     setValue("motherTongue", "Marathi");
     setValue("nationality", "Indian");
     
-    // Date of Birth
     for (let i = 0; i < 2; i++) setValue(`dobDay${i}`, i === 0 ? "1" : "5");
     for (let i = 0; i < 2; i++) setValue(`dobMonth${i}`, i === 0 ? "0" : "6");
     for (let i = 0; i < 4; i++) {
@@ -139,21 +131,17 @@ const JuniorAdmissionForm = () => {
       setValue(`dobYear${i}`, year[i]);
     }
     
-    // Age
     for (let i = 0; i < 2; i++) setValue(`ageYears${i}`, i === 0 ? "1" : "7");
     for (let i = 0; i < 2; i++) setValue(`ageMonths${i}`, i === 0 ? "0" : "6");
     for (let i = 0; i < 2; i++) setValue(`ageDays${i}`, i === 0 ? "1" : "5");
     
-    // Blood Group
     setValue("bloodGroup", "O+");
     
-    // Aadhar Number
     for (let i = 0; i < 12; i++) {
       const aadhar = "123456789012";
       setValue(`aadhar${i}`, aadhar[i]);
     }
     
-    // Mobile Numbers
     for (let i = 0; i < 10; i++) {
       const mobile = "9876543210";
       setValue(`parentMobile${i}`, mobile[i]);
@@ -161,16 +149,13 @@ const JuniorAdmissionForm = () => {
       setValue(`candidateMobile${i}`, altMobile[i]);
     }
     
-    // Address
     setValue("permanentAddress", "123, Shivaji Nagar\nNear Main Market\nPimpalgaon Baswant, Nashik - 422209");
     setValue("correspondenceAddress", "123, Shivaji Nagar\nNear Main Market\nPimpalgaon Baswant, Nashik - 422209");
     
-    // Course Selection
     setValue("standard", "11th");
     setValue("stream", "Commerce");
     setValue("boardStateBoard", true);
     
-    // Previous Education
     setValue("sscStream", "General");
     setValue("sscYear", "2024");
     setValue("sscMarksObtained", "450");
@@ -178,14 +163,12 @@ const JuniorAdmissionForm = () => {
     setValue("sscPercentage", "75.00");
     setValue("sscBoard", "Maharashtra State Board");
     
-    // Parent/Guardian Information
     setValue("fullNameFather", "Rajesh Sharma");
     setValue("occupation", "Business");
     setValue("officeAddress", "Market Area, Nashik");
     setValue("guardianName", "");
     setValue("guardianRelation", "");
     
-    // Birth Details
     for (let i = 0; i < 2; i++) setValue(`birthDate${i}`, i === 0 ? "1" : "5");
     for (let i = 0; i < 2; i++) setValue(`birthMonth${i}`, i === 0 ? "0" : "6");
     for (let i = 0; i < 4; i++) {
@@ -196,17 +179,14 @@ const JuniorAdmissionForm = () => {
     setValue("birthPlace", "Nashik");
     setValue("birthState", "Maharashtra");
     
-    // Documents
     setValue("docLeavingCert", true);
     setValue("docMigration", false);
     setValue("docMarksheet", true);
     setValue("docAadhar", true);
     
-    // Declaration
     setValue("declarationAccepted", true);
   };
 
-  // Helper component for individual digit boxes
   const DigitBoxes = ({ name, count, label }) => {
     return (
       <div>
@@ -221,7 +201,11 @@ const JuniorAdmissionForm = () => {
                 required: `${label} digit ${i+1} required`,
                 pattern: { value: /^[0-9]$/, message: "Only digits" }
               })}
-              className="w-10 h-12 text-center border-2 border-gray-300 rounded-lg text-lg font-bold focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="w-10 h-12 text-center border-2 rounded-lg text-lg font-bold focus:ring-2"
+              style={{
+                borderColor: '#B8860B',
+                outlineColor: '#800020'
+              }}
               onInput={(e) => {
                 if (e.target.value && i < count - 1) {
                   const nextInput = e.target.parentElement.children[i + 1];
@@ -237,40 +221,43 @@ const JuniorAdmissionForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-8 px-4 sm:px-6">
+    <div className="min-h-screen py-8 px-4 sm:px-6" style={{ backgroundColor: '#f8f7f3' }}>
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}
         <div className="text-center mb-6">
-          <h1 className="text-4xl font-bold text-blue-900 mb-2">
+          <h1 className="text-4xl font-bold mb-2" style={{ color: '#002147' }}>
             Swami Vivekananda Junior Institute
           </h1>
           <p className="text-lg text-gray-700">Arts, Commerce & Science, Pimpalgaon Baswant</p>
           <p className="text-md text-gray-600">Admission Form: 2026-27</p>
-          <p className="text-sm text-red-700 font-semibold mt-2">Form Fees: Rs. 100/-</p>
+          <p className="text-sm font-semibold mt-2" style={{ color: '#800020' }}>Form Fees: Rs. 100/-</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-gray-100">
+        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden" style={{ borderColor: '#002147', borderWidth: '3px' }}>
           
           {/* Header Strip */}
-          <div className="bg-gradient-to-r from-red-800 to-red-900 px-8 py-5 flex justify-between items-center text-white">
+          <div className="px-8 py-5 flex justify-between items-center text-white" style={{ backgroundColor: '#800020' }}>
             <div className="flex items-center gap-3">
               <FileText size={28} />
               <div>
                 <span className="font-bold text-xl">Junior College Admission Form</span>
-                <p className="text-sm text-red-100">Academic Year 2026-27</p>
+                <p className="text-sm opacity-90">Academic Year 2026-27</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={quickFillForm}
-                className="text-sm bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full transition-all flex items-center gap-2"
+                className="text-sm px-4 py-2 rounded-full transition-all flex items-center gap-2"
+                style={{ backgroundColor: 'rgba(184, 134, 11, 0.3)' }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(184, 134, 11, 0.5)'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(184, 134, 11, 0.3)'}
               >
                 <RefreshCcw size={16} />
                 Quick Fill Demo
               </button>
-              <span className="text-sm bg-white/20 px-4 py-2 rounded-full">Official Application</span>
+              <span className="text-sm px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(184, 134, 11, 0.3)' }}>Official Application</span>
             </div>
           </div>
 
@@ -278,15 +265,15 @@ const JuniorAdmissionForm = () => {
             {!isSubmitted ? (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
                 
-                {/* Course Selection - Checkbox Style */}
-                <section className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
-                  <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
-                    <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
+                {/* Course Selection */}
+                <section className="p-6 rounded-xl" style={{ backgroundColor: '#f0f4f8', borderColor: '#002147', borderWidth: '2px' }}>
+                  <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
+                    <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>1</span>
                     Course Selection
                   </h3>
                   
                   <div className="space-y-6">
-                    {/* Standard Selection - Only 11th and 12th */}
+                    {/* Standard Selection */}
                     <div>
                       <label className="block text-sm font-bold mb-3 text-gray-700">Standard *</label>
                       <div className="flex gap-8 md:gap-12">
@@ -296,6 +283,7 @@ const JuniorAdmissionForm = () => {
                             value="11th"
                             {...register("standard", { required: "Please select a standard" })}
                             className="w-6 h-6 cursor-pointer"
+                            style={{ accentColor: '#B8860B' }}
                           />
                           <span className="text-gray-800 font-bold text-lg">11th Standard</span>
                         </label>
@@ -305,6 +293,7 @@ const JuniorAdmissionForm = () => {
                             value="12th"
                             {...register("standard", { required: "Please select a standard" })}
                             className="w-6 h-6 cursor-pointer"
+                            style={{ accentColor: '#B8860B' }}
                           />
                           <span className="text-gray-800 font-bold text-lg">12th Standard</span>
                         </label>
@@ -312,7 +301,7 @@ const JuniorAdmissionForm = () => {
                       {errors.standard && <p className="text-red-600 text-xs mt-2">{errors.standard.message}</p>}
                     </div>
 
-                    {/* Stream Selection - Only Science and Commerce */}
+                    {/* Stream Selection */}
                     <div>
                       <label className="block text-sm font-bold mb-3 text-gray-700">Stream/Subject *</label>
                       <div className="flex gap-8 md:gap-12">
@@ -322,6 +311,7 @@ const JuniorAdmissionForm = () => {
                             value="Science"
                             {...register("stream", { required: "Please select a stream" })}
                             className="w-6 h-6 cursor-pointer"
+                            style={{ accentColor: '#B8860B' }}
                           />
                           <span className="text-gray-800 font-bold text-lg">Science (PCM/PCB)</span>
                         </label>
@@ -331,6 +321,7 @@ const JuniorAdmissionForm = () => {
                             value="Commerce"
                             {...register("stream", { required: "Please select a stream" })}
                             className="w-6 h-6 cursor-pointer"
+                            style={{ accentColor: '#B8860B' }}
                           />
                           <span className="text-gray-800 font-bold text-lg">Commerce</span>
                         </label>
@@ -345,6 +336,7 @@ const JuniorAdmissionForm = () => {
                           type="checkbox" 
                           {...register("boardStateBoard")}
                           className="w-5 h-5 cursor-pointer"
+                          style={{ accentColor: '#B8860B' }}
                           defaultChecked
                         />
                         <span className="text-gray-800 font-medium">State Board (HSC)</span>
@@ -365,55 +357,56 @@ const JuniorAdmissionForm = () => {
                           />
                           <label 
                             htmlFor="photo-upload" 
-                            className="flex items-center justify-center gap-2 p-3 border-2 border-dashed border-gray-300 rounded-lg bg-white hover:bg-gray-50 cursor-pointer transition-all"
+                            className="flex items-center justify-center gap-2 p-3 border-2 border-dashed rounded-lg bg-white hover:bg-gray-50 cursor-pointer transition-all"
+                            style={{ borderColor: '#B8860B' }}
                           >
                             <Upload size={18} />
                             <span className="text-sm">{photoFile ? photoFile.name : 'Choose Photo'}</span>
                           </label>
                         </div>
                         {photoPreview && (
-                          <img src={photoPreview} alt="Preview" className="w-20 h-24 object-cover border-2 border-gray-300 rounded" />
+                          <img src={photoPreview} alt="Preview" className="w-20 h-24 object-cover border-2 rounded" style={{ borderColor: '#B8860B' }} />
                         )}
                       </div>
                     </div>
                   </div>
                 </section>
 
-                {/* Course Fees Display - Show only when both standard and stream are selected */}
+                {/* Course Fees Display */}
                 {currentCourseFees && (
-                  <section className="bg-gradient-to-r from-gray-50 to-slate-50 p-6 rounded-xl border-2 border-gray-300">
-                    <h3 className="text-xl font-bold text-gray-900 mb-5">💰 Fee Structure for {currentCourseFees.name}</h3>
+                  <section className="p-6 rounded-xl" style={{ backgroundColor: '#fafaf8', borderColor: '#B8860B', borderWidth: '2px' }}>
+                    <h3 className="text-xl font-bold mb-5" style={{ color: '#002147' }}>💰 Fee Structure for {currentCourseFees.name}</h3>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Fee Breakdown Table */}
                       <div className="overflow-x-auto">
-                        <table className="w-full border-collapse border border-gray-400">
+                        <table className="w-full border-collapse border">
                           <thead>
-                            <tr className="bg-gray-300">
-                              <th className="border border-gray-400 p-3 text-left font-bold">Fee Type</th>
-                              <th className="border border-gray-400 p-3 text-right font-bold">Amount</th>
+                            <tr style={{ backgroundColor: '#B8860B' }}>
+                              <th className="border p-3 text-left font-bold text-white">Fee Type</th>
+                              <th className="border p-3 text-right font-bold text-white">Amount</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr className="bg-white hover:bg-gray-50">
-                              <td className="border border-gray-400 p-3">Admission Fees</td>
-                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.admission}</td>
+                              <td className="border p-3">Admission Fees</td>
+                              <td className="border p-3 text-right font-semibold">Rs. {currentCourseFees.admission}</td>
                             </tr>
                             <tr className="bg-white hover:bg-gray-50">
-                              <td className="border border-gray-400 p-3">Tuition Fees</td>
-                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.tuition}</td>
+                              <td className="border p-3">Tuition Fees</td>
+                              <td className="border p-3 text-right font-semibold">Rs. {currentCourseFees.tuition}</td>
                             </tr>
                             <tr className="bg-white hover:bg-gray-50">
-                              <td className="border border-gray-400 p-3">Co-curricular Activities</td>
-                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.coActivity}</td>
+                              <td className="border p-3">Co-curricular Activities</td>
+                              <td className="border p-3 text-right font-semibold">Rs. {currentCourseFees.coActivity}</td>
                             </tr>
                             <tr className="bg-white hover:bg-gray-50">
-                              <td className="border border-gray-400 p-3">Exam Fees</td>
-                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.exam}</td>
+                              <td className="border p-3">Exam Fees</td>
+                              <td className="border p-3 text-right font-semibold">Rs. {currentCourseFees.exam}</td>
                             </tr>
-                            <tr className="bg-blue-100 hover:bg-blue-150">
-                              <td className="border border-gray-400 p-3 font-bold">TOTAL FEES</td>
-                              <td className="border border-gray-400 p-3 text-right font-bold text-lg">Rs. {currentCourseFees.total}</td>
+                            <tr style={{ backgroundColor: '#f0f4f8' }}>
+                              <td className="border p-3 font-bold">TOTAL FEES</td>
+                              <td className="border p-3 text-right font-bold text-lg" style={{ color: '#800020' }}>Rs. {currentCourseFees.total}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -421,37 +414,37 @@ const JuniorAdmissionForm = () => {
 
                       {/* Payment Options Table */}
                       <div className="overflow-x-auto">
-                        <table className="w-full border-collapse border border-gray-400">
+                        <table className="w-full border-collapse border">
                           <thead>
-                            <tr className="bg-gray-300">
-                              <th className="border border-gray-400 p-3 text-left font-bold">Payment Mode</th>
-                              <th className="border border-gray-400 p-3 text-right font-bold">Amount</th>
+                            <tr style={{ backgroundColor: '#B8860B' }}>
+                              <th className="border p-3 text-left font-bold text-white">Payment Mode</th>
+                              <th className="border p-3 text-right font-bold text-white">Amount</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr className="bg-white hover:bg-gray-50">
-                              <td className="border border-gray-400 p-3">One Time Payment</td>
-                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.oneTime}</td>
+                              <td className="border p-3">One Time Payment</td>
+                              <td className="border p-3 text-right font-semibold">Rs. {currentCourseFees.oneTime}</td>
                             </tr>
                             <tr className="bg-white hover:bg-gray-50">
-                              <td className="border border-gray-400 p-3">First Installment</td>
-                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.inst1}</td>
+                              <td className="border p-3">First Installment</td>
+                              <td className="border p-3 text-right font-semibold">Rs. {currentCourseFees.inst1}</td>
                             </tr>
                             <tr className="bg-white hover:bg-gray-50">
-                              <td className="border border-gray-400 p-3">Second Installment</td>
-                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. {currentCourseFees.inst2}</td>
+                              <td className="border p-3">Second Installment</td>
+                              <td className="border p-3 text-right font-semibold">Rs. {currentCourseFees.inst2}</td>
                             </tr>
-                            <tr className="bg-yellow-50 hover:bg-yellow-100">
-                              <td className="border border-gray-400 p-3 text-sm italic">Form Fees (Non-Refundable)</td>
-                              <td className="border border-gray-400 p-3 text-right font-semibold">Rs. 100/-</td>
+                            <tr style={{ backgroundColor: '#f0f4f8' }}>
+                              <td className="border p-3 text-sm italic">Form Fees (Non-Refundable)</td>
+                              <td className="border p-3 text-right font-semibold">Rs. 100/-</td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
                     </div>
 
-                    <div className="mt-4 p-4 bg-red-50 border-l-4 border-red-500 rounded">
-                      <p className="text-sm text-red-800">
+                    <div className="mt-4 p-4 rounded" style={{ backgroundColor: '#ffe6e6', borderLeft: '4px solid #800020' }}>
+                      <p className="text-sm" style={{ color: '#800020' }}>
                         <strong>Note:</strong> Uniform/Books/Exam Fees are not included in the above fees. Admission will be finalized only after submission of all documents & full payment of fees.
                       </p>
                     </div>
@@ -459,9 +452,9 @@ const JuniorAdmissionForm = () => {
                 )}
 
                 {/* Personal Information - Section 2 */}
-                <section className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                  <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
-                    <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
+                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                  <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
+                    <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>2</span>
                     Personal Information
                   </h3>
                   
@@ -471,7 +464,8 @@ const JuniorAdmissionForm = () => {
                       <input 
                         type="text" 
                         {...register("surname", { required: "Surname is required" })}
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg uppercase focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg uppercase focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="SURNAME"
                       />
                       {errors.surname && <p className="text-red-600 text-xs mt-1">{errors.surname.message}</p>}
@@ -482,7 +476,8 @@ const JuniorAdmissionForm = () => {
                       <input 
                         type="text" 
                         {...register("middleName", { required: "Middle name is required" })}
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg uppercase focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg uppercase focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="MIDDLE NAME"
                       />
                       {errors.middleName && <p className="text-red-600 text-xs mt-1">{errors.middleName.message}</p>}
@@ -493,7 +488,8 @@ const JuniorAdmissionForm = () => {
                       <input 
                         type="text" 
                         {...register("fathersName", { required: "Father's name is required" })}
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg uppercase focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg uppercase focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="FATHER'S NAME"
                       />
                       {errors.fathersName && <p className="text-red-600 text-xs mt-1">{errors.fathersName.message}</p>}
@@ -505,7 +501,8 @@ const JuniorAdmissionForm = () => {
                     <input 
                       type="text" 
                       {...register("nameDevanagari", { required: "Name in Devanagari is required" })}
-                      className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                      className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                      style={{ borderColor: '#B8860B' }}
                       placeholder="देवनागरी लिपीत नाव"
                     />
                     {errors.nameDevanagari && <p className="text-red-600 text-xs mt-1">{errors.nameDevanagari.message}</p>}
@@ -516,7 +513,8 @@ const JuniorAdmissionForm = () => {
                     <input 
                       type="text" 
                       {...register("motherName", { required: "Mother's name is required" })}
-                      className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                      className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                      style={{ borderColor: '#B8860B' }}
                       placeholder="Mother's Full Name"
                     />
                     {errors.motherName && <p className="text-red-600 text-xs mt-1">{errors.motherName.message}</p>}
@@ -531,6 +529,7 @@ const JuniorAdmissionForm = () => {
                           value="Male"
                           {...register("gender", { required: "Please select gender" })}
                           className="w-5 h-5 cursor-pointer"
+                          style={{ accentColor: '#B8860B' }}
                         />
                         <span className="text-gray-800 font-medium">Male</span>
                       </label>
@@ -540,6 +539,7 @@ const JuniorAdmissionForm = () => {
                           value="Female"
                           {...register("gender", { required: "Please select gender" })}
                           className="w-5 h-5 cursor-pointer"
+                          style={{ accentColor: '#B8860B' }}
                         />
                         <span className="text-gray-800 font-medium">Female</span>
                       </label>
@@ -549,9 +549,9 @@ const JuniorAdmissionForm = () => {
                 </section>
 
                 {/* Father and Guardian Information - Section 3 */}
-                <section className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                  <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
-                    <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
+                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                  <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
+                    <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>3</span>
                     Father & Guardian Information
                   </h3>
                   
@@ -561,7 +561,8 @@ const JuniorAdmissionForm = () => {
                       <input 
                         type="text" 
                         {...register("fullNameFather", { required: "Father's full name is required" })}
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="Father's Full Name"
                       />
                       {errors.fullNameFather && <p className="text-red-600 text-xs mt-1">{errors.fullNameFather.message}</p>}
@@ -573,7 +574,8 @@ const JuniorAdmissionForm = () => {
                         <input 
                           type="text" 
                           {...register("occupation")}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                           placeholder="Occupation & Designation"
                         />
                       </div>
@@ -583,7 +585,8 @@ const JuniorAdmissionForm = () => {
                         <input 
                           type="text" 
                           {...register("officeAddress")}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                           placeholder="Office Address"
                         />
                       </div>
@@ -594,7 +597,8 @@ const JuniorAdmissionForm = () => {
                       <input 
                         type="text" 
                         {...register("guardianName")}
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="Guardian's Full Name"
                       />
                     </div>
@@ -604,7 +608,8 @@ const JuniorAdmissionForm = () => {
                       <input 
                         type="text" 
                         {...register("guardianRelation")}
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="e.g., Uncle, Aunt, Brother"
                       />
                     </div>
@@ -612,9 +617,9 @@ const JuniorAdmissionForm = () => {
                 </section>
 
                 {/* Address Information - Section 4 */}
-                <section className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                  <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
-                    <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">4</span>
+                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                  <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
+                    <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>4</span>
                     Address & Contact Information
                   </h3>
                   
@@ -624,7 +629,8 @@ const JuniorAdmissionForm = () => {
                       <textarea 
                         {...register("permanentAddress", { required: "Permanent address is required" })}
                         rows="3"
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="Complete Address with Village/City, Taluka, District, State, PIN"
                       />
                       {errors.permanentAddress && <p className="text-red-600 text-xs mt-1">{errors.permanentAddress.message}</p>}
@@ -642,7 +648,8 @@ const JuniorAdmissionForm = () => {
                         <input 
                           type="text" 
                           {...register("telephone")}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                           placeholder="STD-Telephone"
                         />
                       </div>
@@ -652,7 +659,8 @@ const JuniorAdmissionForm = () => {
                         <input 
                           type="email" 
                           {...register("email")}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                           placeholder="email@example.com"
                         />
                       </div>
@@ -663,7 +671,8 @@ const JuniorAdmissionForm = () => {
                       <textarea 
                         {...register("correspondenceAddress")}
                         rows="2"
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="Correspondence Address (if different from permanent address)"
                       />
                     </div>
@@ -671,9 +680,9 @@ const JuniorAdmissionForm = () => {
                 </section>
 
                 {/* Birth Details - Section 5 */}
-                <section className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                  <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
-                    <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">5</span>
+                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                  <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
+                    <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>5</span>
                     Birth Details
                   </h3>
                   
@@ -689,7 +698,8 @@ const JuniorAdmissionForm = () => {
                       <input 
                         type="text" 
                         {...register("birthPlace", { required: "Place of birth is required" })}
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="City/Village"
                       />
                       {errors.birthPlace && <p className="text-red-600 text-xs mt-1">{errors.birthPlace.message}</p>}
@@ -700,7 +710,8 @@ const JuniorAdmissionForm = () => {
                       <input 
                         type="text" 
                         {...register("birthState", { required: "State is required" })}
-                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                        style={{ borderColor: '#B8860B' }}
                         placeholder="State"
                       />
                       {errors.birthState && <p className="text-red-600 text-xs mt-1">{errors.birthState.message}</p>}
@@ -709,9 +720,9 @@ const JuniorAdmissionForm = () => {
                 </section>
 
                 {/* Caste Category - Section 6 */}
-                <section className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                  <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
-                    <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">6</span>
+                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                  <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
+                    <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>6</span>
                     Caste Category
                   </h3>
                   
@@ -722,6 +733,7 @@ const JuniorAdmissionForm = () => {
                         value="SC"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">SC</span>
                     </label>
@@ -731,6 +743,7 @@ const JuniorAdmissionForm = () => {
                         value="ST"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">ST</span>
                     </label>
@@ -740,6 +753,7 @@ const JuniorAdmissionForm = () => {
                         value="DT-VJ"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">DT-VJ</span>
                     </label>
@@ -749,6 +763,7 @@ const JuniorAdmissionForm = () => {
                         value="NT-B"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">NT-B</span>
                     </label>
@@ -758,6 +773,7 @@ const JuniorAdmissionForm = () => {
                         value="NT-C"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">NT-C</span>
                     </label>
@@ -767,6 +783,7 @@ const JuniorAdmissionForm = () => {
                         value="NT-D"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">NT-D</span>
                     </label>
@@ -776,6 +793,7 @@ const JuniorAdmissionForm = () => {
                         value="OBC"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">OBC</span>
                     </label>
@@ -785,6 +803,7 @@ const JuniorAdmissionForm = () => {
                         value="SBC"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">SBC</span>
                     </label>
@@ -794,6 +813,7 @@ const JuniorAdmissionForm = () => {
                         value="OPEN"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">OPEN</span>
                     </label>
@@ -803,6 +823,7 @@ const JuniorAdmissionForm = () => {
                         value="General"
                         {...register("caste")}
                         className="w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-gray-800 font-medium">General</span>
                     </label>
@@ -810,13 +831,13 @@ const JuniorAdmissionForm = () => {
                 </section>
 
                 {/* Previous Year Details - Section 7 */}
-                <section className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                  <h3 className="text-xl font-bold text-blue-900 mb-5 flex items-center gap-2">
-                    <span className="bg-blue-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">7</span>
+                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                  <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
+                    <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>7</span>
                     Previous Year Academic Details
                   </h3>
                   
-                  {/* 10th Standard Details - Always show */}
+                  {/* 10th Standard Details */}
                   <div className="mb-6">
                     <h4 className="font-bold text-gray-800 mb-3">Standard X (10th) Details *</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -824,7 +845,8 @@ const JuniorAdmissionForm = () => {
                         <label className="block text-sm font-bold mb-2 text-gray-700">Stream</label>
                         <select 
                           {...register("sscStream")}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                         >
                           <option value="">Select</option>
                           <option value="Science">Science</option>
@@ -837,7 +859,8 @@ const JuniorAdmissionForm = () => {
                         <input 
                           type="text" 
                           {...register("sscYear", { required: "Year is required" })}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                           placeholder="YYYY"
                         />
                         {errors.sscYear && <p className="text-red-600 text-xs mt-1">{errors.sscYear.message}</p>}
@@ -847,7 +870,8 @@ const JuniorAdmissionForm = () => {
                         <input 
                           type="text" 
                           {...register("sscMarksObtained", { required: "Marks required" })}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                           placeholder="e.g., 450"
                         />
                         {errors.sscMarksObtained && <p className="text-red-600 text-xs mt-1">{errors.sscMarksObtained.message}</p>}
@@ -857,7 +881,8 @@ const JuniorAdmissionForm = () => {
                         <input 
                           type="text" 
                           {...register("sscTotalMarks", { required: "Total marks required" })}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                           placeholder="e.g., 600"
                         />
                         {errors.sscTotalMarks && <p className="text-red-600 text-xs mt-1">{errors.sscTotalMarks.message}</p>}
@@ -869,7 +894,8 @@ const JuniorAdmissionForm = () => {
                         <input 
                           type="text" 
                           {...register("sscPercentage", { required: "Percentage required" })}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                           placeholder="e.g., 75.00%"
                         />
                         {errors.sscPercentage && <p className="text-red-600 text-xs mt-1">{errors.sscPercentage.message}</p>}
@@ -879,7 +905,8 @@ const JuniorAdmissionForm = () => {
                         <input 
                           type="text" 
                           {...register("sscBoard", { required: "Board required" })}
-                          className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                          style={{ borderColor: '#B8860B' }}
                           placeholder="e.g., Maharashtra State Board"
                         />
                         {errors.sscBoard && <p className="text-red-600 text-xs mt-1">{errors.sscBoard.message}</p>}
@@ -896,7 +923,8 @@ const JuniorAdmissionForm = () => {
                           <label className="block text-sm font-bold mb-2 text-gray-700">Stream</label>
                           <select 
                             {...register("hscStream")}
-                            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                            style={{ borderColor: '#B8860B' }}
                           >
                             <option value="">Select</option>
                             <option value="Science">Science</option>
@@ -908,7 +936,8 @@ const JuniorAdmissionForm = () => {
                           <input 
                             type="text" 
                             {...register("hscYear", { required: selectedStandard === "12th" ? "Year is required" : false })}
-                            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                            style={{ borderColor: '#B8860B' }}
                             placeholder="YYYY"
                           />
                           {errors.hscYear && <p className="text-red-600 text-xs mt-1">{errors.hscYear.message}</p>}
@@ -918,7 +947,8 @@ const JuniorAdmissionForm = () => {
                           <input 
                             type="text" 
                             {...register("hscMarksObtained", { required: selectedStandard === "12th" ? "Marks required" : false })}
-                            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                            style={{ borderColor: '#B8860B' }}
                             placeholder="e.g., 450"
                           />
                           {errors.hscMarksObtained && <p className="text-red-600 text-xs mt-1">{errors.hscMarksObtained.message}</p>}
@@ -928,7 +958,8 @@ const JuniorAdmissionForm = () => {
                           <input 
                             type="text" 
                             {...register("hscTotalMarks", { required: selectedStandard === "12th" ? "Total marks required" : false })}
-                            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                            style={{ borderColor: '#B8860B' }}
                             placeholder="e.g., 600"
                           />
                           {errors.hscTotalMarks && <p className="text-red-600 text-xs mt-1">{errors.hscTotalMarks.message}</p>}
@@ -940,7 +971,8 @@ const JuniorAdmissionForm = () => {
                           <input 
                             type="text" 
                             {...register("hscPercentage", { required: selectedStandard === "12th" ? "Percentage required" : false })}
-                            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                            style={{ borderColor: '#B8860B' }}
                             placeholder="e.g., 75.00%"
                           />
                           {errors.hscPercentage && <p className="text-red-600 text-xs mt-1">{errors.hscPercentage.message}</p>}
@@ -950,7 +982,8 @@ const JuniorAdmissionForm = () => {
                           <input 
                             type="text" 
                             {...register("hscBoard", { required: selectedStandard === "12th" ? "Board required" : false })}
-                            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            className="w-full p-3 border-2 rounded-lg focus:ring-2"
+                            style={{ borderColor: '#B8860B' }}
                             placeholder="e.g., Maharashtra State Board"
                           />
                           {errors.hscBoard && <p className="text-red-600 text-xs mt-1">{errors.hscBoard.message}</p>}
@@ -961,14 +994,15 @@ const JuniorAdmissionForm = () => {
                 </section>
 
                 {/* Documents Required Section */}
-                <section className="bg-yellow-50 p-6 rounded-xl border-2 border-yellow-300">
-                  <h3 className="text-lg font-bold text-yellow-900 mb-4">📄 Documents Required at Time of Admission</h3>
+                <section className="p-6 rounded-xl border-2" style={{ backgroundColor: '#faf6f0', borderColor: '#B8860B' }}>
+                  <h3 className="text-lg font-bold mb-4" style={{ color: '#800020' }}>📄 Documents Required at Time of Admission</h3>
                   <div className="space-y-3">
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input 
                         type="checkbox" 
                         {...register("docLeavingCert")}
                         className="mt-1 w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-sm text-gray-700">
                         <strong>1.</strong> School/College Leaving Certificate (Duly counter-signed by Principal/College Authorities) - Original + 2 Xerox Copies
@@ -979,6 +1013,7 @@ const JuniorAdmissionForm = () => {
                         type="checkbox" 
                         {...register("docMigration")}
                         className="mt-1 w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-sm text-gray-700">
                         <strong>2.</strong> Migration Certificate (If necessary) - Original + 2 Xerox Copies
@@ -989,6 +1024,7 @@ const JuniorAdmissionForm = () => {
                         type="checkbox" 
                         {...register("docMarksheet")}
                         className="mt-1 w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-sm text-gray-700">
                         <strong>3.</strong> Previous Year Marksheet (SSC/11th) - Original + 2 Xerox Copies
@@ -999,22 +1035,23 @@ const JuniorAdmissionForm = () => {
                         type="checkbox" 
                         {...register("docAadhar")}
                         className="mt-1 w-5 h-5 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="text-sm text-gray-700">
                         <strong>4.</strong> Aadhar Card - Original + 2 Xerox Copies
                       </span>
                     </label>
                   </div>
-                  <div className="mt-5 pt-4 border-t-2 border-yellow-200">
+                  <div className="mt-5 pt-4" style={{ borderTop: '2px solid #B8860B' }}>
                     <p className="text-xs text-gray-600 italic">
-                      I hereby agree that, I have attached copies of only mentioned documents to my application and understand that my application will be approved on the basis of above documents supplied by me.
+                      I hereby agree that, I have attached copies of only mentioned documents to my application and understand that my application will be approved on the basis of above documents.
                     </p>
                   </div>
                 </section>
 
                 {/* Declaration Section */}
-                <section className="bg-red-50 p-6 rounded-xl border-2 border-red-300">
-                  <h3 className="text-lg font-bold text-red-900 mb-4 text-center underline">
+                <section className="p-6 rounded-xl border-2" style={{ backgroundColor: '#fef5f5', borderColor: '#800020' }}>
+                  <h3 className="text-lg font-bold mb-4 text-center underline" style={{ color: '#800020' }}>
                     DECLARATION TO BE SIGNED BY THE CANDIDATE & PARENT/GUARDIAN AT THE TIME OF ADMISSION
                   </h3>
                   <div className="space-y-2 text-sm text-gray-700 max-h-80 overflow-y-auto pr-2">
@@ -1024,7 +1061,7 @@ const JuniorAdmissionForm = () => {
                       <li>The information given by me in this application is true to the best of my knowledge.</li>
                       <li>I have not been debarred from appearing at any examination held by any Government or Statutory examination authority in India.</li>
                       <li>I fully understand that I will be offered admission strictly on the basis of my merit and availability of seat.</li>
-                      <li>I hereby abide by all the Rules, Acts and Laws enforced by Government/College Principal/College Authorities of the Institute from time to time and I also hereby give an undertaking.</li>
+                      <li>I hereby abide by all the Rules, Acts and Laws enforced by Government/College Principal/College Authorities of the Institute from time to time.</li>
                       <li>The Institute will deal strictly with students who organize, assist or lead in strikes or any way found guilty of serious breach of discipline.</li>
                       <li>I fully understand that the Principal/Management of the college will have full right to expel me from College for infringement of rules.</li>
                       <li>I know that my ward will not be permitted to appear for examination if not meeting requirements.</li>
@@ -1037,12 +1074,13 @@ const JuniorAdmissionForm = () => {
                     </ol>
                   </div>
                   
-                  <div className="mt-6 pt-4 border-t-2 border-red-200">
+                  <div className="mt-6 pt-4" style={{ borderTop: '2px solid #800020' }}>
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input 
                         type="checkbox" 
                         {...register("declarationAccepted", { required: "You must accept the declaration" })}
                         className="mt-1 w-6 h-6 cursor-pointer"
+                        style={{ accentColor: '#B8860B' }}
                       />
                       <span className="font-semibold text-gray-800">
                         I have read and understood all the above declarations and undertakings. I accept all terms and conditions stated above. *
@@ -1056,7 +1094,10 @@ const JuniorAdmissionForm = () => {
                 <div className="flex justify-center pt-6">
                   <button 
                     type="submit" 
-                    className="bg-gradient-to-r from-red-800 to-red-900 hover:from-red-900 hover:to-red-950 text-white text-lg px-12 py-5 rounded-full font-bold shadow-2xl flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95"
+                    className="text-white text-lg px-12 py-5 rounded-full font-bold shadow-2xl flex items-center gap-3 transition-all"
+                    style={{ backgroundColor: '#800020' }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = '#600015'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = '#800020'}
                   >
                     <Save size={24} /> 
                     Generate Application PDF
@@ -1067,16 +1108,18 @@ const JuniorAdmissionForm = () => {
             ) : (
               // Success View
               <div className="text-center py-16">
-                <div className="w-32 h-32 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
+                <div className="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg" style={{ backgroundColor: '#e8f5e9', color: '#004d00' }}>
                   <CheckCircle size={64} />
                 </div>
                 <h2 className="text-4xl font-bold text-gray-900 mb-3">Application Generated Successfully!</h2>
                 <p className="text-lg text-gray-600 mb-4">
-                  Application No: <span className="font-bold text-blue-900">{formData.appNo}</span>
+                  Application No: <span className="font-bold" style={{ color: '#002147' }}>{formData.appNo}</span>
                 </p>
                 <p className="text-gray-500 mb-10 max-w-2xl mx-auto">
-                  Your admission form for <strong>{formData.standard} {formData.stream}</strong> has been generated successfully. Please download the PDF, print it, affix your photograph, and sign at the designated places.
+                  Your admission form for <strong>{formData.standard} {formData.stream}</strong> has been generated successfully. Please download the PDF, print it, affix your photograph, and sign at designated places.
                 </p>
+                
+                
                 
                 <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
                   <PDFDownloadLink 

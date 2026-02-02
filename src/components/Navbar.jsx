@@ -48,6 +48,7 @@ const Navbar = () => {
         { name: 'Admission Process', href: '/admissions/process' },
         { name: 'Fee Structure', href: '/admissions/fees' },
         { name: 'Scholarships', href: '/admissions/scholarships' },
+        { name: 'Junior Admission', href: '/admissions/form' },
       ]
     },
     { 
