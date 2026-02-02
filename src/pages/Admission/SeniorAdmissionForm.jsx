@@ -253,11 +253,11 @@ const SeniorAdmissionForm = () => {
   };
 
   return (
-    <div className="min-h-screen py-8 px-4" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+    <div className="min-h-screen py-8 px-4" style={{ backgroundColor: '#f8f7f3' }}>
       <div className="max-w-5xl mx-auto">
         
         {/* Header */}
-        <div className="text-center mb-8">
+        {/* <div className="text-center mb-8">
           <div className="inline-block bg-white px-12 py-6 rounded-2xl shadow-2xl" style={{ borderTop: '6px solid #800020' }}>
             <h1 className="text-4xl font-extrabold mb-2" style={{ color: '#002147' }}>
               Swami Vivekananda Institute Of Management
@@ -272,7 +272,7 @@ const SeniorAdmissionForm = () => {
               📞 8208665658 | ✉️ swamivivekanandainstitute2021@gmail.com
             </p>
           </div>
-        </div>
+        </div> */}
 
         {/* Main Form Container */}
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
