@@ -82,6 +82,8 @@ const SeniorAdmissionForm = () => {
       createdAt: serverTimestamp(),
     };
 
+    delete payload.photoData;
+
     for (const spec of digitFieldSpecs) {
       for (let i = 0; i < spec.count; i++) delete payload[`${spec.prefix}${i}`];
     }
