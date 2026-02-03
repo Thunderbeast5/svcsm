@@ -1,14 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const Hero = () => {
+  const MotionDiv = motion.div;
+  const [hero, setHero] = useState({
+    badgeText: 'Admissions Open for 2026-27',
+    titleLine1: 'Excellence in',
+    titleHighlight: 'Education & Character',
+    subtitle:
+      'Join Swami Vivekananda College to experience a curriculum that blends academic rigor with moral leadership.',
+    imageUrl: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop',
+  });
+
+  useEffect(() => {
+    let ignore = false;
+
+    const load = async () => {
+      try {
+        const snap = await getDoc(doc(db, 'siteContent', 'hero'));
+        if (!snap.exists() || ignore) return;
+
+        const data = snap.data() || {};
+        setHero((prev) => ({
+          ...prev,
+          badgeText: data.badgeText ?? prev.badgeText,
+          titleLine1: data.titleLine1 ?? prev.titleLine1,
+          titleHighlight: data.titleHighlight ?? prev.titleHighlight,
+          subtitle: data.subtitle ?? prev.subtitle,
+          imageUrl: data.imageUrl ?? prev.imageUrl,
+        }));
+      } catch {
+        if (ignore) return;
+      }
+    };
+
+    load();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop" 
+          src={hero.imageUrl}
           alt="SVCMS Campus" 
           className="w-full h-full object-cover"
         />
@@ -18,24 +59,24 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
           <span className="inline-block py-1 px-4 rounded-full bg-sv-gold/20 border border-sv-gold text-sv-gold text-sm font-semibold mb-6 uppercase tracking-wider backdrop-blur-sm">
-            Admissions Open for 2026-27
+            {hero.badgeText}
           </span>
           
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
-            Excellence in <br />
+            {hero.titleLine1} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-sv-gold to-yellow-200">
-              Education & Character
+              {hero.titleHighlight}
             </span>
           </h1>
           
           <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-            Join Swami Vivekananda College to experience a curriculum that blends academic rigor with moral leadership.
+            {hero.subtitle}
           </p>
 
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
@@ -47,7 +88,7 @@ const Hero = () => {
               <Download size={20} /> Download Brochure
             </button>
           </div>
-        </motion.div>
+        </MotionDiv>
       </div>
 
       {/* News Ticker Bottom Bar */}
