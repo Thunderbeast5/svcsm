@@ -208,7 +208,7 @@ const SeniorAdmissionForm = () => {
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden" style={{ borderColor: '#002147', borderWidth: '3px' }}>
           
           {/* Header Strip */}
-          <div className="px-8 py-5 flex justify-between items-center text-white" style={{ backgroundColor: '#800020' }}>
+          <div className="px-4 sm:px-6 md:px-8 py-5 flex flex-col md:flex-row md:justify-between md:items-center gap-4 text-white" style={{ backgroundColor: '#800020' }}>
             <div className="flex items-center gap-3">
               <FileText size={28} />
               <div>
@@ -216,11 +216,11 @@ const SeniorAdmissionForm = () => {
                 <p className="text-sm opacity-90">Academic Year 2026-27</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
               <button
                 type="button"
                 onClick={quickFillForm}
-                className="text-sm px-4 py-2 rounded-full transition-all flex items-center gap-2"
+                className="text-sm px-4 py-2 rounded-full transition-all flex items-center justify-center gap-2"
                 style={{ backgroundColor: 'rgba(184, 134, 11, 0.3)' }}
                 onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(184, 134, 11, 0.5)'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(184, 134, 11, 0.3)'}
@@ -228,16 +228,16 @@ const SeniorAdmissionForm = () => {
                 <RefreshCcw size={16} />
                 Quick Fill Demo
               </button>
-              <span className="text-sm px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(184, 134, 11, 0.3)' }}>Official Application</span>
+              <span className="text-sm px-4 py-2 rounded-full text-center" style={{ backgroundColor: 'rgba(184, 134, 11, 0.3)' }}>Official Application</span>
             </div>
           </div>
 
-          <div className="p-8 md:p-10">
+          <div className="p-4 sm:p-6 md:p-10">
             {!isSubmitted ? (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
                 
                 {/* Course Selection - Dropdown Style */}
-                <section className="p-6 rounded-xl" style={{ backgroundColor: '#f0f4f8', borderColor: '#002147', borderWidth: '2px' }}>
+                <section className="p-4 sm:p-6 rounded-xl" style={{ backgroundColor: '#f0f4f8', borderColor: '#002147', borderWidth: '2px' }}>
                   <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
                     <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>1</span>
                     Course Selection
@@ -281,7 +281,7 @@ const SeniorAdmissionForm = () => {
                   {/* Photo Upload */}
                   <div className="mt-6">
                     <label className="block text-sm font-bold mb-2 text-gray-700">Upload Photo</label>
-                    <div className="flex gap-4 items-center">
+                    <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
                       <div className="relative">
                         <input 
                           type="file" 
@@ -308,7 +308,7 @@ const SeniorAdmissionForm = () => {
 
                 {/* Course Fees Display */}
                 {currentCourseFees && (
-                  <section className="p-6 rounded-xl" style={{ backgroundColor: '#fafaf8', borderColor: '#B8860B', borderWidth: '2px' }}>
+                  <section className="p-4 sm:p-6 rounded-xl" style={{ backgroundColor: '#fafaf8', borderColor: '#B8860B', borderWidth: '2px' }}>
                     <h3 className="text-xl font-bold mb-5" style={{ color: '#002147' }}>💰 Fee Structure for {currentCourseFees.name}</h3>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -386,7 +386,7 @@ const SeniorAdmissionForm = () => {
                 )}
 
                 {/* Personal Information - Section 2 */}
-                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                <section className="p-4 sm:p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
                   <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
                     <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>2</span>
                     Personal Information
@@ -456,7 +456,7 @@ const SeniorAdmissionForm = () => {
                   {/* Aadhar Number */}
                   <div className="mt-6">
                     <label className="block text-sm font-bold mb-2 text-gray-700">Aadhar Number (12 digits) *</label>
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       {[...Array(12)].map((_, i) => (
                         <input
                           key={i}
@@ -466,7 +466,7 @@ const SeniorAdmissionForm = () => {
                             required: "Required",
                             pattern: { value: /^[0-9]$/, message: "Only digits" }
                           })}
-                          className="w-10 h-12 text-center border-2 rounded-lg text-lg font-bold focus:ring-2"
+                          className="w-8 h-10 sm:w-10 sm:h-12 text-center border-2 rounded-lg text-base sm:text-lg font-bold focus:ring-2"
                           style={{ borderColor: '#B8860B' }}
                           onInput={(e) => {
                             e.target.value = e.target.value.replace(/[^0-9]/g, '');
@@ -509,7 +509,7 @@ const SeniorAdmissionForm = () => {
                 </section>
 
                 {/* Address Information - Section 3 */}
-                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                <section className="p-4 sm:p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
                   <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
                     <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>3</span>
                     Permanent Address
@@ -593,7 +593,7 @@ const SeniorAdmissionForm = () => {
                 </section>
 
                 {/* Other Personnel Details - Section 4 */}
-                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                <section className="p-4 sm:p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
                   <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
                     <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>4</span>
                     Other Personnel Details
@@ -602,11 +602,11 @@ const SeniorAdmissionForm = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-bold mb-2 text-gray-700">Date of Birth (DD-MM-YYYY) *</label>
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <input 
                           type="text"
                           {...register("dobDay", { required: true })}
-                          className="w-20 px-3 py-3 border-2 rounded-lg text-center"
+                          className="w-16 sm:w-20 px-3 py-3 border-2 rounded-lg text-center"
                           style={{ borderColor: '#B8860B' }}
                           placeholder="DD"
                           maxLength="2"
@@ -615,7 +615,7 @@ const SeniorAdmissionForm = () => {
                         <input 
                           type="text"
                           {...register("dobMonth", { required: true })}
-                          className="w-20 px-3 py-3 border-2 rounded-lg text-center"
+                          className="w-16 sm:w-20 px-3 py-3 border-2 rounded-lg text-center"
                           style={{ borderColor: '#B8860B' }}
                           placeholder="MM"
                           maxLength="2"
@@ -624,7 +624,7 @@ const SeniorAdmissionForm = () => {
                         <input 
                           type="text"
                           {...register("dobYear", { required: true })}
-                          className="w-28 px-3 py-3 border-2 rounded-lg text-center"
+                          className="w-24 sm:w-28 px-3 py-3 border-2 rounded-lg text-center"
                           style={{ borderColor: '#B8860B' }}
                           placeholder="YYYY"
                           maxLength="4"
@@ -730,7 +730,7 @@ const SeniorAdmissionForm = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
                       <label className="block text-sm font-bold mb-2 text-gray-700">Candidate Mobile No. (10 digits) *</label>
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-2">
                         {[...Array(10)].map((_, i) => (
                           <input
                             key={i}
@@ -740,7 +740,7 @@ const SeniorAdmissionForm = () => {
                               required: "Required",
                               pattern: { value: /^[0-9]$/, message: "Only digits" }
                             })}
-                            className="w-10 h-12 text-center border-2 rounded-lg text-lg font-bold focus:ring-2"
+                            className="w-8 h-10 sm:w-10 sm:h-12 text-center border-2 rounded-lg text-base sm:text-lg font-bold focus:ring-2"
                             style={{ borderColor: '#B8860B' }}
                             onInput={(e) => {
                               e.target.value = e.target.value.replace(/[^0-9]/g, '');
@@ -776,7 +776,7 @@ const SeniorAdmissionForm = () => {
 
                     <div>
                       <label className="block text-sm font-bold mb-2 text-gray-700">Parent Mobile No. (10 digits) *</label>
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-2">
                         {[...Array(10)].map((_, i) => (
                           <input
                             key={i}
@@ -786,7 +786,7 @@ const SeniorAdmissionForm = () => {
                               required: "Required",
                               pattern: { value: /^[0-9]$/, message: "Only digits" }
                             })}
-                            className="w-10 h-12 text-center border-2 rounded-lg text-lg font-bold focus:ring-2"
+                            className="w-8 h-10 sm:w-10 sm:h-12 text-center border-2 rounded-lg text-base sm:text-lg font-bold focus:ring-2"
                             style={{ borderColor: '#B8860B' }}
                             onInput={(e) => {
                               e.target.value = e.target.value.replace(/[^0-9]/g, '');
@@ -823,7 +823,7 @@ const SeniorAdmissionForm = () => {
                 </section>
 
                 {/* Qualification Details - Section 5 */}
-                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                <section className="p-4 sm:p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
                   <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
                     <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>5</span>
                     Qualification Details
@@ -940,7 +940,7 @@ const SeniorAdmissionForm = () => {
                 </section>
 
                 {/* Bank Details - Section 6 */}
-                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                <section className="p-4 sm:p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
                   <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
                     <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>6</span>
                     Bank Details
@@ -997,7 +997,7 @@ const SeniorAdmissionForm = () => {
                 </section>
 
                 {/* Parent Details - Section 7 */}
-                <section className="p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
+                <section className="p-4 sm:p-6 rounded-xl bg-gray-50 border" style={{ borderColor: '#002147', borderWidth: '1px' }}>
                   <h3 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ color: '#002147' }}>
                     <span className="text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#800020' }}>7</span>
                     Parent/Guardian Details
@@ -1067,7 +1067,7 @@ const SeniorAdmissionForm = () => {
                 </section>
 
                 {/* Declaration Section */}
-                <section className="p-6 rounded-xl border-2" style={{ backgroundColor: '#fef5f5', borderColor: '#800020' }}>
+                <section className="p-4 sm:p-6 rounded-xl border-2" style={{ backgroundColor: '#fef5f5', borderColor: '#800020' }}>
                   <h3 className="text-lg font-bold mb-4 text-center underline" style={{ color: '#800020' }}>
                     DECLARATION & TERMS
                   </h3>
