@@ -2,6 +2,46 @@ import React, { useEffect, useState } from 'react';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../firebase';
 
+const formatCsvValue = (value) => {
+  if (value === null || value === undefined) return '';
+  if (value?.toDate && typeof value.toDate === 'function') {
+    const d = value.toDate();
+    return d instanceof Date && !Number.isNaN(d.getTime()) ? d.toISOString() : '';
+  }
+  if (value instanceof Date) return value.toISOString();
+  if (Array.isArray(value)) return value.map((v) => String(v ?? '')).join(' | ');
+  if (typeof value === 'object') return JSON.stringify(value);
+  return String(value);
+};
+
+const downloadCsv = (filename, rows) => {
+  const headersSet = new Set();
+  rows.forEach((r) => Object.keys(r || {}).forEach((k) => headersSet.add(k)));
+  const headers = Array.from(headersSet);
+
+  const escapeCell = (cell) => {
+    const str = formatCsvValue(cell);
+    const escaped = str.replace(/"/g, '""');
+    return `"${escaped}"`;
+  };
+
+  const csvLines = [headers.map((h) => escapeCell(h)).join(',')];
+  rows.forEach((r) => {
+    csvLines.push(headers.map((h) => escapeCell(r?.[h])).join(','));
+  });
+
+  const csv = csvLines.join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+};
+
 const SeniorAdmissionRow = ({ row }) => {
   const year = row.year || '-';
   const course = row.course || '-';
@@ -24,6 +64,16 @@ const AdminSeniorAdmissions = () => {
   const [seniorAdmissions, setSeniorAdmissions] = useState([]);
   const [isLoadingAdmissions, setIsLoadingAdmissions] = useState(true);
   const [admissionsError, setAdmissionsError] = useState('');
+
+  const handleExport = () => {
+    const exportRows = seniorAdmissions.map((row) => {
+      const { id, ...rest } = row;
+      void id;
+      return rest;
+    });
+    const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+    downloadCsv(`senior-admissions-${ts}.csv`, exportRows);
+  };
 
   useEffect(() => {
     const q = query(collection(db, 'seniorAdmissions'), orderBy('createdAt', 'desc'));
@@ -49,7 +99,17 @@ const AdminSeniorAdmissions = () => {
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
       <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
         <h3 className="font-bold text-gray-800 text-lg">Senior Admission Submissions</h3>
-        <div className="text-xs text-gray-500 font-semibold">Total: {admissionsCount}</div>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleExport}
+            disabled={seniorAdmissions.length === 0}
+            className="px-4 py-2 rounded-lg text-xs font-bold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Export to Excel
+          </button>
+          <div className="text-xs text-gray-500 font-semibold">Total: {admissionsCount}</div>
+        </div>
       </div>
 
       {admissionsError && (
