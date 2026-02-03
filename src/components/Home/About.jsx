@@ -18,8 +18,13 @@ const About = () => {
             className="relative"
           >
             <div className="absolute -inset-4 bg-sv-gold/20 rounded-2xl transform rotate-3 -z-10"></div>
-            <img 
+            {/* <img 
               src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2574&auto=format&fit=crop" 
+              alt="Founder" 
+              className="rounded-xl shadow-2xl w-full object-cover h-[500px]"
+            /> */}
+            <img 
+              src="src/assets/image.png" 
               alt="Founder" 
               className="rounded-xl shadow-2xl w-full object-cover h-[500px]"
             />
