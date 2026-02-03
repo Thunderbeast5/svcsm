@@ -25,6 +25,7 @@ const AdminLayout = () => {
   const menuItems = [
     { path: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { path: '/admin/junior-admissions', label: 'Junior Admissions', icon: Users },
+    { path: '/admin/senior-admissions', label: 'Senior Admissions', icon: Users },
     { path: '/admin/courses', label: 'Manage Courses', icon: BookOpen },
     { path: '/admin/notices', label: 'Notices & News', icon: FileText },
     { path: '/admin/settings', label: 'Settings', icon: Settings },

@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { FileText, Save, Download, CheckCircle, RefreshCcw, Upload } from 'lucide-react';
 import SeniorAdmissionPDF from '../../components/PDF/SeniorAdmissionPDF'; 
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const SeniorAdmissionForm = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset, setValue } = useForm();
@@ -45,15 +47,54 @@ const SeniorAdmissionForm = () => {
 
   const currentCourseFees = getSelectedCourseFees();
 
-  const onSubmit = (data) => {
-    data.appNo = `SVIM-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  const onSubmit = async (data) => {
+    const joinDigits = (prefix, count) => {
+      let out = '';
+      for (let i = 0; i < count; i++) out += data[`${prefix}${i}`] ?? '';
+      return out;
+    };
+
+    const digitFieldSpecs = [
+      { prefix: 'aadhar', count: 12 },
+      { prefix: 'candidateMobile', count: 10 },
+      { prefix: 'parentMobile', count: 10 },
+    ];
+
+    const appNo = `SVIM-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    data.appNo = appNo;
     
     if (photoPreview) {
       data.photoData = photoPreview;
     }
 
-    setFormData(data);
-    setIsSubmitted(true);
+    const combinedFields = {
+      aadhar: joinDigits('aadhar', 12),
+      candidateMobile: joinDigits('candidateMobile', 10),
+      parentMobile: joinDigits('parentMobile', 10),
+    };
+
+    const payload = {
+      ...data,
+      ...combinedFields,
+      appNo,
+      formType: 'senior',
+      status: 'Pending',
+      createdAt: serverTimestamp(),
+    };
+
+    for (const spec of digitFieldSpecs) {
+      for (let i = 0; i < spec.count; i++) delete payload[`${spec.prefix}${i}`];
+    }
+
+    try {
+      const docRef = await addDoc(collection(db, 'seniorAdmissions'), payload);
+      data.submissionId = docRef.id;
+      setFormData(data);
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error('Failed to submit admission form:', err);
+      alert('Submission failed. Please try again.');
+    }
   };
 
   const handlePhotoUpload = (e) => {
