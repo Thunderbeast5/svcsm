@@ -14,20 +14,17 @@ const formatCsvValue = (value) => {
   return String(value);
 };
 
-const downloadCsv = (filename, rows) => {
-  const headersSet = new Set();
-  rows.forEach((r) => Object.keys(r || {}).forEach((k) => headersSet.add(k)));
-  const headers = Array.from(headersSet);
-
+const downloadCsvWithColumns = (filename, columns, rows) => {
   const escapeCell = (cell) => {
     const str = formatCsvValue(cell);
     const escaped = str.replace(/"/g, '""');
     return `"${escaped}"`;
   };
 
+  const headers = columns.map((c) => c.header);
   const csvLines = [headers.map((h) => escapeCell(h)).join(',')];
   rows.forEach((r) => {
-    csvLines.push(headers.map((h) => escapeCell(r?.[h])).join(','));
+    csvLines.push(columns.map((c) => escapeCell(c.getValue(r))).join(','));
   });
 
   const csv = csvLines.join('\n');
@@ -66,13 +63,51 @@ const AdminSeniorAdmissions = () => {
   const [admissionsError, setAdmissionsError] = useState('');
 
   const handleExport = () => {
-    const exportRows = seniorAdmissions.map((row) => {
-      const { id, ...rest } = row;
-      void id;
-      return rest;
-    });
+    const exportRows = seniorAdmissions;
+
+    const exportColumns = [
+      { header: 'Application Number', getValue: (r) => r?.appNo },
+      { header: 'Std', getValue: (r) => r?.year },
+      { header: 'Stream', getValue: (r) => r?.course },
+      { header: 'Last Name', getValue: (r) => r?.lastName },
+      { header: 'First Name', getValue: (r) => r?.firstName },
+      { header: 'Middle Name', getValue: (r) => r?.middleName },
+      { header: 'Gender', getValue: (r) => r?.gender },
+      { header: 'Mother Name', getValue: (r) => r?.motherName },
+      { header: 'Father Name', getValue: (r) => r?.parentName },
+      { header: 'Father Occupation', getValue: (r) => r?.parentOccupation },
+      { header: 'Office Address', getValue: (r) => r?.parentAddress },
+      { header: 'Parent Mobile Number', getValue: (r) => r?.parentMobile },
+      { header: 'Candidate Mobile Number', getValue: (r) => r?.candidateMobile },
+      { header: 'Email', getValue: (r) => r?.email },
+      { header: 'DOB', getValue: (r) => r?.dobString || [r?.dobDay, r?.dobMonth, r?.dobYear].filter(Boolean).join('-') },
+      { header: 'Place Of Birth', getValue: (r) => r?.placeOfBirth },
+      { header: 'State', getValue: (r) => r?.state },
+      { header: 'Caste', getValue: (r) => r?.category || r?.casteName },
+      {
+        header: 'Address',
+        getValue: (r) => {
+          const parts = [r?.buildingName, r?.streetName, r?.village, r?.district, r?.state, r?.pinCode].filter(Boolean);
+          return parts.join(', ');
+        },
+      },
+      {
+        header: 'Previous Exam Details',
+        getValue: (r) => {
+          const parts = [
+            r?.lastCourseName ? `Course: ${r.lastCourseName}` : '',
+            r?.lastSchoolCollege ? `Institute: ${r.lastSchoolCollege}` : '',
+            r?.lastExamMonth ? `Month: ${r.lastExamMonth}` : '',
+            r?.lastExamYear ? `Year: ${r.lastExamYear}` : '',
+            r?.lastPercentage ? `Percentage: ${r.lastPercentage}` : '',
+          ].filter(Boolean);
+          return parts.join(', ');
+        },
+      },
+    ];
+
     const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
-    downloadCsv(`senior-admissions-${ts}.csv`, exportRows);
+    downloadCsvWithColumns(`senior-admissions-${ts}.csv`, exportColumns, exportRows);
   };
 
   useEffect(() => {

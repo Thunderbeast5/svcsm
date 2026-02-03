@@ -14,20 +14,17 @@ const formatCsvValue = (value) => {
   return String(value);
 };
 
-const downloadCsv = (filename, rows) => {
-  const headersSet = new Set();
-  rows.forEach((r) => Object.keys(r || {}).forEach((k) => headersSet.add(k)));
-  const headers = Array.from(headersSet);
-
+const downloadCsvWithColumns = (filename, columns, rows) => {
   const escapeCell = (cell) => {
     const str = formatCsvValue(cell);
     const escaped = str.replace(/"/g, '""');
     return `"${escaped}"`;
   };
 
+  const headers = columns.map((c) => c.header);
   const csvLines = [headers.map((h) => escapeCell(h)).join(',')];
   rows.forEach((r) => {
-    csvLines.push(headers.map((h) => escapeCell(r?.[h])).join(','));
+    csvLines.push(columns.map((c) => escapeCell(c.getValue(r))).join(','));
   });
 
   const csv = csvLines.join('\n');
@@ -66,13 +63,49 @@ const AdminJuniorAdmissions = () => {
   const [admissionsError, setAdmissionsError] = useState('');
 
   const handleExport = () => {
-    const exportRows = juniorAdmissions.map((row) => {
-      const { id, ...rest } = row;
-      void id;
-      return rest;
-    });
+    const exportRows = juniorAdmissions;
+
+    const exportColumns = [
+      { header: 'Application Number', getValue: (r) => r?.appNo },
+      { header: 'Std', getValue: (r) => r?.standard },
+      {
+        header: 'Stream',
+        getValue: (r) => (r?.streamScience ? 'Science' : r?.streamCommerce ? 'Commerce' : r?.stream || ''),
+      },
+      { header: 'Last Name', getValue: (r) => r?.surname },
+      { header: 'First Name', getValue: (r) => r?.firstName },
+      { header: 'Middle Name', getValue: (r) => r?.middleName },
+      { header: 'Gender', getValue: (r) => r?.gender },
+      { header: 'Mother Name', getValue: (r) => r?.mothersName },
+      { header: 'Father Name', getValue: (r) => r?.fathersName || r?.fullNameFather },
+      { header: 'Father Occupation', getValue: (r) => r?.occupation },
+      { header: 'Office Address', getValue: (r) => r?.officeAddress },
+      { header: 'Parent Mobile Number', getValue: (r) => r?.parentMobile },
+      { header: 'Candidate Mobile Number', getValue: (r) => r?.candidateMobile },
+      { header: 'Email', getValue: (r) => r?.email },
+      { header: 'DOB', getValue: (r) => r?.dobString || r?.birthDateString },
+      { header: 'Place Of Birth', getValue: (r) => r?.placeOfBirth || r?.birthPlace },
+      { header: 'State', getValue: (r) => r?.birthState },
+      { header: 'Caste', getValue: (r) => r?.caste },
+      { header: 'Address', getValue: (r) => r?.permanentAddress || r?.correspondenceAddress },
+      {
+        header: 'Previous Exam Details',
+        getValue: (r) => {
+          const parts = [
+            r?.sscStream ? `Stream: ${r.sscStream}` : '',
+            r?.sscYear ? `Year: ${r.sscYear}` : '',
+            r?.sscBoard ? `Board: ${r.sscBoard}` : '',
+            r?.sscPercentage ? `Percentage: ${r.sscPercentage}` : '',
+            r?.sscMarksObtained ? `Marks: ${r.sscMarksObtained}` : '',
+            r?.sscTotalMarks ? `Out Of: ${r.sscTotalMarks}` : '',
+          ].filter(Boolean);
+          return parts.join(', ');
+        },
+      },
+    ];
+
     const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
-    downloadCsv(`junior-admissions-${ts}.csv`, exportRows);
+    downloadCsvWithColumns(`junior-admissions-${ts}.csv`, exportColumns, exportRows);
   };
 
   useEffect(() => {
