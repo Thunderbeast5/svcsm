@@ -3,9 +3,11 @@ import { useForm } from 'react-hook-form';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { FileText, Save, Download, CheckCircle, RefreshCcw, Upload } from 'lucide-react';
 import JuniorAdmissionPDF from '../../components/PDF/JuniorAdmissionPDF'; 
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const JuniorAdmissionForm = () => {
-  const { register, handleSubmit, watch, formState: { errors }, reset, setValue } = useForm();
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting }, reset, setValue } = useForm();
   const [formData, setFormData] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [photoFile, setPhotoFile] = useState(null);
@@ -61,6 +63,16 @@ const JuniorAdmissionForm = () => {
     }
   };
 
+  const onInvalid = (invalidErrors) => {
+    const firstField = Object.keys(invalidErrors || {})[0];
+    if (!firstField) return;
+    const el = document.querySelector(`[name="${CSS.escape(firstField)}"]`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (typeof el.focus === 'function') el.focus();
+    }
+  };
+
   const getSelectedCourseFees = () => {
     if (selectedStandard && selectedStream) {
       const courseKey = `${selectedStandard}${selectedStream === 'Science' ? 'Sci' : 'Com'}`;
@@ -71,8 +83,9 @@ const JuniorAdmissionForm = () => {
 
   const currentCourseFees = getSelectedCourseFees();
 
-  const onSubmit = (data) => {
-    data.appNo = `SV-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  const onSubmit = async (data) => {
+    const appNo = `SV-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    data.appNo = appNo;
     
     if (photoPreview) {
       data.photoData = photoPreview;
@@ -85,9 +98,24 @@ const JuniorAdmissionForm = () => {
       data.streamCommerce = true;
       data.streamScience = false;
     }
-    
-    setFormData(data);
-    setIsSubmitted(true);
+
+    const payload = {
+      ...data,
+      appNo,
+      formType: 'junior',
+      status: 'Pending',
+      createdAt: serverTimestamp(),
+    };
+
+    try {
+      const docRef = await addDoc(collection(db, 'juniorAdmissions'), payload);
+      data.submissionId = docRef.id;
+      setFormData(data);
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error('Failed to submit admission form:', err);
+      alert('Submission failed. Please try again.');
+    }
   };
 
   const handlePhotoUpload = (e) => {
@@ -263,7 +291,7 @@ const JuniorAdmissionForm = () => {
 
           <div className="p-8 md:p-10">
             {!isSubmitted ? (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
+              <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="space-y-10">
                 
                 {/* Course Selection */}
                 <section className="p-6 rounded-xl" style={{ backgroundColor: '#f0f4f8', borderColor: '#002147', borderWidth: '2px' }}>
@@ -1094,6 +1122,7 @@ const JuniorAdmissionForm = () => {
                 <div className="flex justify-center pt-6">
                   <button 
                     type="submit" 
+                    disabled={isSubmitting}
                     className="text-white text-lg px-12 py-5 rounded-full font-bold shadow-2xl flex items-center gap-3 transition-all"
                     style={{ backgroundColor: '#800020' }}
                     onMouseEnter={(e) => e.target.style.backgroundColor = '#600015'}
