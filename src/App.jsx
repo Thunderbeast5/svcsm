@@ -36,6 +36,8 @@ import TestimonialsPage from "./pages/CampusLife/TestimonialsPage";
 //Admin Pages
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminLayout from "./pages/Admin/AdminLayout";
+import AdminJuniorAdmissions from "./pages/Admin/AdminJuniorAdmissions";
 
 import TestAdmissionForm from "./pages/Admission/TestAddForm";
 import JuniorAdmissionPDF from "./components/PDF/JuniorAdmissionPDF";
@@ -112,13 +114,20 @@ const Layout = () => {
         {/* --- ADMIN ROUTES --- */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
-          path="/admin/dashboard"
+          path="/admin"
           element={
             <RequireAdminAuth>
-              <AdminDashboard />
+              <AdminLayout />
             </RequireAdminAuth>
           }
-        />
+        >
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="junior-admissions" element={<AdminJuniorAdmissions />} />
+          <Route path="courses" element={<div className="bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center text-sm text-gray-500">This section will be implemented next.</div>} />
+          <Route path="notices" element={<div className="bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center text-sm text-gray-500">This section will be implemented next.</div>} />
+          <Route path="settings" element={<div className="bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center text-sm text-gray-500">This section will be implemented next.</div>} />
+        </Route>
       </Routes>
 
       {/* HIDE Footer on Admin Pages */}
