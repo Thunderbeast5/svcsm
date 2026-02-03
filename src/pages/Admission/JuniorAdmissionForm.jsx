@@ -84,6 +84,27 @@ const JuniorAdmissionForm = () => {
   const currentCourseFees = getSelectedCourseFees();
 
   const onSubmit = async (data) => {
+    const joinDigits = (prefix, count) => {
+      let out = '';
+      for (let i = 0; i < count; i++) out += data[`${prefix}${i}`] ?? '';
+      return out;
+    };
+
+    const digitFieldSpecs = [
+      { prefix: 'aadhar', count: 12 },
+      { prefix: 'parentMobile', count: 10 },
+      { prefix: 'candidateMobile', count: 10 },
+      { prefix: 'birthDate', count: 2 },
+      { prefix: 'birthMonth', count: 2 },
+      { prefix: 'birthYear', count: 4 },
+      { prefix: 'dobDay', count: 2 },
+      { prefix: 'dobMonth', count: 2 },
+      { prefix: 'dobYear', count: 4 },
+      { prefix: 'ageYears', count: 2 },
+      { prefix: 'ageMonths', count: 2 },
+      { prefix: 'ageDays', count: 2 },
+    ];
+
     const appNo = `SV-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
     data.appNo = appNo;
     
@@ -99,13 +120,36 @@ const JuniorAdmissionForm = () => {
       data.streamScience = false;
     }
 
+    const combinedFields = {
+      aadhar: joinDigits('aadhar', 12),
+      parentMobile: joinDigits('parentMobile', 10),
+      candidateMobile: joinDigits('candidateMobile', 10),
+      birthDate: joinDigits('birthDate', 2),
+      birthMonth: joinDigits('birthMonth', 2),
+      birthYear: joinDigits('birthYear', 4),
+      birthDateString: `${joinDigits('birthDate', 2)}/${joinDigits('birthMonth', 2)}/${joinDigits('birthYear', 4)}`,
+      dobDay: joinDigits('dobDay', 2),
+      dobMonth: joinDigits('dobMonth', 2),
+      dobYear: joinDigits('dobYear', 4),
+      dobString: `${joinDigits('dobDay', 2)}/${joinDigits('dobMonth', 2)}/${joinDigits('dobYear', 4)}`,
+      ageYears: joinDigits('ageYears', 2),
+      ageMonths: joinDigits('ageMonths', 2),
+      ageDays: joinDigits('ageDays', 2),
+      ageString: `${joinDigits('ageYears', 2)}Y ${joinDigits('ageMonths', 2)}M ${joinDigits('ageDays', 2)}D`,
+    };
+
     const payload = {
       ...data,
+      ...combinedFields,
       appNo,
       formType: 'junior',
       status: 'Pending',
       createdAt: serverTimestamp(),
     };
+
+    for (const spec of digitFieldSpecs) {
+      for (let i = 0; i < spec.count; i++) delete payload[`${spec.prefix}${i}`];
+    }
 
     try {
       const docRef = await addDoc(collection(db, 'juniorAdmissions'), payload);
