@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 const Hero = () => {
@@ -14,6 +14,10 @@ const Hero = () => {
       'Join Swami Vivekananda College to experience a curriculum that blends academic rigor with moral leadership.',
     imageUrl: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop',
   });
+
+  const [tickerText, setTickerText] = useState(
+    'HSC Board Exam Schedule Released  •  Guest Lecture by Dr. Patil on 25th Jan  •  Annual Sports Day Registration Open  •  Scholarship Applications due by Feb 1st'
+  );
 
   useEffect(() => {
     let ignore = false;
@@ -38,6 +42,46 @@ const Hero = () => {
     };
 
     load();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let ignore = false;
+
+    const loadNotices = async () => {
+      try {
+        let snap;
+        try {
+          const q = query(
+            collection(db, 'notices'),
+            where('active', '==', true),
+            orderBy('createdAt', 'desc')
+          );
+          snap = await getDocs(q);
+        } catch (err) {
+          const fallbackQuery = query(collection(db, 'notices'), where('active', '==', true));
+          snap = await getDocs(fallbackQuery);
+          console.error('Hero ticker notices query failed (retrying without orderBy):', err);
+        }
+        if (ignore) return;
+
+        const texts = snap.docs
+          .map((d) => d.data()?.text)
+          .filter((t) => typeof t === 'string' && t.trim().length > 0);
+
+        if (texts.length > 0) {
+          setTickerText(texts.join('  •  '));
+        }
+      } catch (err) {
+        if (ignore) return;
+        console.error('Failed to load hero ticker notices:', err);
+      }
+    };
+
+    loadNotices();
 
     return () => {
       ignore = true;
@@ -103,7 +147,7 @@ const Hero = () => {
               animate={{ x: ["100%", "-100%"] }}
               transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
             >
-              HSC Board Exam Schedule Released  •  Guest Lecture by Dr. Patil on 25th Jan  •  Annual Sports Day Registration Open  •  Scholarship Applications due by Feb 1st
+              {tickerText}
             </motion.div>
           </div>
         </div>

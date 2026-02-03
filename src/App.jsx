@@ -40,6 +40,7 @@ import AdminLayout from "./pages/Admin/AdminLayout";
 import AdminJuniorAdmissions from "./pages/Admin/AdminJuniorAdmissions";
 import AdminSeniorAdmissions from "./pages/Admin/AdminSeniorAdmissions";
 import AdminHeroSettings from "./pages/Admin/AdminHeroSettings";
+import AdminNoticesNews from "./pages/Admin/AdminNoticesNews";
 
 import TestAdmissionForm from "./pages/Admission/TestAddForm";
 import JuniorAdmissionPDF from "./components/PDF/JuniorAdmissionPDF";
@@ -129,7 +130,7 @@ const Layout = () => {
           <Route path="senior-admissions" element={<AdminSeniorAdmissions />} />
           <Route path="hero" element={<AdminHeroSettings />} />
           <Route path="courses" element={<div className="bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center text-sm text-gray-500">This section will be implemented next.</div>} />
-          <Route path="notices" element={<div className="bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center text-sm text-gray-500">This section will be implemented next.</div>} />
+          <Route path="notices" element={<AdminNoticesNews />} />
           <Route path="settings" element={<div className="bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center text-sm text-gray-500">This section will be implemented next.</div>} />
         </Route>
       </Routes>
