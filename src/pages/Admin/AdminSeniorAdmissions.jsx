@@ -67,8 +67,8 @@ const AdminSeniorAdmissions = () => {
 
     const exportColumns = [
       { header: 'Application Number', getValue: (r) => r?.appNo },
-      { header: 'Std', getValue: (r) => r?.year },
-      { header: 'Stream', getValue: (r) => r?.course },
+      { header: 'Year', getValue: (r) => r?.year },
+      { header: 'Course', getValue: (r) => r?.course },
       { header: 'Last Name', getValue: (r) => r?.lastName },
       { header: 'First Name', getValue: (r) => r?.firstName },
       { header: 'Middle Name', getValue: (r) => r?.middleName },
@@ -81,7 +81,7 @@ const AdminSeniorAdmissions = () => {
       { header: 'Candidate Mobile Number', getValue: (r) => r?.candidateMobile },
       { header: 'Email', getValue: (r) => r?.email },
       { header: 'DOB', getValue: (r) => r?.dobString || [r?.dobDay, r?.dobMonth, r?.dobYear].filter(Boolean).join('-') },
-      { header: 'Place Of Birth', getValue: (r) => r?.placeOfBirth },
+      { header: 'Blood Group', getValue: (r) => r?.bloodGroup },
       { header: 'State', getValue: (r) => r?.state },
       { header: 'Caste', getValue: (r) => r?.category || r?.casteName },
       {
@@ -91,6 +91,19 @@ const AdminSeniorAdmissions = () => {
           return parts.join(', ');
         },
       },
+      {
+        header: 'Bank Details',
+        getValue: (r) => {
+          const parts = [
+            r?.bankAccountNumber ? `A/C: ${r.bankAccountNumber}` : '',
+            r?.bankIFSC ? `IFSC: ${r.bankIFSC}` : '',
+            r?.bankName ? `Bank: ${r.bankName}` : '',
+            r?.bankBranch ? `Branch: ${r.bankBranch}` : '',
+          ].filter(Boolean);
+          return parts.join(', ');
+        },
+      },
+      { header: 'Parent Income', getValue: (r) => r?.parentIncome },
       {
         header: 'Previous Exam Details',
         getValue: (r) => {
