@@ -684,32 +684,6 @@ const SeniorAdmissionForm = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-bold mb-3 text-gray-700">Gender *</label>
-                      <div className="flex gap-6">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input 
-                            type="radio" 
-                            value="Male"
-                            {...register("gender")}
-                            className="w-5 h-5 cursor-pointer"
-                            style={{ accentColor: '#B8860B' }}
-                          />
-                          <span className="text-gray-800 font-medium">Male</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input 
-                            type="radio" 
-                            value="Female"
-                            {...register("gender")}
-                            className="w-5 h-5 cursor-pointer"
-                            style={{ accentColor: '#B8860B' }}
-                          />
-                          <span className="text-gray-800 font-medium">Female</span>
-                        </label>
-                      </div>
-                    </div>
-
-                    <div>
                       <label className="block text-sm font-bold mb-3 text-gray-700">Marital Status *</label>
                       <div className="flex gap-6">
                         <label className="flex items-center gap-2 cursor-pointer">
