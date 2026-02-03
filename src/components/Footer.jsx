@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion'; // Added Import
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  void motion;
   return (
     <footer className="bg-sv-blue text-white pt-20 pb-10 border-t-4 border-sv-gold">
       <div className="container mx-auto px-4 grid md:grid-cols-4 gap-12 mb-16 border-b border-white/10 pb-12">
@@ -100,6 +102,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
         <p>&copy; 2026 SVCMS. All rights reserved.</p>
         <div className="flex gap-6 mt-4 md:mt-0">
+          <Link to="/admin/login" className="hover:text-white">Admin Portal</Link>
           <a href="#" className="hover:text-white">Privacy Policy</a>
           <a href="#" className="hover:text-white">Terms of Service</a>
         </div>
