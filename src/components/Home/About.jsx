@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Quote, ArrowRight } from 'lucide-react'; // Added ArrowRight for the link
-import { Link } from 'react-router-dom'; // 1. Import Link
+import { Quote, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
@@ -9,38 +9,39 @@ const About = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           
-          {/* Image Side */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative"
-          >
-            <div className="absolute -inset-4 bg-sv-gold/20 rounded-2xl transform rotate-3 -z-10"></div>
-            {/* <img 
-              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2574&auto=format&fit=crop" 
-              alt="Founder" 
-              className="rounded-xl shadow-2xl w-full object-cover h-[500px]"
-            /> */}
-            <img 
-              src="src/assets/image.png" 
-              alt="Founder" 
-              className="rounded-xl shadow-2xl w-full object-cover h-[500px]"
-            />
-            
-            <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur p-6 rounded-lg shadow-lg border-l-4 border-sv-maroon"
-            >
-              <p className="font-bold text-sv-blue text-lg">Hon. Founder Name</p>
-              <p className="text-sm text-gray-500">Founder & Chairman</p>
-            </motion.div>
-          </motion.div>
+          {/* Image Side - UPDATED DESIGN */}
+         {/* Option 1: The Academic Arch */}
+<motion.div 
+  initial={{ opacity: 0, x: -50 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true, margin: "-100px" }}
+  transition={{ duration: 0.8 }}
+  className="relative h-[520px] flex items-end justify-center"
+>
+  {/* The Background - Changed to Rounded Rectangle */}
+  <div className="absolute bottom-0 w-[90%] h-[95%] bg-sv-blue rounded-3xl border-4 border-sv-gold shadow-2xl overflow-hidden">
+     {/* Subtle texture inside */}
+     <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#B8860B_1px,transparent_1px)] [background-size:16px_16px]"></div>
+     
+     {/* Optional: Add a subtle gradient at the bottom to blend legs/torso if cut abruptly */}
+     <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-sv-blue to-transparent"></div>
+  </div>
 
-          {/* Text Side */}
+  {/* The Image - Rising out of the box */}
+  <img 
+    src="src/assets/img.png" 
+    alt="Founder" 
+    className="relative z-10 h-full w-full object-contain object-bottom drop-shadow-2xl"
+  />
+
+  {/* Name Plate - Floating at the bottom edge */}
+  <div className="absolute -bottom-6 z-20 bg-white py-4 px-8 rounded-xl shadow-xl border-t-4 border-sv-maroon text-center min-w-[250px]">
+    <p className="font-bold text-sv-blue text-xl">Hon. Kiran R Arote</p>
+    <p className="text-xs font-bold text-sv-gold tracking-widest uppercase mt-1">Founder & Chairman</p>
+  </div>
+</motion.div>
+
+          {/* Text Side (Unchanged) */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -69,7 +70,6 @@ const About = () => {
               </div>
             </motion.div>
 
-            {/* 2. REPLACED BUTTON WITH LINK */}
             <Link 
               to="/about/vision" 
               className="inline-flex items-center gap-2 text-sv-maroon font-bold border-b-2 border-sv-maroon hover:text-red-900 hover:border-red-900 pb-1 transition-all group"
