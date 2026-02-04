@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import { 
   Microscope, Calculator, Palette, Briefcase, Code, Landmark, 
-  BookOpen, Users, GraduationCap, Star, ArrowRight, Sparkles 
+  BookOpen, Users, GraduationCap, Star, ArrowRight, Sparkles, Download 
 } from 'lucide-react';
 
 // Data for Junior College (11th & 12th)
@@ -51,7 +51,7 @@ const seniorStreams = [
   {
     id: 'bba',
     title: 'BBA',
-    subtitle: "Bachelor of Business Admin",
+    subtitle: "Bachelor of Business Administration",
     icon: Briefcase,
     theme: 'indigo',
     description: "Hones critical skills in leadership, entrepreneurship & strategic thinking. Includes immersive industry visits, impactful internships & live projects.",
@@ -136,48 +136,68 @@ const CoursesCurriculum = () => {
     return colors[theme]?.[type] || '';
   };
 
+  // --- DOWNLOAD HANDLER ---
+  const handleDownload = () => {
+    // 1. Determine which file to download based on the section
+    // Assuming you placed "COM-SCI.pdf" and "BBA.pdf" in a "brochures" folder inside "public"
+    const fileUrl = activeSection === 'junior' 
+      ? '/brochures/COM-SCI.pdf' 
+      : '/brochures/BBA.pdf';
+    
+    const fileName = activeSection === 'junior' 
+      ? 'SVICS_Junior_College_Brochure.pdf' 
+      : 'SVICS_Degree_College_Brochure.pdf';
+
+    // 2. Create a temporary link element to trigger the download
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="min-h-screen bg-[#FAFAFA] pt-5 font-sans selection:bg-sv-gold selection:text-white">
       
-      {/* --- PREMIUM HERO SECTION --- */}
-      <section className="relative bg-sv-blue text-white py-16 md:py-20 overflow-hidden">
-  {/* Abstract Background Shapes */}
-  <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-  <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sv-gold/10 rounded-full blur-3xl translate-y-1/4 -translate-x-1/4 pointer-events-none" />
-  
-  <div className="container mx-auto px-4 relative z-10 text-center">
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="inline-block mb-3"
-    >
-       <span className="py-1 px-3 border border-sv-gold/50 rounded-full text-sv-gold text-xs font-bold uppercase tracking-widest bg-sv-gold/10 backdrop-blur-sm">
-          Academic Excellence
-       </span>
-    </motion.div>
-    <motion.h1 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 }}
-      className="text-4xl md:text-6xl font-bold mb-4 tracking-tight"
-    >
-      Curriculum & <span className="text-transparent bg-clip-text bg-gradient-to-r from-sv-gold to-orange-300">Courses</span>
-    </motion.h1>
-    <motion.p 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.2 }}
-      className="text-lg text-gray-300 max-w-2xl mx-auto font-light leading-relaxed"
-    >
-      Meticulously designed programs that bridge the gap between academic theory and professional success.
-    </motion.p>
-  </div>
-</section>
-
-      {/* --- NAVIGATION & CONTENT --- */}
-      <section className="container mx-auto px-4 py-16 -mt-16 relative z-20">
+      {/* --- HERO SECTION --- */}
+      <section className="relative bg-sv-blue text-white py-14 md:py-16 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sv-gold/10 rounded-full blur-3xl translate-y-1/4 -translate-x-1/4 pointer-events-none" />
         
-        {/* 1. Level Toggle (Floating Card) */}
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-block mb-3"
+          >
+             <span className="py-1 px-3 border border-sv-gold/50 rounded-full text-sv-gold text-xs font-bold uppercase tracking-widest bg-sv-gold/10 backdrop-blur-sm">
+                Academic Excellence
+             </span>
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-6xl font-bold mb-4 tracking-tight"
+          >
+            Curriculum & <span className="text-transparent bg-clip-text bg-gradient-to-r from-sv-gold to-orange-300">Courses</span>
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-gray-300 max-w-2xl mx-auto font-light leading-relaxed"
+          >
+            Meticulously designed programs that bridge the gap between academic theory and professional success.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* --- CONTENT SECTION --- */}
+      <section className="container mx-auto px-4 py-16  -mt-13 relative z-20">
+        
+        {/* Toggle Buttons */}
         <div className="flex justify-center mb-12">
           <div className="bg-white p-2 rounded-full shadow-2xl shadow-sv-blue/10 inline-flex items-center gap-2 border border-white/50 backdrop-blur-xl">
             {['junior', 'senior'].map((level) => (
@@ -190,7 +210,7 @@ const CoursesCurriculum = () => {
                     : 'text-gray-500 hover:text-sv-blue hover:bg-gray-50'
                 }`}
               >
-                {level === 'junior' ? 'Junior College' : 'Degree College'}
+                {level === 'junior' ? 'Junior Institute' : 'Senior Institute'}
               </button>
             ))}
           </div>
@@ -198,7 +218,7 @@ const CoursesCurriculum = () => {
 
         <div className="grid lg:grid-cols-12 gap-8 items-start">
           
-          {/* 2. Side Navigation (Vertical Menu) */}
+          {/* Side Navigation */}
           <div className="lg:col-span-3 space-y-3">
              {currentStreams.map((stream) => (
                <motion.button
@@ -228,7 +248,7 @@ const CoursesCurriculum = () => {
              ))}
           </div>
 
-          {/* 3. Main Content Display (Classy Cards) */}
+          {/* Main Content Area */}
           <div className="lg:col-span-9">
             <AnimatePresence mode="wait">
               {activeData && (
@@ -240,9 +260,9 @@ const CoursesCurriculum = () => {
                   transition={{ duration: 0.4 }}
                   className="space-y-6"
                 >
-                    {/* Top Stats Row */}
+                    {/* Top Row: Info & Stats */}
                     <div className="grid md:grid-cols-3 gap-6">
-                        {/* Title Card */}
+                        {/* Description Card */}
                         <div className="md:col-span-2 bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group">
                             <div className={`absolute top-0 left-0 w-2 h-full bg-gradient-to-b ${getThemeColor(activeData.theme, 'gradient')}`}></div>
                             <div className="flex items-start justify-between mb-4">
@@ -262,7 +282,7 @@ const CoursesCurriculum = () => {
                             </p>
                         </div>
 
-                        {/* Quick Stats Card */}
+                        {/* Stats Card */}
                         <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex flex-col justify-center space-y-6">
                             <div>
                                 <div className="flex items-center gap-2 text-gray-400 text-xs font-bold uppercase tracking-widest mb-1">
@@ -291,7 +311,7 @@ const CoursesCurriculum = () => {
                         </div>
                     </div>
 
-                    {/* Bottom Content Grid */}
+                    {/* Bottom Row: Subjects & Careers */}
                     <div className="grid md:grid-cols-2 gap-6">
                         
                         {/* Subjects Card */}
@@ -312,8 +332,8 @@ const CoursesCurriculum = () => {
                              </div>
                         </div>
 
-                        {/* Career Path Card */}
-                        <div className="bg-sv-blue text-white rounded-2xl p-8 shadow-xl relative overflow-hidden">
+                        {/* Career Path Card with DOWNLOAD BUTTON */}
+                        <div className="bg-sv-blue text-white rounded-2xl p-8 shadow-xl relative overflow-hidden flex flex-col">
                              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
                              
                              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 relative z-10">
@@ -321,7 +341,7 @@ const CoursesCurriculum = () => {
                                 Career Opportunities
                              </h3>
                              
-                             <ul className="space-y-4 relative z-10">
+                             <ul className="space-y-4 relative z-10 flex-grow">
                                 {activeData.careers.map((career, i) => (
                                     <li key={i} className="flex items-center gap-3 text-gray-200 group">
                                         <div className={`w-2 h-2 rounded-full ${activeData.theme === 'orange' ? 'bg-orange-400' : 'bg-sv-gold'} group-hover:scale-150 transition-transform`}></div>
@@ -330,8 +350,14 @@ const CoursesCurriculum = () => {
                                 ))}
                              </ul>
 
-                             <button className="mt-8 w-full py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 group">
-                                Download Brochure <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                             {/* Functional Download Button */}
+                             <button 
+                                onClick={handleDownload}
+                                className="mt-8 w-full py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 group cursor-pointer relative z-20"
+                             >
+                                <Download size={18} />
+                                <span>Download Brochure</span>
+                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                              </button>
                         </div>
                     </div>
