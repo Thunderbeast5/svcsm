@@ -30,12 +30,6 @@ const getAdmissionDateObj = (value) => {
   return d;
 };
 
-const addMonths = (date, months) => {
-  const d = new Date(date);
-  d.setMonth(d.getMonth() + months);
-  return d;
-};
-
 const styles = StyleSheet.create({
   page: { 
     padding: 30, 
@@ -955,7 +949,7 @@ const JuniorAdmissionPDF = ({ data }) => {
           </View>
           <View style={styles.submissionTableRow}>
             <Text style={styles.submissionTableData}>Installment 2</Text>
-            <Text style={styles.submissionTableData}>{formatAdmissionDate(addMonths(getAdmissionDateObj(data.admissionDate), 6))}</Text>
+            <Text style={styles.submissionTableData}>21/09/2026</Text>
             <Text style={styles.submissionTableData}>Rs. {currentFees.inst2}</Text>
           </View>
         </View>
