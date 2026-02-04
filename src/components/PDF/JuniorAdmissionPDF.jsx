@@ -4,6 +4,24 @@ import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/render
 // Import your logo if available
 import logo from '../../assets/logo-name.png'; 
 
+const formatAdmissionDate = (value) => {
+  if (!value) {
+    const d = new Date();
+    return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+  }
+
+  if (typeof value === 'string') return value;
+
+  if (typeof value?.toDate === 'function') {
+    const d = value.toDate();
+    return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+  }
+
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return '';
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+};
+
 const styles = StyleSheet.create({
   page: { 
     padding: 30, 
@@ -457,6 +475,7 @@ const JuniorAdmissionPDF = ({ data }) => {
             <View style={styles.appNoText}>
               <Text>Application Form No.</Text>
               <Text style={{ marginTop: 2 }}>{data.appNo || '________'}</Text>
+              <Text style={{ marginTop: 2 }}>Date of Admission: {formatAdmissionDate(data.admissionDate)}</Text>
             </View>
           </View>
         </View>
