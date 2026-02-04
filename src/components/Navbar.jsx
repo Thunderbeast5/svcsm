@@ -84,7 +84,7 @@ const Navbar = () => {
           <div className="w-full pl-0 pr-4 md:pr-8 h-full flex justify-between items-center">
             <span className="hidden md:flex items-center gap-2 pl-4">
               {/* <MapPin size={14} className="text-white" />  */}
-              Empowering Future Leaders at SVCMS
+              Empowering Future Leaders at SVICSM
             </span>
             <div className="flex justify-between w-full md:w-auto gap-6">
               <span className="flex items-center gap-2">

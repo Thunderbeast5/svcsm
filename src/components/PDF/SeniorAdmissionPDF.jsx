@@ -21,6 +21,20 @@ const formatAdmissionDate = (value) => {
   return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
 };
 
+const getAdmissionDateObj = (value) => {
+  if (!value) return new Date();
+  if (typeof value?.toDate === 'function') return value.toDate();
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return new Date();
+  return d;
+};
+
+const addMonths = (date, months) => {
+  const d = new Date(date);
+  d.setMonth(d.getMonth() + months);
+  return d;
+};
+
 const styles = StyleSheet.create({
   page: { 
     padding: 30, 
@@ -818,6 +832,9 @@ const SeniorAdmissionPDF = ({ data }) => {
                 <View style={{ ...styles.feeTableHeaderCell, flex: 2 }}>
                   <Text>Payment Mode</Text>
                 </View>
+                <View style={styles.feeTableHeaderCell}>
+                  <Text>Date</Text>
+                </View>
                 <View style={styles.feeTableHeaderCellLast}>
                   <Text>Amount</Text>
                 </View>
@@ -825,6 +842,9 @@ const SeniorAdmissionPDF = ({ data }) => {
               <View style={styles.feeTableRow}>
                 <View style={{ ...styles.feeTableDataCell, flex: 2 }}>
                   <Text>One Time</Text>
+                </View>
+                <View style={styles.feeTableDataCell}>
+                  <Text>{formatAdmissionDate(getAdmissionDateObj(data.admissionDate))}</Text>
                 </View>
                 <View style={styles.feeTableDataCellLast}>
                   <Text>Rs. {currentFees.oneTime}</Text>
@@ -834,6 +854,9 @@ const SeniorAdmissionPDF = ({ data }) => {
                 <View style={{ ...styles.feeTableDataCell, flex: 2 }}>
                   <Text>Installment 1</Text>
                 </View>
+                <View style={styles.feeTableDataCell}>
+                  <Text>{formatAdmissionDate(getAdmissionDateObj(data.admissionDate))}</Text>
+                </View>
                 <View style={styles.feeTableDataCellLast}>
                   <Text>Rs. {currentFees.inst1}</Text>
                 </View>
@@ -841,6 +864,9 @@ const SeniorAdmissionPDF = ({ data }) => {
               <View style={styles.feeTableRow}>
                 <View style={{ ...styles.feeTableDataCell, flex: 2 }}>
                   <Text>Installment 2</Text>
+                </View>
+                <View style={styles.feeTableDataCell}>
+                  <Text>{formatAdmissionDate(addMonths(getAdmissionDateObj(data.admissionDate), 6))}</Text>
                 </View>
                 <View style={styles.feeTableDataCellLast}>
                   <Text>Rs. {currentFees.inst2}</Text>
