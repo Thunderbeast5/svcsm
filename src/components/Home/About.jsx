@@ -29,7 +29,7 @@ const About = () => {
 
   {/* The Image - Rising out of the box */}
   <img 
-    src="src/assets/img.png" 
+    src="https://res.cloudinary.com/dh4xushgf/image/upload/v1770226723/img_unj9wg.png" 
     alt="Founder" 
     className="relative z-10 h-full w-full object-contain object-bottom drop-shadow-2xl"
   />
