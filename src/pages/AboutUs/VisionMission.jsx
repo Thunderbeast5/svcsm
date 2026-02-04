@@ -130,6 +130,14 @@ const VisionMission = () => {
 
         </div>
       </section>
+      {/* <section className="bg-white py-20 border-y border-gray-100">
+        <div className="container mx-auto px-4 text-center max-w-4xl">
+             <Quote className="text-sv-gold w-12 h-12 mx-auto mb-6 opacity-40" />
+             <h2 className="text-2xl md:text-3xl font-serif text-gray-700 leading-relaxed italic">
+                "Take up one idea. Make that one idea your life - think of it, dream of it, live on that idea... This is the way to success."
+             </h2>
+        </div>
+      </section> */}
 
       {/* Core Values / Why SVICS */}
       <section className="container mx-auto px-4 pb-12 pt-0">
