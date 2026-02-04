@@ -546,13 +546,13 @@ const JuniorAdmissionForm = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-bold mb-2 text-gray-700">Middle Name *</label>
+                      <label className="block text-sm font-bold mb-2 text-gray-700">First Name *</label>
                       <input 
                         type="text" 
-                        {...register("middleName", { required: "Middle name is required" })}
+                        {...register("middleName", { required: "First name is required" })}
                         className="w-full p-3 border-2 rounded-lg uppercase focus:ring-2"
                         style={{ borderColor: '#B8860B' }}
-                        placeholder="MIDDLE NAME"
+                        placeholder="FIRST NAME"
                       />
                       {errors.middleName && <p className="text-red-600 text-xs mt-1">{errors.middleName.message}</p>}
                     </div>

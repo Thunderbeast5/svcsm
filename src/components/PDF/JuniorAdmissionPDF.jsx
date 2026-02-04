@@ -532,7 +532,7 @@ const JuniorAdmissionPDF = ({ data }) => {
             <Text style={styles.value}>{data.surname || ''}</Text>
           </View>
           <View style={{ ...styles.col, marginRight: 10 }}>
-            <Text style={{ fontSize: 9, marginRight: 4 }}>(Middle Name)</Text>
+            <Text style={{ fontSize: 9, marginRight: 4 }}>(First Name)</Text>
             <Text style={styles.value}>{data.middleName || ''}</Text>
           </View>
           <View style={styles.col}>
