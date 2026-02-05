@@ -40,7 +40,7 @@ const statsData = [
 // Helper Component for the Number Animation
 const Counter = ({ value }) => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, amount: 0.3 });
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, { damping: 50, stiffness: 100 });
 
