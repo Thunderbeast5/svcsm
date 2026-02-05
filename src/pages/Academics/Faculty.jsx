@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Briefcase, Award } from 'lucide-react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase';
 import PricipalImg from '../../assets/img.png';
 import Mapari from '../../assets/mp3.png';
 import Mahale from '../../assets/mh3.png';
@@ -174,6 +176,75 @@ const ProfileCard = ({ person, index }) => {
 };
 
 const Faculty = () => {
+  const facultyCol = useMemo(() => collection(db, 'faculty'), []);
+
+  const [leadershipRows, setLeadershipRows] = useState(leadershipData);
+  const [hodRows, setHodRows] = useState(facultyData);
+
+  useEffect(() => {
+    let ignore = false;
+
+    const load = async () => {
+      try {
+        const snap = await getDocs(facultyCol);
+        if (ignore) return;
+
+        const rows = snap.docs.map((d) => {
+          const data = d.data() || {};
+          return {
+            id: d.id,
+            category: data.category,
+            name: data.name,
+            role: data.role,
+            qual: data.qual,
+            exp: data.exp,
+            image: data.imageUrl,
+            order: data.order,
+            active: data.active,
+            createdAt: data.createdAt,
+          };
+        });
+
+        const toMillis = (v) => {
+          if (!v) return 0;
+          if (typeof v?.toMillis === 'function') return v.toMillis();
+          if (typeof v?.toDate === 'function') return v.toDate().getTime();
+          const d = new Date(v);
+          if (Number.isNaN(d.getTime())) return 0;
+          return d.getTime();
+        };
+
+        const sortedActive = rows
+          .filter((r) => r.active === true)
+          .sort((a, b) => {
+            const catA = String(a?.category || '');
+            const catB = String(b?.category || '');
+            if (catA !== catB) return catA.localeCompare(catB);
+
+            const orderA = Number.isFinite(a?.order) ? a.order : 0;
+            const orderB = Number.isFinite(b?.order) ? b.order : 0;
+            if (orderA !== orderB) return orderA - orderB;
+
+            return toMillis(b?.createdAt) - toMillis(a?.createdAt);
+          });
+
+        const leadership = sortedActive.filter((r) => r.category === 'leadership');
+        const hod = sortedActive.filter((r) => r.category === 'hod');
+
+        if (leadership.length > 0) setLeadershipRows(leadership);
+        if (hod.length > 0) setHodRows(hod);
+      } catch {
+        if (ignore) return;
+      }
+    };
+
+    void load();
+
+    return () => {
+      ignore = true;
+    };
+  }, [facultyCol]);
+
   return (
     <div className="pt-5 min-h-screen bg-gray-50">
       
@@ -218,7 +289,7 @@ const Faculty = () => {
            lg:grid-cols-4 (Desktop - Fits all 4 leaders in one row)
         */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {leadershipData.map((person, index) => (
+          {leadershipRows.map((person, index) => (
             <ProfileCard key={index} person={person} index={index} />
           ))}
         </div>
@@ -240,7 +311,7 @@ const Faculty = () => {
              lg:grid-cols-3 (Desktop - Standard 3-col layout)
           */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {facultyData.map((person, index) => (
+            {hodRows.map((person, index) => (
               <ProfileCard key={index} person={person} index={index + 4} />
             ))}
           </div>
