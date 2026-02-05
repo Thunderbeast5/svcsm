@@ -233,8 +233,7 @@ const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: '100vh' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white fixed top-[80px] left-0 w-full overflow-y-auto pb-32 border-t shadow-inner"
-              style={{ maxHeight: 'calc(100vh - 80px)' }} // Prevent scrolling past viewport
+              className="md:hidden bg-white absolute top-full left-0 w-full overflow-y-auto pb-48 border-t shadow-inner"
             >
               <div className="flex flex-col p-6 space-y-2">
                 {navItems.map((item) => (
