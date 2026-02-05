@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, GraduationCap, Mail, MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import logoName from '../assets/logo-name.png';
 
 const Navbar = () => {
@@ -8,6 +9,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
   const [hoveredDropdown, setHoveredDropdown] = useState(null);
+  const navigate = useNavigate();
 
   void motion;
 
@@ -205,6 +207,7 @@ const Navbar = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => navigate('/admissions/process')}
                   className="hidden md:flex bg-sv-maroon hover:bg-red-900 text-white px-6 py-3 rounded-full font-bold text-sm shadow-md items-center gap-2 transition-all"
                 >
                   <GraduationCap size={18} />
@@ -328,7 +331,12 @@ const Navbar = () => {
                 ))}
                 
                 <div className="pt-6">
-                  <button className="w-full bg-sv-maroon text-white py-4 rounded-xl font-bold text-lg shadow-lg flex justify-center items-center gap-2">
+                  <button 
+                  onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      navigate('/admissions/process');
+                  }}
+                  className="w-full bg-sv-maroon text-white py-4 rounded-xl font-bold text-lg shadow-lg flex justify-center items-center gap-2">
                     <GraduationCap size={24} />
                     Apply Online
                   </button>

@@ -6,34 +6,34 @@ const statsData = [
   { 
     id: 1, 
     label: "Years of Excellence", 
-    value: 20, 
+    value: 5, 
     suffix: "+", 
     icon: Building2,
-    desc: "Established Legacy"
+    desc: "Consistent Academic Growth"
   },
   { 
     id: 2, 
     label: "Students Enrolled", 
-    value: 5000, 
+    value: 500, 
     suffix: "+", 
     icon: Users,
-    desc: "Trust of Parents"
+    desc: "Trusted by Students & Parents"
   },
   { 
     id: 3, 
-    label: "Expert Faculty", 
-    value: 50, 
+    label: "Qualified Faculty", 
+    value: 10, 
     suffix: "+", 
     icon: GraduationCap,
-    desc: "PhD & Masters Holders"
+    desc: "Bachelor’s & Master’s Degree Holders"
   },
   { 
     id: 4, 
-    label: "State Toppers", 
-    value: 150, 
-    suffix: "+", 
+    label: "Academic Results", 
+    value: 100, 
+    suffix: "%", 
     icon: Award,
-    desc: "Consistent Results"
+    desc: "100% Results for 5 Consecutive Years"
   },
 ];
 

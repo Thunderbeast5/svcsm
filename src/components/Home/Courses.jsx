@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap, School, ArrowRight, BookOpen, Star } from 'lucide-react';
+import { GraduationCap, School, ArrowRight, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Courses = () => {
@@ -9,7 +9,7 @@ const Courses = () => {
   const categories = [
     {
       id: "junior",
-      title: "Junior College",
+      title: "Junior Institute",
       subtitle: "11th & 12th (Sci/Com/Arts)",
       desc: "Build a strong foundation for NEET, JEE, CA/CS, and UPSC with our integrated Junior College programs.",
       icon: School,
@@ -20,7 +20,7 @@ const Courses = () => {
     },
     {
       id: "senior",
-      title: "Senior College",
+      title: "Senior Institute",
       subtitle: "UG Degrees (BBA, BCA, B.Com)",
       desc: "Advance your career with specialized undergraduate degrees focused on Management, Technology, and Commerce.",
       icon: GraduationCap,
@@ -80,7 +80,8 @@ const Courses = () => {
 
               <div className="relative z-10">
                 <div className="flex justify-between items-start mb-8">
-                  <div className={`p-4 rounded-2xl bg-white/10 text-white ${item.accent} group-hover:bg-white group-hover:scale-110 transition-all duration-300 shadow-lg`}>
+                  {/* FIX: Removed 'text-white' so the icon uses the accent color always */}
+                  <div className={`p-4 rounded-2xl bg-white/10 ${item.accent} group-hover:bg-white group-hover:scale-110 transition-all duration-300 shadow-lg`}>
                     <item.icon size={40} />
                   </div>
                 </div>

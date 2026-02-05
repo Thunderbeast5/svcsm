@@ -48,40 +48,40 @@ const CampusLife = () => {
           {/* Main Large Image */}
           <motion.div variants={itemVariants} className="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-2xl">
             <img 
-              src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop" 
+              src="https://res.cloudinary.com/dh4xushgf/image/upload/v1770277650/IMG_20220708_113408_e2pdai.jpg" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
               alt="Library" 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-8">
-              <h3 className="text-white text-xl font-bold translate-y-4 group-hover:translate-y-0 transition-transform">World-Class Library</h3>
+              <h3 className="text-white text-xl font-bold translate-y-4 group-hover:translate-y-0 transition-transform">Field Visits</h3>
             </div>
           </motion.div>
           
           {/* Top Right */}
           <motion.div variants={itemVariants} className="md:col-span-2 relative group overflow-hidden rounded-2xl">
             <img 
-              src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?q=80&w=2574&auto=format&fit=crop" 
+              src="https://res.cloudinary.com/dh4xushgf/image/upload/v1770227408/20250807_112400_u6e7xn.jpg" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
               alt="Lab" 
             />
-            <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-1 rounded text-sm font-bold text-sv-blue">Science Labs</div>
+            <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-1 rounded text-sm font-bold text-sv-blue">Campus</div>
           </motion.div>
 
           {/* Bottom Right 1 */}
           <motion.div variants={itemVariants} className="relative group overflow-hidden rounded-2xl">
             <img 
-              src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=2070&auto=format&fit=crop" 
+              src="https://res.cloudinary.com/dh4xushgf/image/upload/v1770277649/IMG-20250112-WA0101_p8obwu.jpg" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
               alt="Sports" 
             />
-             <div className="absolute bottom-4 left-4 bg-sv-maroon px-4 py-1 rounded text-sm font-bold text-white">Sports</div>
+             <div className="absolute bottom-4 left-4 bg-sv-maroon px-4 py-1 rounded text-sm font-bold text-white">Competitions</div>
           </motion.div>
 
           {/* Bottom Right 2 */}
           <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-sv-blue flex items-center justify-center p-6 text-center group cursor-pointer hover:bg-sv-maroon transition-colors">
             <div>
-              <h3 className="text-4xl font-bold text-white mb-1">30+</h3>
-              <p className="text-white/70 group-hover:text-white">Student Clubs</p>
+              <h3 className="text-4xl font-bold text-white mb-1">10+</h3>
+              <p className="text-white/70 group-hover:text-white">Activites</p>
             </div>
           </motion.div>
         </motion.div>

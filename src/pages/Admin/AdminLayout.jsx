@@ -32,11 +32,11 @@ const AdminLayout = () => {
     { path: '/admin/hero', label: 'Hero Section', icon: Image },
     { path: '/admin/faculty', label: 'Faculty', icon: GraduationCap },
     { path: '/admin/activities', label: 'Activities & Events', icon: Calendar },
-    { path: '/admin/courses', label: 'Manage Courses', icon: BookOpen },
+    // { path: '/admin/courses', label: 'Manage Courses', icon: BookOpen },
     { path: '/admin/notices', label: 'Notices & News', icon: FileText },
     { path: '/admin/gallery', label: 'Gallery', icon: Image },
     { path: '/admin/testimonials', label: 'Testimonials', icon: Users },
-    { path: '/admin/settings', label: 'Settings', icon: Settings },
+    // { path: '/admin/settings', label: 'Settings', icon: Settings 
   ];
 
   const activeItem = menuItems.find((item) => location.pathname.startsWith(item.path));

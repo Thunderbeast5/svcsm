@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { collection, doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 const Hero = () => {
+  const navigate = useNavigate();
   const MotionDiv = motion.div;
   const [hero, setHero] = useState({
     badgeText: 'Admissions Open for 2026-27',
     titleLine1: 'Excellence in',
     titleHighlight: 'Education & Character',
     subtitle:
-      'Join Swami Vivekananda College to experience a curriculum that blends academic rigor with moral leadership.',
+      'Join Swami Vivekananda Institute to experience a curriculum that blends academic rigor with moral leadership.',
     imageUrl: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop',
   });
 
@@ -124,13 +126,20 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-            <button className="bg-sv-maroon hover:bg-red-800 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl shadow-red-900/40 flex items-center gap-2 group">
+            <button 
+                onClick={() => navigate('/admissions/process')}
+                className="bg-sv-maroon hover:bg-red-800 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl shadow-red-900/40 flex items-center gap-2 group"
+            >
               Start Application 
               <ArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <button className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg transition-all flex items-center gap-2">
+            <a 
+                href="/brochures/SVICSM.pdf" 
+                download
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg transition-all flex items-center gap-2"
+            >
               <Download size={20} /> Download Brochure
-            </button>
+            </a>
           </div>
         </MotionDiv>
       </div>
