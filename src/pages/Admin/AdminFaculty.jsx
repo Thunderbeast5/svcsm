@@ -9,11 +9,13 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { useToast } from '../../context/ToastContext';
 
 const CLOUDINARY_CLOUD_NAME = 'dh4xushgf';
 const CLOUDINARY_UPLOAD_PRESET = 'Swami-Viveka';
 
 const AdminFaculty = () => {
+  const { success, error: toastError } = useToast();
   const facultyCol = useMemo(() => collection(db, 'faculty'), []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -120,8 +122,10 @@ const AdminFaculty = () => {
       if (!url) throw new Error('Cloudinary upload succeeded but no URL returned');
 
       setImageUrl(url);
+      success('Image Uploaded', 'Image uploaded to Cloudinary');
     } catch (e) {
       setError(e?.message || 'Failed to upload image');
+      toastError('Upload Failed', e?.message || 'Failed to upload image');
     }
   };
 
@@ -160,8 +164,10 @@ const AdminFaculty = () => {
 
       resetForm();
       await load();
+      success('Success', editingId ? 'Faculty member updated' : 'Faculty member added');
     } catch (err) {
       setError(err?.message || 'Failed to save faculty');
+      toastError('Error', err?.message || 'Failed to save faculty');
     } finally {
       setIsSaving(false);
     }
@@ -175,8 +181,10 @@ const AdminFaculty = () => {
         updatedAt: serverTimestamp(),
       });
       await load();
+      success('Updated', `Faculty member ${!row.active ? 'activated' : 'deactivated'}`);
     } catch (e) {
       setError(e?.message || 'Failed to update faculty');
+      toastError('Error', 'Failed to update status');
     }
   };
 
@@ -185,8 +193,10 @@ const AdminFaculty = () => {
     try {
       await deleteDoc(doc(db, 'faculty', row.id));
       await load();
+      success('Deleted', 'Faculty member removed');
     } catch (e) {
       setError(e?.message || 'Failed to delete faculty');
+      toastError('Error', 'Failed to delete faculty');
     }
   };
 

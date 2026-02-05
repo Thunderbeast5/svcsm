@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { Trash2, Image as ImageIcon, Upload, Filter, Plus } from 'lucide-react';
+import { useToast } from '../../context/ToastContext';
 
 const CLOUDINARY_CLOUD_NAME = 'dh4xushgf';
 const CLOUDINARY_UPLOAD_PRESET = 'Swami-Viveka';
@@ -16,6 +17,7 @@ const CLOUDINARY_UPLOAD_PRESET = 'Swami-Viveka';
 const CATEGORIES = ["Campus", "Sports", "Cultural", "Students"];
 
 const AdminGallery = () => {
+  const { success, error: toastError } = useToast();
   const galleryCol = useMemo(() => collection(db, 'gallery_images'), []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -75,8 +77,10 @@ const AdminGallery = () => {
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error?.message || 'Upload failed');
       setImageUrl(json.secure_url || json.url);
+      success('Image Uploaded', 'Image uploaded to Cloudinary successfully');
     } catch (e) {
       setError(e.message);
+      toastError('Upload Failed', e.message);
     } finally {
       setIsSaving(false);
     }
@@ -103,10 +107,13 @@ const AdminGallery = () => {
       // Reset form
       setTitle('');
       setCategory(CATEGORIES[0]);
+      setCategory(CATEGORIES[0]);
       setImageUrl('');
       await load();
+      success('Success', 'Image added to gallery');
     } catch (err) {
       setError(err?.message || 'Failed to save');
+      toastError('Error', err?.message || 'Failed to save');
     } finally {
       setIsSaving(false);
     }
@@ -117,8 +124,10 @@ const AdminGallery = () => {
     try {
       await deleteDoc(doc(db, 'gallery_images', id));
       await load();
+      success('Deleted', 'Image removed from gallery');
     } catch (e) {
       setError('Failed to delete');
+      toastError('Error', 'Failed to delete image');
     }
   };
 

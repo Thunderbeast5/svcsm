@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { useToast } from '../../context/ToastContext';
 
 const AdminHeroSettings = () => {
+  const { success, error: toastError } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
@@ -78,8 +80,10 @@ const AdminHeroSettings = () => {
       if (!url) throw new Error('Cloudinary upload succeeded but no URL returned');
 
       setImageUrl(url);
+      success('Image Uploaded', 'Hero background image updated successfully');
     } catch (e) {
       setError(e?.message || 'Failed to upload image');
+      toastError('Upload Failed', e?.message || 'Failed to upload image');
     }
   };
 
@@ -100,8 +104,10 @@ const AdminHeroSettings = () => {
         },
         { merge: true }
       );
+      success('Settings Saved', 'Hero section updated successfully');
     } catch (e) {
       setError(e?.message || 'Failed to save hero settings');
+      toastError('Error', e?.message || 'Failed to save settings');
     } finally {
       setIsSaving(false);
     }

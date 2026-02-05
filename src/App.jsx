@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
+import { ToastProvider } from "./context/ToastContext";
 
 // Layout Components
 import Navbar from "./components/Navbar";
@@ -94,7 +95,7 @@ const Layout = () => {
         <Route path="/" element={<HomePage />} />
         
         {/* About Us */}
-        <Route path="/about/svcms" element={<AboutSVCMS />} />
+        <Route path="/about/svicsm" element={<AboutSVCMS />} />
         <Route path="/about/vision" element={<VisionMission />} />
         <Route path="/about/leadership" element={<Leadership />} />
 
@@ -152,7 +153,9 @@ const Layout = () => {
 export default function App() {
   return (
     <Router>
-      <Layout />
+      <ToastProvider>
+        <Layout />
+      </ToastProvider>
     </Router>
   );
 }

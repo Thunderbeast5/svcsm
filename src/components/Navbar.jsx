@@ -29,7 +29,7 @@ const Navbar = () => {
       name: 'About Us', 
       href: '#about',
       subLinks: [
-        { name: 'About SVCMS', href: '/about/svcms' },
+        { name: 'About SVICSM', href: '/about/svicsm' },
         { name: 'Vision & Mission', href: '/about/vision' },
         { name: 'Leadership', href: '/about/leadership' },
       ]

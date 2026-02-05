@@ -11,8 +11,10 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { useToast } from '../../context/ToastContext';
 
 const AdminNoticesNews = () => {
+  const { success, error: toastError } = useToast();
   const noticesCol = useMemo(() => collection(db, 'notices'), []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -82,8 +84,10 @@ const AdminNoticesNews = () => {
 
       resetForm();
       await load();
+      success('Success', editingId ? 'Notice updated' : 'Notice added');
     } catch (err) {
       setError(err?.message || 'Failed to save notice');
+      toastError('Error', err?.message || 'Failed to save notice');
     } finally {
       setIsSaving(false);
     }
@@ -97,8 +101,10 @@ const AdminNoticesNews = () => {
         updatedAt: serverTimestamp(),
       });
       await load();
+      success('Updated', `Notice ${!row.active ? 'activated' : 'deactivated'}`);
     } catch (e) {
       setError(e?.message || 'Failed to update notice');
+      toastError('Error', 'Failed to update status');
     }
   };
 
@@ -107,8 +113,10 @@ const AdminNoticesNews = () => {
     try {
       await deleteDoc(doc(db, 'notices', row.id));
       await load();
+      success('Deleted', 'Notice removed');
     } catch (e) {
       setError(e?.message || 'Failed to delete notice');
+      toastError('Error', 'Failed to delete notice');
     }
   };
 

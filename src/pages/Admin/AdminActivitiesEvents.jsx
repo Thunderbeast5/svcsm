@@ -9,6 +9,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { useToast } from '../../context/ToastContext';
 
 const CLOUDINARY_CLOUD_NAME = 'dh4xushgf';
 const CLOUDINARY_UPLOAD_PRESET = 'Swami-Viveka';
@@ -21,6 +22,7 @@ const normalizeGallery = (thumbnail, gallery) => {
 };
 
 const AdminActivitiesEvents = () => {
+  const { success, error: toastError } = useToast();
   const eventsCol = useMemo(() => collection(db, 'activitiesEvents'), []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -145,6 +147,7 @@ const AdminActivitiesEvents = () => {
       }
     } catch (e) {
       setError(e.message);
+      toastError('Error', e.message);
     }
   };
 
@@ -185,10 +188,14 @@ const AdminActivitiesEvents = () => {
 
       if (errors.length > 0) {
         setError(`Some images failed to upload: ${errors[0]} (and ${errors.length - 1} others)`);
+        toastError('Upload Warning', 'Some images failed to upload');
+      } else {
+        success('Gallery Uploaded', 'All images uploaded successfully');
       }
 
     } catch (e) {
       setError(e?.message || 'Failed to upload gallery images');
+      toastError('Error', e?.message || 'Failed to upload gallery');
     } finally {
       setIsUploadingGallery(false);
     }
@@ -229,8 +236,10 @@ const AdminActivitiesEvents = () => {
 
       resetForm();
       await load();
+      success('Success', editingId ? 'Activity updated' : 'Activity added');
     } catch (err) {
       setError(err?.message || 'Failed to save activity/event');
+      toastError('Error', err?.message || 'Failed to save');
     } finally {
       setIsSaving(false);
     }
@@ -244,8 +253,10 @@ const AdminActivitiesEvents = () => {
         updatedAt: serverTimestamp(),
       });
       await load();
+      success('Updated', `Activity ${!row.active ? 'activated' : 'deactivated'}`);
     } catch (e) {
       setError(e?.message || 'Failed to update status');
+      toastError('Error', 'Failed to update status');
     }
   };
 
@@ -254,8 +265,10 @@ const AdminActivitiesEvents = () => {
     try {
       await deleteDoc(doc(db, 'activitiesEvents', row.id));
       await load();
+      success('Deleted', 'Activity removed');
     } catch (e) {
       setError(e?.message || 'Failed to delete');
+      toastError('Error', 'Failed to delete activity');
     }
   };
 

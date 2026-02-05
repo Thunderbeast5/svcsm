@@ -10,11 +10,13 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { Trash2, Edit2, CheckCircle, XCircle, Home, EyeOff, Eye } from 'lucide-react';
+import { useToast } from '../../context/ToastContext';
 
 const CLOUDINARY_CLOUD_NAME = 'dh4xushgf';
 const CLOUDINARY_UPLOAD_PRESET = 'Swami-Viveka';
 
 const AdminTestimonials = () => {
+  const { success, error: toastError } = useToast();
   const testimonialsCol = useMemo(() => collection(db, 'testimonials'), []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -104,8 +106,10 @@ const AdminTestimonials = () => {
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error?.message || 'Upload failed');
       setImageUrl(json.secure_url || json.url);
+      success('Image Uploaded', 'Image uploaded to Cloudinary');
     } catch (e) {
       setError(e.message);
+      toastError('Upload Failed', e.message);
     }
   };
 
@@ -143,8 +147,10 @@ const AdminTestimonials = () => {
 
       resetForm();
       await load();
+      success('Success', editingId ? 'Testimonial updated' : 'Testimonial added');
     } catch (err) {
       setError(err?.message || 'Failed to save');
+      toastError('Error', err?.message || 'Failed to save');
     } finally {
       setIsSaving(false);
     }
@@ -155,8 +161,10 @@ const AdminTestimonials = () => {
     try {
       await deleteDoc(doc(db, 'testimonials', id));
       await load();
+      success('Deleted', 'Testimonial removed');
     } catch (e) {
       setError('Failed to delete');
+      toastError('Delete Failed', 'Could not delete testimonial');
     }
   };
 
@@ -167,8 +175,10 @@ const AdminTestimonials = () => {
               updatedAt: serverTimestamp()
           });
           load(); // Reload to refresh UI properly
+          success('Updated', `${field} updated successfully`);
       } catch (e) {
           setError('Failed to update status');
+          toastError('Update Failed', 'Could not update status');
       }
   }
 
