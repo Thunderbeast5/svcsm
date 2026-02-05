@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, CheckCircle, HelpCircle, ChevronDown, Download, AlertCircle } from 'lucide-react';
+import { FileText, CheckCircle, HelpCircle, ChevronDown, AlertCircle } from 'lucide-react';
 
 const AdmissionProcessPage = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -15,14 +15,23 @@ const AdmissionProcessPage = () => {
     "Gap Certificate (if applicable)"
   ];
 
+  // Removed the first cutoff question as requested
   const faqs = [
-    { q: "What is the cutoff percentage for Science stream?", a: "The cutoff varies every year based on board results. For 2025, it is expected to be around 85% for General category." },
     { q: "Can I pay the fees in installments?", a: "Yes, we offer a 3-installment plan. 40% at admission, 30% before Diwali, and 30% before final exams." },
-    { q: "Is the registration fee refundable?", a: "The INR 1000/- registration fee is non-refundable. However, tuition fees have a refund policy if cancelled within 15 days." }
+    { q: "Is the registration fee refundable?", a: "The ₹100/- registration fee is non-refundable. However, tuition fees have a refund policy if cancelled within 15 days." }
+  ];
+
+  // Updated steps to match your specific flow
+  const processSteps = [
+    { title: "Online Application", desc: "Visit our website and fill out the digital admission form with your personal and academic details.", step: "01" },
+    { title: "Form Fees", desc: "Pay the non-refundable registration/form fee of ₹100/- via online payment mode.", step: "02" },
+    { title: "Academic Fee", desc: "Pay the academic fees (full or first installment) to provisionally book your seat.", step: "03" },
+    { title: "Document Verification", desc: "Visit the college admin office with original documents for physical verification.", step: "04" },
+    { title: "Admission Confirmation", desc: "Once verified, you will receive your official admission confirmation letter.", step: "05" }
   ];
 
   return (
-    <div className="pt-20 min-h-screen bg-gray-50">
+    <div className="pt-5 min-h-screen bg-gray-50">
       {/* Hero */}
       <section className="bg-sv-maroon py-20 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
@@ -40,13 +49,9 @@ const AdmissionProcessPage = () => {
         <div className="lg:col-span-2 space-y-12">
           <div>
             <h2 className="text-3xl font-bold text-sv-blue mb-8">Step-by-Step Guide</h2>
-            <div className="space-y-8 relative before:absolute before:left-8 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-200">
-              {[
-                { title: "Online Registration", desc: "Fill out the online enquiry form on our website to generate your Student ID.", step: "01" },
-                { title: "Document Verification", desc: "Visit the college admin office with original documents for verification between 10 AM - 4 PM.", step: "02" },
-                { title: "Merit List & Interview", desc: "Check the merit list display on the notice board. Shortlisted candidates will have a brief interaction with the Principal.", step: "03" },
-                { title: "Fee Payment", desc: "Pay the first installment of fees via UPI, Demand Draft, or Net Banking to confirm admission.", step: "04" }
-              ].map((item, i) => (
+            {/* Added 'pb-8' to allow the last line to connect properly if needed, though hidden for last item */}
+            <div className="space-y-8 relative before:absolute before:left-8 before:top-2 before:bottom-10 before:w-0.5 before:bg-gray-200">
+              {processSteps.map((item, i) => (
                 <motion.div 
                   key={i}
                   initial={{ opacity: 0, x: -20 }}
@@ -102,11 +107,11 @@ const AdmissionProcessPage = () => {
           </div>
         </div>
 
-        {/* Right Column: Sidebar (Downloads & Docs) */}
+        {/* Right Column: Sidebar (Docs Only - Prospectus Removed) */}
         <div className="space-y-8">
           
           {/* Document Checklist Card */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-sv-blue">
+          <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-sv-blue sticky top-24">
             <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <FileText className="text-sv-blue" /> Required Documents
             </h3>
@@ -124,14 +129,7 @@ const AdmissionProcessPage = () => {
             </div>
           </div>
 
-          {/* Download Brochure */}
-          <div className="bg-sv-maroon p-8 rounded-2xl text-white text-center shadow-lg">
-            <h3 className="text-xl font-bold mb-4">College Prospectus 2025-26</h3>
-            <p className="text-white/80 text-sm mb-6">Download detailed syllabus, fee breakdown, and campus rules.</p>
-            <button className="w-full bg-white text-sv-maroon py-3 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors">
-              <Download size={18} /> Download PDF
-            </button>
-          </div>
+          {/* Prospectus Section Removed Here */}
 
         </div>
 

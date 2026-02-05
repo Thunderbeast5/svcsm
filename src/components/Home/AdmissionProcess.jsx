@@ -7,36 +7,36 @@ const AdmissionProcess = () => {
   const steps = [
     {
       id: 1,
-      title: "Application Form",
-      desc: "Locate the Registration Portal",
+      title: "Online Application",
+      desc: "Fill out the digital application form on our portal.",
       icon: FileText,
       position: "top"
     },
     {
       id: 2,
-      title: "Registration Fee",
-      desc: "Fill Your Details And Pay The INR 1000/- Registration Fee",
+      title: "Form Fees",
+      desc: "Pay the non-refundable form fee of ₹100/-.",
       icon: CreditCard,
       position: "bottom"
     },
     {
       id: 3,
       title: "Academic Fee",
-      desc: "Pay The Academic Fee For The First Semester/Year Or Full Program",
+      desc: "Pay the academic fees to provisionally book your seat.",
       icon: GraduationCap,
       position: "top"
     },
     {
       id: 4,
       title: "Document Verification",
-      desc: "Upload All Mandatory Documents & Submit Your Application",
+      desc: "Submit original documents for physical verification at the institute.",
       icon: FileCheck,
       position: "bottom"
     },
     {
       id: 5,
       title: "Admission Confirmation",
-      desc: "The University Will Verify Your Documents To Confirm Your Admission",
+      desc: "Receive your final admission confirmation letter.",
       icon: School,
       position: "top"
     }
@@ -49,7 +49,7 @@ const AdmissionProcess = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-sv-maroon mb-4">Admission Process</h2>
           <p className="text-lg text-gray-700 font-medium">
-            You've Come Scrolling This Far — Why Stop Now? <br />
+            Start your journey with us in 5 simple steps. <br />
             <span className="text-sv-blue">Share Your Details And Apply Now!</span>
           </p>
         </div>
