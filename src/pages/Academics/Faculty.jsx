@@ -264,7 +264,7 @@ const Faculty = () => {
             className="max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-6 font-serif">
-              Meet Our Mentors
+              Meet Our Faculty
             </h1>
             <p className="text-xl text-white/90 leading-relaxed">
               Highly qualified and experienced leadership dedicated to academic excellence and student development.

@@ -1,119 +1,256 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Trophy, Star, TrendingUp, Award } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Trophy, Calendar, Star, TrendingUp, Medal, Quote } from 'lucide-react';
 
-const toppers = [
-  { name: "Aarav Patil", percentage: "98.50%", stream: "Science", rank: "1st in District", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1887&auto=format&fit=crop" },
-  { name: "Ishita Rao", percentage: "96.20%", stream: "Commerce", rank: "College Topper", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop" },
-  { name: "Rohan Mehta", percentage: "95.00%", stream: "Science", rank: "PCM Subject Topper", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop" },
-  { name: "Sneha Wagh", percentage: "94.50%", stream: "Arts", rank: "College Topper", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop" },
-];
+// --- DATA CONFIGURATION ---
+const resultsData = {
+  "2024-25": {
+    type: "current",
+    description: "Setting new benchmarks in academic excellence.",
+    scienceToppers: [
+      { name: "Gayatri Sarode", percent: "81.50%", rank: "1st", image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267975/Gayatri_Sarode_iwf598.png" },
+      { name: "Varsha Purkar", percent: "80.83%", rank: "2nd", image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267973/Varsha_Purkar_tymymo.png" },
+      { name: "Krushna More", percent: "78.17%", rank: "3rd", image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770268444/Krushna_More_rxyev0.png" },
+    ],
+    commerceToppers: [
+      { name: "Prachi Jagoo", percent: "84.17%", rank: "1st", image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267971/Prachi_Jajoo_l1w7xi.png" },
+      { name: "Sarthak Pawar", percent: "83.17%", rank: "2nd", image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267972/Sarthak_Pawar_jr4htv.png" },
+      { name: "Prince Himthani", percent: "82.67%", rank: "3rd", image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267976/Prince_Himthani_a6wv77.png" },
+    ]
+  },
+  "2023-24": {
+    type: "banner-only",
+    description: "A historic year with 100% pass results across all streams.",
+    bannerImage: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267975/Screenshot_2026-02-02_at_11.27.28_AM_1_gbezcw.png" 
+  },
+  "2022-23": {
+    type: "mixed",
+    description: "The 'Ek Number' Batch that started the legacy.",
+    toppers: [
+      { name: "Adesh Athawale", percent: "88.50%", badge: "Acc: 96", image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267969/IMG-20240111-WA0001_r24nfu.jpg" },
+      { name: "Parul Soni", percent: "87.67%", badge: "Acc: 96", image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267969/IMG-20240111-WA0002_zy4nx1.jpg" },
+      { name: "Sarthak Jivrak", percent: "80.67%", badge: "Acc: 96", image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267969/IMG-20240111-WA0004_kk2hzz.jpg" },
+    ],
+    bannerImage: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770267975/IMG-20240111-WA0008_frzxw2.jpg" 
+  }
+};
+
+// --- COMPONENTS ---
+
+const StudentCard = ({ student, index, color = "blue" }) => {
+  const isGold = index === 0;
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1 }}
+      className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 group flex flex-col w-full max-w-sm mx-auto"
+    >
+      <div className="relative w-full aspect-[3/5] overflow-hidden bg-gray-100">
+        
+        {/* Rank Badge */}
+        <div className={`absolute top-0 right-0 z-10 px-4 py-2 rounded-bl-2xl font-bold text-white shadow-md text-sm md:text-base
+          ${isGold ? 'bg-gradient-to-r from-yellow-400 to-yellow-600' : 'bg-sv-blue'}`}>
+          {student.rank || student.badge || `#${index + 1}`}
+        </div>
+        
+        <img 
+          src={student.image} 
+          alt={student.name} 
+          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+        />
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80"></div>
+        
+        {/* Content Overlay */}
+        <div className="absolute bottom-0 left-0 w-full p-4 md:p-6">
+          <p className="text-gray-300 text-[10px] md:text-xs uppercase tracking-wider font-semibold mb-1">Percentage</p>
+          <div className="flex items-baseline gap-2 mb-2">
+             <span className="text-3xl md:text-4xl font-bold text-white">{student.percent}</span>
+             <TrendingUp className="text-green-400 w-4 h-4 md:w-5 md:h-5" />
+          </div>
+           <h3 className="text-lg md:text-xl font-bold text-white leading-tight">{student.name}</h3>
+        </div>
+      </div>
+      
+      {/* Bottom accent bar */}
+      <div className={`h-2 w-full ${isGold ? 'bg-sv-gold' : 'bg-sv-blue'}`}></div>
+    </motion.div>
+  );
+};
 
 const Results = () => {
+  const [activeTab, setActiveTab] = useState("2024-25");
+
   return (
-    <div className="pt-20 min-h-screen bg-gray-50">
+    <div className="pt-5 min-h-screen bg-gray-50">
       
-      {/* Hero Stats */}
-      <section className="bg-sv-blue text-white py-20 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-20 h-20 bg-sv-gold rounded-full flex items-center justify-center mx-auto mb-6 text-sv-blue shadow-lg shadow-yellow-500/20">
-            <Trophy size={40} />
+      {/* --- HERO SECTION --- */}
+      <section className="bg-sv-blue text-white py-12 md:py-20 relative overflow-hidden px-4">
+        {/* Background blobs */}
+        <div className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-white/5 rounded-full blur-3xl -mr-10 -mt-10"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 md:w-64 md:h-64 bg-sv-gold/10 rounded-full blur-3xl -ml-10 -mb-10"></div>
+        
+        <div className="container mx-auto relative z-10 text-center">
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="inline-flex items-center justify-center p-2 md:p-3 bg-white/10 rounded-full mb-6 backdrop-blur-sm border border-white/20"
+          >
+            <Trophy className="text-sv-gold w-6 h-6 md:w-8 md:h-8 mr-2" />
+            <span className="font-bold tracking-wider uppercase text-xs md:text-sm">Hall of Fame</span>
           </motion.div>
-          <h1 className="text-5xl font-bold mb-4">Academic Results 2025</h1>
-          <p className="text-xl text-gray-300">Continuing the legacy of 100% Pass Results</p>
+          
+          <h1 className="text-3xl md:text-6xl font-bold mb-4 font-serif leading-tight">
+            Academic Excellence
+          </h1>
+          <p className="text-base md:text-xl text-gray-300 max-w-2xl mx-auto">
+            Celebrating the hard work and dedication of our students.
+          </p>
         </div>
       </section>
 
-      {/* Hall of Fame */}
-      <section className="container mx-auto px-4 py-16 -mt-10">
-        <div className="grid md:grid-cols-4 gap-6">
-          {toppers.map((student, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden relative group"
-            >
-              {/* Rank Badge */}
-              <div className="absolute top-0 right-0 bg-sv-gold text-sv-blue text-xs font-bold px-3 py-1 rounded-bl-xl z-10">
-                {student.rank}
-              </div>
-              
-              <div className="h-48 overflow-hidden">
-                <img 
-                  src={student.img} 
-                  alt={student.name} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold text-gray-800">{student.name}</h3>
-                <p className="text-sm text-gray-500 mb-4">{student.stream} Stream</p>
-                
-                <div className="bg-sv-blue/5 rounded-xl py-2 px-4 inline-block">
-                  <span className="text-2xl font-bold text-sv-maroon">{student.percentage}</span>
+      {/* --- TAB NAVIGATION (Scrollable on Mobile) --- */}
+      <section className="sticky top-20 z-30 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-start md:justify-center gap-2 md:gap-8 overflow-x-auto py-4 scrollbar-hide">
+            {Object.keys(resultsData).map((year) => (
+              <button
+                key={year}
+                onClick={() => setActiveTab(year)}
+                className={`relative px-4 py-2 md:px-6 rounded-full text-xs md:text-base font-bold transition-all duration-300 flex-shrink-0 whitespace-nowrap
+                  ${activeTab === year 
+                    ? 'bg-sv-maroon text-white shadow-lg shadow-sv-maroon/30' 
+                    : 'text-gray-500 hover:bg-gray-100 hover:text-gray-800'
+                  }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Calendar size={14} className="md:w-4 md:h-4" />
+                  Batch {year}
                 </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- DYNAMIC CONTENT AREA --- */}
+      <section className="container mx-auto px-4 py-12 md:py-16 min-h-[600px]">
+        <AnimatePresence mode="wait">
+          
+          {/* 1. LATEST BATCH (2024-25) */}
+          {activeTab === "2024-25" && (
+            <motion.div
+              key="2024-25"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="text-center mb-8 md:mb-12">
+                <Quote className="w-8 h-8 md:w-10 md:h-10 text-sv-gold/50 mx-auto mb-2 md:mb-4" />
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800">{resultsData["2024-25"].description}</h2>
+              </div>
+
+              {/* Science Section */}
+              <div className="mb-12 md:mb-16">
+                 <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+                    <div className="w-1.5 h-6 md:w-2 md:h-8 bg-sv-blue rounded-full"></div>
+                    <h3 className="text-xl md:text-2xl font-bold text-sv-blue">Science Toppers</h3>
+                    <div className="h-px bg-gray-200 flex-grow"></div>
+                 </div>
+                 
+                 {/* Mobile: 1 col, Tablet: 2 col, Desktop: 3 col */}
+                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center">
+                    {resultsData["2024-25"].scienceToppers.map((student, idx) => (
+                      <StudentCard key={idx} student={student} index={idx} color="blue" />
+                    ))}
+                 </div>
+              </div>
+
+              {/* Commerce Section */}
+              <div>
+                 <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+                    <div className="w-1.5 h-6 md:w-2 md:h-8 bg-sv-maroon rounded-full"></div>
+                    <h3 className="text-xl md:text-2xl font-bold text-sv-maroon">Commerce Toppers</h3>
+                    <div className="h-px bg-gray-200 flex-grow"></div>
+                 </div>
+                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center">
+                    {resultsData["2024-25"].commerceToppers.map((student, idx) => (
+                      <StudentCard key={idx} student={student} index={idx} color="maroon" />
+                    ))}
+                 </div>
               </div>
             </motion.div>
-          ))}
-        </div>
-      </section>
+          )}
 
-      {/* Performance Graph Section (Simple CSS Visuals) */}
-      <section className="container mx-auto px-4 py-12 mb-20">
-        <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-12 items-center">
-          <div className="flex-1">
-            <h2 className="text-3xl font-bold text-sv-blue mb-4 flex items-center gap-3">
-              <TrendingUp className="text-green-500" /> 
-              Consistent Growth
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Our students consistently outperform the state average. With a dedicated focus on individual attention, we ensure every student achieves their personal best.
-            </p>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
-                <Award className="text-sv-gold" /> 
-                <span className="font-bold text-gray-700">150+</span> 
-                <span className="text-gray-500">Distinction Holders</span>
-              </li>
-              <li className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
-                <Star className="text-sv-gold" /> 
-                <span className="font-bold text-gray-700">25+</span> 
-                <span className="text-gray-500">Centum (100/100) Scorers</span>
-              </li>
-            </ul>
-          </div>
+          {/* 2. PREVIOUS BATCH (2023-24) */}
+          {activeTab === "2023-24" && (
+            <motion.div
+              key="2023-24"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-5xl mx-auto"
+            >
+               <div className="text-center mb-6 md:mb-8">
+                 <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Class of 2023-24</h2>
+                 <p className="text-sm md:text-base text-gray-500">{resultsData["2023-24"].description}</p>
+               </div>
+               
+               <div className="bg-white p-2 rounded-xl shadow-xl border border-gray-200">
+                  <img 
+                    src={resultsData["2023-24"].bannerImage} 
+                    alt="2023-24 Results" 
+                    className="w-full h-auto rounded-lg"
+                  />
+               </div>
+            </motion.div>
+          )}
 
-          <div className="flex-1 w-full">
-            <div className="space-y-6">
-              {[
-                { label: "Overall Pass Percentage", val: "100%", width: "100%", color: "bg-green-500" },
-                { label: "Science Distinctions", val: "85%", width: "85%", color: "bg-cyan-500" },
-                { label: "Commerce Distinctions", val: "92%", width: "92%", color: "bg-sv-maroon" },
-                { label: "Arts Distinctions", val: "78%", width: "78%", color: "bg-purple-500" }
-              ].map((stat, i) => (
-                <div key={i}>
-                  <div className="flex justify-between text-sm font-bold text-gray-600 mb-2">
-                    <span>{stat.label}</span>
-                    <span>{stat.val}</span>
+          {/* 3. OLDER BATCH (2022-23) */}
+          {activeTab === "2022-23" && (
+            <motion.div
+              key="2022-23"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="max-w-6xl mx-auto mb-12 md:mb-16">
+                 <div className="text-center mb-8 md:mb-10">
+                   <div className="inline-block bg-sv-gold/20 text-sv-maroon px-4 py-1 rounded-full text-xs md:text-sm font-bold mb-2 md:mb-4">
+                     Star Performers
+                   </div>
+                   <h2 className="text-2xl md:text-3xl font-bold text-gray-800">The 'Ek Number' Batch</h2>
+                 </div>
+                 
+                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center mb-10 md:mb-12">
+                    {resultsData["2022-23"].toppers.map((student, idx) => (
+                      <StudentCard key={idx} student={student} index={idx} />
+                    ))}
+                 </div>
+              </div>
+
+              <div className="max-w-6xl mx-auto bg-white p-2 rounded-xl shadow-xl border border-gray-200 mt-8">
+                  <div className="text-center mb-4">
+                    <span className="inline-block bg-sv-blue text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
+                        Full Batch Result
+                    </span>
                   </div>
-                  <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      whileInView={{ width: stat.width }}
-                      transition={{ duration: 1, delay: 0.5 }}
-                      className={`h-full rounded-full ${stat.color}`}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+                  <img 
+                    src={resultsData["2022-23"].bannerImage} 
+                    alt="2022-23 Results" 
+                    className="w-full h-auto rounded-lg"
+                  />
+               </div>
+            </motion.div>
+          )}
+
+        </AnimatePresence>
       </section>
 
     </div>
