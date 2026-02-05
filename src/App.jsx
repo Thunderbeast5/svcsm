@@ -52,10 +52,31 @@ import JuniorAdmissionPDF from "./components/PDF/JuniorAdmissionPDF";
 
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    // If there is a hash, scroll to the element
+    if (hash) {
+      // Small timeout to allow content to render
+      setTimeout(() => {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          const headerOffset = 100;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      }, 100);
+    } else {
+      // Otherwise scroll to top
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+
   return null;
 };
 

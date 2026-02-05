@@ -11,6 +11,41 @@ const Navbar = () => {
   const [hoveredDropdown, setHoveredDropdown] = useState(null);
   const navigate = useNavigate();
 
+  const handleNavClick = (e, href) => {
+    // 1. If it's a hash link (e.g., #about)
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const elementId = href.substring(1);
+      const element = document.getElementById(elementId);
+
+      if (element) {
+        // If element exists (we are on homepage), scroll to it with offset
+        const headerOffset = 100; // Adjust this value based on your fixed header height
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      } else {
+        // If element doesn't exist (we are NOT on homepage), navigate to home with hash
+        navigate(`/${href}`);
+        // Optional: The App.jsx ScrollToTop logic needs to handle this hash on load
+      }
+    } 
+    // 2. If it's a regular route link
+    else {
+      // Default behavior or navigate()
+      // If we use <a> tags with react-router, we might want to just let it be, 
+      // but strictly we should use navigate usually. 
+      // However, for consistency with the hrefs, we'll let default occur if standard <a>,
+      // or if you want to force navigate:
+      // e.preventDefault();
+      // navigate(href);
+    }
+  };
+
   void motion;
 
   // Handle scroll effect
@@ -127,6 +162,7 @@ const Navbar = () => {
                   >
                     <a
                       href={item.href}
+                      onClick={(e) => handleNavClick(e, item.href)}
                       className="flex items-center gap-1 text-sv-blue hover:text-sv-maroon font-bold text-sm uppercase tracking-wide py-4"
                     >
                       {item.name}
@@ -244,6 +280,12 @@ const Navbar = () => {
                     >
                       <a 
                         href={item.href} 
+                        onClick={(e) => {
+                           if (item.href.startsWith('#')) {
+                             handleNavClick(e, item.href);
+                             setIsMobileMenuOpen(false);
+                           }
+                        }}
                         className="text-lg font-bold text-sv-blue"
                       >
                         {item.name}

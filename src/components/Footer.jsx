@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion'; // Added Import
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import logoIcon from '../assets/logo.png';
 
 const Footer = () => {
   void motion;
@@ -18,8 +19,8 @@ const Footer = () => {
           className="col-span-1"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-sv-maroon font-bold text-xl">SV</div>
-            <span className="font-bold text-lg leading-tight">Swami Vivekananda <br/> College</span>
+            <img src={logoIcon} alt="SVICSM" className="w-10 h-10 bg-white rounded-full object-contain p-1" />
+            <span className="font-bold text-lg leading-tight">Swami Vivekananda Institute of Commerce, Science &amp; Management</span>
           </div>
           <p className="text-gray-400 text-sm leading-relaxed mb-6">
             Empowering students with knowledge, skills, and values to lead the future.
@@ -47,9 +48,11 @@ const Footer = () => {
         >
           <h4 className="font-bold text-lg mb-6 text-sv-gold">Quick Links</h4>
           <ul className="space-y-3 text-gray-400 text-sm">
-            {['Admissions', 'Student Portal', 'Exam Results', 'Alumni Network', 'Careers'].map((item) => (
-              <li key={item}><a href="#" className="hover:text-white transition-colors">{item}</a></li>
-            ))}
+            <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+            <li><Link to="/about/svicsm" className="hover:text-white transition-colors">About SVICSM</Link></li>
+            <li><Link to="/academics/faculty" className="hover:text-white transition-colors">Faculty</Link></li>
+            <li><Link to="/academics/results" className="hover:text-white transition-colors">Results</Link></li>
+            <li><Link to="/admissions/process" className="hover:text-white transition-colors">Admissions</Link></li>
           </ul>
         </motion.div>
 
@@ -77,25 +80,32 @@ const Footer = () => {
           </ul>
         </motion.div>
 
-        {/* Newsletter */}
+        {/* Map */}
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
            transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h4 className="font-bold text-lg mb-6 text-sv-gold">Newsletter</h4>
-          <p className="text-gray-400 text-sm mb-4">Subscribe to get admission updates.</p>
-          <div className="flex gap-2">
-            <input 
-              type="email" 
-              placeholder="Email Address" 
-              className="bg-white/5 border border-white/10 rounded px-4 py-2 text-sm w-full focus:outline-none focus:border-sv-gold text-white" 
+          <h4 className="font-bold text-lg mb-6 text-sv-gold">Find Us</h4>
+          <div className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
+            <iframe
+              title="SVICSM Location"
+              src="https://www.google.com/maps?q=20.1693189,73.9910487&z=17&output=embed"
+              className="w-full h-40"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
-            <button className="bg-sv-maroon px-4 py-2 rounded text-sm font-bold hover:bg-red-900 transition-colors">
-              Join
-            </button>
           </div>
+          <a
+            href="https://www.google.com/maps/place/Swami+Vivekananda+Junior+Inst.+of+Commerce+%26+Science/@20.1693239,73.9884738,17z/data=!3m1!4b1!4m6!3m5!1s0x3bdddb1eda90f145:0x9ea9cb1fb615eed9!8m2!3d20.1693189!4d73.9910487!16s%2Fg%2F11nh4kr_my?entry=ttu&g_ep=EgoyMDI2MDIwMS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 mt-4 text-sm text-gray-300 hover:text-white transition-colors"
+          >
+            <MapPin size={16} className="text-sv-gold" />
+            Open in Google Maps
+          </a>
         </motion.div>
       </div>
 
@@ -103,8 +113,6 @@ const Footer = () => {
         <p>&copy; 2026 SVCMS. All rights reserved.</p>
         <div className="flex gap-6 mt-4 md:mt-0">
           <Link to="/admin/login" className="hover:text-white">Admin Portal</Link>
-          <a href="#" className="hover:text-white">Privacy Policy</a>
-          <a href="#" className="hover:text-white">Terms of Service</a>
         </div>
       </div>
     </footer>

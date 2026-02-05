@@ -8,6 +8,11 @@ import App from './App.jsx'
 // Ensure Buffer is globally available
 window.Buffer = Buffer;
 
+console.log(
+  "%cDeveloped by Vedant Purkar | vedant.purkar05@gmail.com",
+  "font-weight: bold;"
+);
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
