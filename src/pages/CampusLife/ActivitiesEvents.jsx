@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, X, ChevronLeft, ChevronRight, Image as ImageIcon, Grid } from 'lucide-react';
+
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
+import SEO from '../../components/SEO';
 
 void motion;
 
@@ -152,7 +154,12 @@ const ActivitiesEvents = () => {
 
   return (
     <div className="pt-5 min-h-screen bg-gray-50">
-      
+      <SEO 
+        title="Activities & Events" 
+        description="Explore the vibrant campus life, cultural fests, and sports events at SVICSM."
+        keywords="events, cultural fest, sports, activities, campus life"
+        url="/campus-life/activities-events"
+      />
       {/* Header */}
       <section className="bg-sv-blue py-20 text-center">
         <div className="container mx-auto px-4">

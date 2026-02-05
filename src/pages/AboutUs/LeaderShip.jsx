@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Linkedin, Mail, Quote, GraduationCap, Clock, Briefcase } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 const leaders = [
   {
@@ -20,7 +21,7 @@ const leaders = [
   {
     name: "Mr. Chetan N. Bargal",
     role: "Principal",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/dh4xushgf/image/upload/v1770297321/20260205_160340_edmxrh.jpg",
     qualifications: "B.E. (Mechanical), MBA",
     experience: "10 Years of Experience",
     bio: [
@@ -34,6 +35,12 @@ const leaders = [
 const Leadership = () => {
   return (
     <div className="bg-white min-h-screen pt-5">
+      <SEO 
+        title="Leadership" 
+        description="Meet the visionaries guiding SVICSM - Mr. Kiran R. Arote and Mr. Chetan N. Bargal."
+        keywords="leadership, director, principal, SVICSM team, educational leaders"
+        url="/about/leadership"
+      />
       <section className="bg-sv-blue py-20 text-center relative overflow-hidden">
          {/* Decorative Background Blob */}
          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
@@ -99,14 +106,14 @@ const Leadership = () => {
                 ))}
               </div>
 
-              <div className="flex gap-4">
+              {/* <div className="flex gap-4">
                 <button className="flex items-center gap-2 px-6 py-2 border border-gray-300 rounded-full hover:bg-sv-blue hover:text-white hover:border-sv-blue transition-all group">
                   <Linkedin size={18} /> <span className="text-sm font-bold">Connect</span>
                 </button>
                 <button className="flex items-center gap-2 px-6 py-2 border border-gray-300 rounded-full hover:bg-sv-maroon hover:text-white hover:border-sv-maroon transition-all group">
                   <Mail size={18} /> <span className="text-sm font-bold">Email</span>
                 </button>
-              </div>
+              </div> */}
             </div>
           </motion.div>
         ))}

@@ -5,6 +5,7 @@ import { FileText, Save, Download, CheckCircle, RefreshCcw, Upload } from 'lucid
 import SeniorAdmissionPDF from '../../components/PDF/SeniorAdmissionPDF'; 
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase';
+import SEO from '../../components/SEO';
 
 const SeniorAdmissionForm = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset, setValue } = useForm();
@@ -206,6 +207,12 @@ const SeniorAdmissionForm = () => {
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6" style={{ backgroundColor: '#f8f7f3' }}>
+      <SEO 
+        title="Senior College Admission Form" 
+        description="Apply for BBA, B.Com, and other degree courses at SVICSM. Start your professional journey today."
+        keywords="senior college admission, BBA admission, BCom admission, undergraduate admission, nashik college"
+        url="/admissions/senior-form"
+      />
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}

@@ -2,7 +2,9 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, Star, Upload, CheckCircle } from 'lucide-react';
 import { collection, addDoc, getDocs, query, where, serverTimestamp, orderBy } from 'firebase/firestore';
+
 import { db } from '../../firebase';
+import SEO from '../../components/SEO';
 
 const CLOUDINARY_CLOUD_NAME = 'dh4xushgf';
 const CLOUDINARY_UPLOAD_PRESET = 'Swami-Viveka';
@@ -126,7 +128,12 @@ const TestimonialsPage = () => {
 
   return (
     <div className="pt-5 min-h-screen bg-gray-50">
-      
+      <SEO 
+        title="Testimonials" 
+        description="Read what our students, parents, and alumni have to say about SVICSM."
+        keywords="testimonials, reviews, student feedback, alumni stories"
+        url="/campus-life/testimonials"
+      />
       {/* Header */}
       <section className="bg-sv-blue py-20 text-center text-white">
         <div className="container mx-auto px-4">

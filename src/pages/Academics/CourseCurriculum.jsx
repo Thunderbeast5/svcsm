@@ -5,6 +5,7 @@ import {
   Microscope, Calculator, Palette, Briefcase, Code, Landmark, 
   BookOpen, Users, GraduationCap, Star, ArrowRight, Sparkles, Download 
 } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 // Data for Junior College (11th & 12th)
 const juniorStreams = [
@@ -159,6 +160,12 @@ const CoursesCurriculum = () => {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] pt-5 font-sans selection:bg-sv-gold selection:text-white">
+      <SEO 
+        title="Courses & Curriculum" 
+        description="Explore our academic programs for 11th and 12th standards in Science and Commerce streams, and our Senior College courses."
+        keywords="courses, curriculum, science stream, commerce stream, BBA, BCom, junior college subjects"
+        url="/curriculum"
+      />
       
       {/* --- HERO SECTION --- */}
       <section className="relative bg-sv-blue text-white py-14 md:py-16 overflow-hidden">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Target, Lightbulb, Users, Award, Quote, Compass } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 const VisionMission = () => {
   const values = [
@@ -28,6 +29,12 @@ const VisionMission = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen pt-5">
+      <SEO 
+        title="Vision & Mission" 
+        description="Our vision to be a premier educational institution and our mission to foster academic excellence."
+        keywords="vision, mission, values, student-centric, pedagogy, SVICSM"
+        url="/about/vision"
+      />
       {/* Hero Section */}
       <section className="bg-sv-blue relative overflow-hidden text-white py-32">
         <div className="absolute inset-0 opacity-10">

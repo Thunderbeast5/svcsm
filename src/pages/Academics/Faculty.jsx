@@ -3,12 +3,15 @@ import { motion } from 'framer-motion';
 import { GraduationCap, Briefcase, Award } from 'lucide-react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
+import SEO from '../../components/SEO';
 import PricipalImg from '../../assets/img.png';
 import Mapari from '../../assets/mp3.png';
 import Mahale from '../../assets/mh3.png';
 import Pardeshi from '../../assets/p1.png';
 import Saiyyad from '../../assets/saiyyad.png';
 import Pagare from '../../assets/pagare.png';
+import Nilima from '../../assets/faculty/nil.png'
+import Chetan from '../../assets/faculty/chetan.png'
 // --- DATA CONFIGURATION ---
 const leadershipData = [
   {
@@ -16,7 +19,7 @@ const leadershipData = [
     role: "Principal",
     qual: "B.E. (Mechanical), MBA",
     exp: "10 Years",
-    image: PricipalImg
+    image: Chetan
   },
   {
     name: "Mr. Vivek S. Mapari",
@@ -47,7 +50,7 @@ const facultyData = [
     role: "HOD: Business Management",
     qual: "B.E. (Mechanical), MBA",
     exp: "10 Years",
-    image: PricipalImg
+    image: Chetan
   },
   {
     name: "Mr. Vivek S. Mapari",
@@ -82,7 +85,7 @@ const facultyData = [
     role: "HOD: Language & Lit.",
     qual: "M.A (English)",
     exp: "8 Years",
-    image: Pagare
+    image: Nilima
   }
 ];
 
@@ -247,7 +250,12 @@ const Faculty = () => {
 
   return (
     <div className="pt-5 min-h-screen bg-gray-50">
-      
+      <SEO 
+        title="Faculty" 
+        description="Meet our highly qualified and experienced faculty members at SVICSM."
+        keywords="faculty, teachers, professors, SVICSM staff, education experts"
+        url="/academics/faculty"
+      />
       {/* HERO SECTION */}
       <section className="relative bg-sv-maroon text-white py-24 overflow-hidden">
         {/* Background Patterns */}

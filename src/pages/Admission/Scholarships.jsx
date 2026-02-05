@@ -1,10 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Award, Users, ExternalLink } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 const Scholarships = () => {
   return (
     <div className="pt-20 min-h-screen bg-white">
+      <SEO 
+        title="Scholarships" 
+        description="Scholarships and financial aid available at SVICSM. Supporting deserving talent."
+        keywords="scholarships, financial aid, merit scholarship, government scholarship, SVICSM"
+        url="/admissions/scholarships"
+      />
       <section className="bg-gradient-to-r from-sv-maroon to-red-900 py-20 text-center text-white">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Scholarships & Financial Aid</h1>

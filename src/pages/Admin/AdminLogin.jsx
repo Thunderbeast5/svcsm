@@ -4,6 +4,7 @@ import { Lock, User, Eye, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
+import SEO from '../../components/SEO';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -36,7 +37,12 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 relative overflow-hidden">
-      
+      <SEO 
+        title="Admin Login" 
+        description="Restricted access for SVICSM Administration."
+        keywords="admin, login, portal, secure"
+        url="/admin/login"
+      />
       {/* Background Decoration */}
       <div className="absolute top-0 left-0 w-full h-1/2 bg-sv-blue z-0"></div>
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-sv-maroon/5 rounded-full blur-[100px] z-0"></div>

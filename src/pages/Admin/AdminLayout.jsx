@@ -18,6 +18,9 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import AdminNotifications from '../../components/Admin/AdminNotifications';
+import SEO from '../../components/SEO';
+import logoName from '../../assets/logo-name.png';
+import logoIcon from '../../assets/logo.png';
 
 const MotionAside = motion.aside;
 
@@ -49,16 +52,21 @@ const AdminLayout = () => {
 
   return (
     <div className="flex h-screen bg-gray-100 font-sans overflow-hidden">
+      <SEO 
+        title="Admin Portal" 
+        description="SVICSM Administration Dashboard."
+        url="/admin"
+      />
       <MotionAside
         initial={false}
         animate={{ width: isSidebarOpen ? 256 : 80 }}
         className="bg-sv-blue text-white flex flex-col shadow-2xl z-20 flex-shrink-0"
       >
-        <div className="h-16 flex items-center justify-center border-b border-white/10">
+        <div className="h-16 flex items-center justify-center border-b border-white/10 px-2">
           {isSidebarOpen ? (
-            <span className="font-bold text-xl tracking-wider text-sv-gold">SVCMS ADMIN</span>
+            <img src={logoName} alt="SVICSM" className="h-full w-full object-contain" />
           ) : (
-            <span className="font-bold text-xl text-sv-gold">SV</span>
+            <img src={logoIcon} alt="SVICSM" className="h-full w-full object-contain p-3" />
           )}
         </div>
 

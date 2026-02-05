@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, CheckCircle, HelpCircle, ChevronDown, AlertCircle } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 const AdmissionProcessPage = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -32,6 +33,12 @@ const AdmissionProcessPage = () => {
 
   return (
     <div className="pt-5 min-h-screen bg-gray-50">
+      <SEO 
+        title="Admission Process" 
+        description="Step-by-step guide for admission at SVICSM. Apply online for Junior and Senior College."
+        keywords="admission process, apply online, SVICSM admission, junior college, senior college"
+        url="/admissions/process"
+      />
       {/* Hero */}
       <section className="bg-sv-maroon py-20 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>

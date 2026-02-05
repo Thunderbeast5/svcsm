@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn, Filter, Loader } from 'lucide-react';
+
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../../firebase';
+import SEO from '../../components/SEO';
 
 // Static Data for Fallback
 const staticImages = [
@@ -78,7 +80,12 @@ const GalleryPage = () => {
 
   return (
     <div className="pt-5 min-h-screen bg-gray-50">
-      
+      <SEO 
+        title="Photo Gallery" 
+        description="View photos of our campus, events, students, and infrastructure."
+        keywords="gallery, photos, campus images, event photos, SVICSM gallery"
+        url="/campus-life/gallery"
+      />
       {/* Page Header */}
       <section className="bg-white py-12 border-b border-gray-200">
         <div className="container mx-auto px-4 text-center">

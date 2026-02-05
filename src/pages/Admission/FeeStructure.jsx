@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, Users, ExternalLink } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 // Data from your 2026-27 Fee Chart with Curriculum Colors applied
 const feeData = [
@@ -64,7 +65,12 @@ const feeData = [
 const FeesStructure = () => {
   return (
     <div className="pt-5 min-h-screen bg-gray-50">
-      
+      <SEO 
+        title="Fee Structure" 
+        description="Transparent fee structure for Junior and Senior College courses at SVICSM."
+        keywords="fees, college fees, reimbursement, installment, SVICSM fees"
+        url="/admissions/fees"
+      />
       {/* --- HERO SECTION --- */}
       <section className="bg-sv-blue py-20 text-center relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16"></div>

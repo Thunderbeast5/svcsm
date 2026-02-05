@@ -150,12 +150,16 @@ const Layout = () => {
   );
 };
 
+import { HelmetProvider } from 'react-helmet-async';
+
 export default function App() {
   return (
-    <Router>
-      <ToastProvider>
-        <Layout />
-      </ToastProvider>
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <ToastProvider>
+          <Layout />
+        </ToastProvider>
+      </Router>
+    </HelmetProvider>
   );
 }

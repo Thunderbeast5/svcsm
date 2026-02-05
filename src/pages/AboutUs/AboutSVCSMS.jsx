@@ -1,10 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, BookOpen, Lightbulb, Target, Calendar, Award } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 const AboutSVCMS = () => {
   return (
     <div className="bg-white min-h-screen pt-5">
+      <SEO 
+        title="About SVICSM" 
+        description="About SVICSM (Year of establishment: 2021). Eduparivartan Intellectual Services LLP is the parent organisation of SVICSM."
+        keywords="SVICSM, Swami Vivekananda Institute, Eduparivartan, About Us, Mission, Vision"
+        url="/about/svicsm"
+      />
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -46,32 +53,24 @@ const AboutSVCMS = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl font-bold text-sv-blue mb-6">Our Journey</h2>
+            <h2 className="text-4xl font-bold text-sv-blue mb-6">About SVICSM (Year of establishment: 2021)</h2>
             
             <div className="prose prose-lg text-gray-600">
               <p className="mb-6">
-                The roots of Swami Vivekananda Institute (SVICSM) run deep, beginning well before our official establishment. Our parent organization, <strong>Eduparivartan Intellectual Services LLP</strong>, has been actively working in the educational sector since <strong>2012</strong>.
+                <strong>Eduparivartan Intellectual Services LLP</strong> is the parent organisation of SVICSM. Working since 2012 in an educational sector through “fearless exam campaign”. It serves more than 5000+ students with the help of a team of 250+ intellectual persons.
               </p>
               <p className="mb-6">
-                Through our nationwide "Fearless Exam Campaign," we served more than <strong>5,000+ students</strong> with the help of a dedicated team of 250+ intellectuals. This decade of experience in understanding student psychology and learning gaps laid the foundation for our next big step.
+                In 2021, Team Eduparivartan has decided to build an educational institution by the name <strong>Swami Vivekananda Institute</strong> to provide NEP2020 ready platform for students in rural sector. It aims to build future ready generations through modern formative assessments methodology and concept boat pattern.
               </p>
               <p className="mb-6">
-                In <strong>2021</strong>, Team Eduparivartan decided to formalize this mission by building an educational institution. Thus, SVICSM was born—designed specifically to provide an <strong>NEP2020-ready platform</strong> for students in the rural sector, utilizing our unique "Concept Boat Pattern" for learning.
+                Swami Vivekananda Institute is a distinguished educational institution committed to fostering academic excellence and holistic development in students. Known for its strong values and student-centric approach, the institute offers a diverse range of programs in Commerce, Science, and Management, designed to equip students with both theoretical knowledge and practical skills relevant to today’s competitive world.
               </p>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-6 mt-8">
-              {[
-                { label: "Est. 2012 (Parent Org)", icon: Calendar },
-                { label: "Est. 2021 (Institute)", icon: Building2 },
-                { label: "5000+ Lives Touched", icon: Users },
-                { label: "250+ Team Members", icon: Award },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
-                  <item.icon className="text-sv-maroon" size={24} />
-                  <span className="font-bold text-sv-blue text-sm">{item.label}</span>
-                </div>
-              ))}
+              <p className="mb-6">
+                In the Commerce stream, students explore subjects such as accounting, finance, business law, and economics, preparing them for careers in banking, finance, taxation, and entrepreneurship. The Science courses are tailored to inspire curiosity and scientific temper, covering key disciplines like physics, chemistry, biology, and mathematics, and enabling students to venture into research, technology, and higher studies. Meanwhile, the Management programs focus on developing leadership, strategic thinking, and organizational skills, with specializations in areas like marketing, human resources, and business analytics.
+              </p>
+              <p className="mb-6">
+                At Swami Vivekananda Institute, the faculty comprises experienced educators who guide and mentor students with dedication. Alongside academic rigor, the institute emphasizes overall personality development through seminars, workshops, and extracurricular activities. With a supportive learning environment and modern facilities, Swami Vivekananda Institute empowers students to achieve their academic goals and build successful careers.
+              </p>
             </div>
           </motion.div>
 

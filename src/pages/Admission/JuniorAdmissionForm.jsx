@@ -5,6 +5,7 @@ import { FileText, Save, Download, CheckCircle, RefreshCcw, Upload } from 'lucid
 import JuniorAdmissionPDF from '../../components/PDF/JuniorAdmissionPDF'; 
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase';
+import SEO from '../../components/SEO';
 
 const JuniorAdmissionForm = () => {
   const { register, handleSubmit, watch, formState: { errors, isSubmitting }, reset, setValue } = useForm();
@@ -307,6 +308,12 @@ const JuniorAdmissionForm = () => {
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6" style={{ backgroundColor: '#f8f7f3' }}>
+      <SEO 
+        title="Junior College Admission Form" 
+        description="Apply for 11th and 12th standard admission at Swami Vivekananda Junior College. Science and Commerce streams available."
+        keywords="admission form, junior college admission, 11th admission, 12th admission, online application"
+        url="/admissions/junior-form"
+      />
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}

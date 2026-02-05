@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Bell, Check, X, UserPlus, Info } from 'lucide-react';
+import { Bell, Check, X, UserPlus, Info, Trash2 } from 'lucide-react';
 import { 
   collection, 
   query, 
@@ -7,6 +7,7 @@ import {
   onSnapshot, 
   doc, 
   updateDoc, 
+  deleteDoc,
   limit,
   where
 } from 'firebase/firestore';
@@ -73,6 +74,15 @@ const AdminNotifications = () => {
       updateDoc(doc(db, 'notifications', note.id), { read: true })
     );
     await Promise.all(updates);
+  };
+
+  const deleteNotification = async (id, e) => {
+    if (e) e.stopPropagation();
+    try {
+      await deleteDoc(doc(db, 'notifications', id));
+    } catch (err) {
+      console.error('Error deleting notification:', err);
+    }
   };
 
   const handleNotificationClick = async (notification) => {
@@ -202,6 +212,14 @@ const AdminNotifications = () => {
                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                           </div>
                         )}
+                        
+                        <button
+                          onClick={(e) => deleteNotification(note.id, e)}
+                          className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full opacity-0 group-hover:opacity-100 transition-all"
+                          title="Delete notification"
+                        >
+                          <Trash2 size={14} />
+                        </button>
                       </div>
                     </div>
                   ))}

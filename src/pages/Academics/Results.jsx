@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Calendar, Star, TrendingUp, Medal, Quote } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 // --- DATA CONFIGURATION ---
 const resultsData = {
@@ -86,7 +87,12 @@ const Results = () => {
 
   return (
     <div className="pt-5 min-h-screen bg-gray-50">
-      
+      <SEO 
+        title="Results & Achievements" 
+        description="Check our academic results and toppers. SVICSM celebrates student success."
+        keywords="results, academic excellence, toppers, exam results, SVICSM achievements"
+        url="/academics/results"
+      />
       {/* --- HERO SECTION --- */}
       <section className="bg-sv-blue text-white py-12 md:py-20 relative overflow-hidden px-4">
         {/* Background blobs */}
