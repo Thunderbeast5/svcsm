@@ -1,11 +1,17 @@
 import React from 'react';
-import { motion } from 'framer-motion'; // Added Import
-import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import logoIcon from '../assets/logo.png';
 
 const Footer = () => {
   void motion;
+  
+  const socialLinks = [
+    { Icon: Youtube, href: "https://youtube.com/@swamivivekananda2021?si=5SAjfFfeAEiNvbjW" },
+    { Icon: Instagram, href: "https://www.instagram.com/swami_vivekananda_jr.college?igsh=b21sbGRtZTJqZWg=&utm_source=ig_contact_invite" }
+  ];
+
   return (
     <footer className="bg-sv-blue text-white pt-20 pb-10 border-t-4 border-sv-gold">
       <div className="container mx-auto px-4 grid md:grid-cols-4 gap-12 mb-16 border-b border-white/10 pb-12">
@@ -26,10 +32,12 @@ const Footer = () => {
             Empowering students with knowledge, skills, and values to lead the future.
           </p>
           <div className="flex gap-4">
-            {[Facebook, Instagram, Linkedin, Twitter].map((Icon, i) => (
+            {socialLinks.map(({ Icon, href }, i) => (
               <motion.a 
                 key={i} 
-                href="#" 
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: 10 }}
                 className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-sv-gold hover:text-sv-blue transition-colors"
               >
@@ -71,11 +79,11 @@ const Footer = () => {
             </li>
             <li className="flex items-center gap-3">
               <Phone size={18} className="text-sv-gold shrink-0" />
-              <span>+91 98765 43210</span>
+              <span>+91 82086 65658</span>
             </li>
             <li className="flex items-center gap-3">
               <Mail size={18} className="text-sv-gold shrink-0" />
-              <span>info@svcms.edu.in</span>
+              <a href="mailto:svics2024@gmail.com" className="hover:text-white transition-colors">svics2024@gmail.com</a>
             </li>
           </ul>
         </motion.div>

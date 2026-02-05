@@ -125,10 +125,10 @@ const Navbar = () => {
             </span>
             <div className="flex justify-between w-full md:w-auto gap-6">
               <span className="flex items-center gap-2">
-                <Phone size={14} className="text-white" /> +91 98765 43210
+                <Phone size={14} className="text-white" /> +91 82086 65658
               </span>
               <span className="flex items-center gap-2">
-                <Mail size={14} className="text-white" /> admission@svcms.edu.in
+                <Mail size={14} className="text-white" /> svics2024@gmail.com
               </span>
             </div>
           </div>
