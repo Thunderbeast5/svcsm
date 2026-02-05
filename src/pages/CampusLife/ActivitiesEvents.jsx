@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, X, ChevronLeft, ChevronRight, Image as ImageIcon, Grid } from 'lucide-react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase';
+
+void motion;
 
 const eventsData = [
   {
@@ -53,8 +57,71 @@ const eventsData = [
 ];
 
 const ActivitiesEvents = () => {
+  const eventsCol = useMemo(() => collection(db, 'activitiesEvents'), []);
+
+  const [eventRows, setEventRows] = useState(eventsData);
   const [selectedEvent, setSelectedEvent] = useState(null); // Controls the Grid Modal
   const [fullScreenImageIndex, setFullScreenImageIndex] = useState(null); // Controls the Lightbox
+
+  useEffect(() => {
+    let ignore = false;
+
+    const load = async () => {
+      try {
+        const snap = await getDocs(eventsCol);
+        if (ignore) return;
+
+        const rows = snap.docs
+          .map((d) => {
+            const data = d.data() || {};
+            return {
+              id: d.id,
+              title: data.title,
+              date: data.date,
+              thumbnail: data.thumbnailUrl || data.thumbnail,
+              gallery: Array.isArray(data.gallery) ? data.gallery : [],
+              order: data.order,
+              active: data.active,
+              createdAt: data.createdAt,
+            };
+          })
+          .filter((r) => r.active === true);
+
+        const toMillis = (v) => {
+          if (!v) return 0;
+          if (typeof v?.toMillis === 'function') return v.toMillis();
+          if (typeof v?.toDate === 'function') return v.toDate().getTime();
+          const dt = new Date(v);
+          if (Number.isNaN(dt.getTime())) return 0;
+          return dt.getTime();
+        };
+
+        rows.sort((a, b) => {
+          const orderA = Number.isFinite(a?.order) ? a.order : 0;
+          const orderB = Number.isFinite(b?.order) ? b.order : 0;
+          if (orderA !== orderB) return orderA - orderB;
+          return toMillis(b?.createdAt) - toMillis(a?.createdAt);
+        });
+
+        const normalized = rows.map((r) => {
+          const gallery = Array.isArray(r.gallery) ? r.gallery.filter(Boolean) : [];
+          const thumb = String(r.thumbnail || '').trim();
+          if (thumb && !gallery.includes(thumb)) gallery.unshift(thumb);
+          return { ...r, gallery };
+        });
+
+        if (normalized.length > 0) setEventRows(normalized);
+      } catch {
+        if (ignore) return;
+      }
+    };
+
+    void load();
+
+    return () => {
+      ignore = true;
+    };
+  }, [eventsCol]);
 
   // Open the Grid View
   const openEventGallery = (event) => {
@@ -97,7 +164,7 @@ const ActivitiesEvents = () => {
       {/* Main Events List - Thumbnail View */}
       <section className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {eventsData.map((event) => (
+          {eventRows.map((event) => (
             <motion.div
               key={event.id}
               whileHover={{ y: -8 }}
@@ -112,7 +179,7 @@ const ActivitiesEvents = () => {
               />
               
               {/* Dark Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6">
+              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6">
                 <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                   <div className="flex items-center gap-2 text-sv-gold text-sm font-bold mb-2">
                     <Calendar size={16} /> {event.date}
@@ -137,7 +204,7 @@ const ActivitiesEvents = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-white/95 backdrop-blur-xl flex flex-col p-4 md:p-8 overflow-y-auto"
+            className="fixed inset-0 z-60 bg-white/95 backdrop-blur-xl flex flex-col p-4 md:p-8 overflow-y-auto"
           >
             {/* Modal Header */}
             <div className="flex justify-between items-center mb-8 container mx-auto max-w-6xl">
@@ -179,7 +246,7 @@ const ActivitiesEvents = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[70] bg-black flex items-center justify-center"
+            className="fixed inset-0 z-70 bg-black flex items-center justify-center"
           >
             {/* Close Lightbox (Back to Grid) */}
             <button 

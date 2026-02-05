@@ -198,14 +198,14 @@ const SeniorAdmissionForm = () => {
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}
-        <div className="text-center mb-6">
+        {/* <div className="text-center mb-6">
           <h1 className="text-4xl font-bold mb-2" style={{ color: '#002147' }}>
             Swami Vivekananda Institute Of Management
           </h1>
           <p className="text-lg text-gray-700">Senior College Admission Form</p>
           <p className="text-md text-gray-600">Admission Form: 2026-27</p>
           <p className="text-sm font-semibold mt-2" style={{ color: '#800020' }}>Form Fees: Rs. 100/-</p>
-        </div>
+        </div> */}
 
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden" style={{ borderColor: '#002147', borderWidth: '3px' }}>
           
