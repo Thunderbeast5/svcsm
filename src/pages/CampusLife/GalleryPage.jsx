@@ -1,94 +1,20 @@
-// import React, { useState } from 'react';
-// import { motion, AnimatePresence } from 'framer-motion';
-
-// const images = [
-//   { id: 1, src: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1986&auto=format&fit=crop", cat: "Campus" },
-//   { id: 2, src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop", cat: "Cultural" },
-//   { id: 3, src: "https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=2070&auto=format&fit=crop", cat: "Sports" },
-//   { id: 4, src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2069&auto=format&fit=crop", cat: "Students" },
-//   { id: 5, src: "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?q=80&w=2070&auto=format&fit=crop", cat: "Campus" },
-//   { id: 6, src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop", cat: "Cultural" },
-//   { id: 7, src: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=2070&auto=format&fit=crop", cat: "Sports" },
-//   { id: 8, src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop", cat: "Students" },
-// ];
-
-// const categories = ["All", "Campus", "Sports", "Cultural", "Students"];
-
-// const GalleryPage = () => {
-//   const [filter, setFilter] = useState("All");
-
-//   const filteredImages = filter === "All" 
-//     ? images 
-//     : images.filter(img => img.cat === filter);
-
-//   return (
-//     <div className="pt-20 min-h-screen bg-white">
-//       <section className="bg-white py-12 text-center border-b border-gray-100">
-//         <h1 className="text-4xl font-bold text-sv-blue mb-2">Photo Gallery</h1>
-//         <p className="text-gray-500">A glimpse into life at SVCMS</p>
-//       </section>
-
-//       <section className="container mx-auto px-4 py-12">
-//         {/* Filter Buttons */}
-//         <div className="flex flex-wrap justify-center gap-4 mb-12">
-//           {categories.map((cat) => (
-//             <button
-//               key={cat}
-//               onClick={() => setFilter(cat)}
-//               className={`px-6 py-2 rounded-full font-medium transition-all ${
-//                 filter === cat 
-//                   ? 'bg-sv-maroon text-white shadow-md' 
-//                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-//               }`}
-//             >
-//               {cat}
-//             </button>
-//           ))}
-//         </div>
-
-//         {/* Masonry Grid */}
-//         <motion.div layout className="columns-1 md:columns-3 lg:columns-4 gap-4 space-y-4">
-//           <AnimatePresence>
-//             {filteredImages.map((img) => (
-//               <motion.div
-//                 layout
-//                 initial={{ opacity: 0, scale: 0.8 }}
-//                 animate={{ opacity: 1, scale: 1 }}
-//                 exit={{ opacity: 0, scale: 0.8 }}
-//                 transition={{ duration: 0.3 }}
-//                 key={img.id}
-//                 className="break-inside-avoid relative group rounded-xl overflow-hidden"
-//               >
-//                 <img src={img.src} alt={img.cat} className="w-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
-//                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-//                   <span className="bg-white text-xs font-bold px-2 py-1 rounded text-black">{img.cat}</span>
-//                 </div>
-//               </motion.div>
-//             ))}
-//           </AnimatePresence>
-//         </motion.div>
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default GalleryPage;
-
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, ZoomIn, Filter } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ZoomIn, Filter, Loader } from 'lucide-react';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { db } from '../../firebase';
 
-// Expanded Image Data
-const images = [
-  { id: 1, src: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1986&auto=format&fit=crop", cat: "Campus", title: "Main Building" },
-  { id: 2, src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop", cat: "Cultural", title: "Dance Performance" },
-  { id: 3, src: "https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=2070&auto=format&fit=crop", cat: "Sports", title: "Football Team" },
-  { id: 4, src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2069&auto=format&fit=crop", cat: "Students", title: "Study Group" },
-  { id: 5, src: "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?q=80&w=2070&auto=format&fit=crop", cat: "Campus", title: "Library Reading Hall" },
-  { id: 6, src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop", cat: "Cultural", title: "Music Fest" },
-  { id: 7, src: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=2070&auto=format&fit=crop", cat: "Sports", title: "Athletics Meet" },
-  { id: 8, src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop", cat: "Students", title: "Graduation Day" },
-  { id: 9, src: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?q=80&w=2574&auto=format&fit=crop", cat: "Campus", title: "Science Labs" },
+// Static Data for Fallback
+const staticImages = [
+  { id: 's1', src: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1986&auto=format&fit=crop", cat: "Campus", title: "Main Building" },
+  { id: 's2', src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop", cat: "Cultural", title: "Dance Performance" },
+  { id: 's3', src: "https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=2070&auto=format&fit=crop", cat: "Sports", title: "Football Team" },
+  { id: 's4', src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2069&auto=format&fit=crop", cat: "Students", title: "Study Group" },
+  { id: 's5', src: "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?q=80&w=2070&auto=format&fit=crop", cat: "Campus", title: "Library Reading Hall" },
+  { id: 's6', src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop", cat: "Cultural", title: "Music Fest" },
+  { id: 's7', src: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=2070&auto=format&fit=crop", cat: "Sports", title: "Athletics Meet" },
+  { id: 's8', src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop", cat: "Students", title: "Graduation Day" },
+  { id: 's9', src: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?q=80&w=2574&auto=format&fit=crop", cat: "Campus", title: "Science Labs" },
 ];
 
 const categories = ["All", "Campus", "Sports", "Cultural", "Students"];
@@ -96,6 +22,40 @@ const categories = ["All", "Campus", "Sports", "Cultural", "Students"];
 const GalleryPage = () => {
   const [filter, setFilter] = useState("All");
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const galleryCol = useMemo(() => collection(db, 'gallery_images'), []);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+        try {
+            const q = query(galleryCol /* orderBy('createdAt', 'desc') */);
+            const snap = await getDocs(q);
+            const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+            // Manual sort to avoid index requirement block
+            data.sort((a, b) => {
+                 const tA = a.createdAt?.toMillis?.() || 0;
+                 const tB = b.createdAt?.toMillis?.() || 0;
+                 return tB - tA; // Newest first
+            });
+
+            if (data.length > 0) {
+                setImages(data);
+            } else {
+                setImages(staticImages);
+            }
+        } catch (error) {
+            console.error("Failed to fetch gallery images:", error);
+            setImages(staticImages);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    fetchImages();
+  }, [galleryCol]);
 
   // Filter Logic
   const filteredImages = filter === "All" 
@@ -117,7 +77,7 @@ const GalleryPage = () => {
   };
 
   return (
-    <div className="pt-24 min-h-screen bg-gray-50">
+    <div className="pt-5 min-h-screen bg-gray-50">
       
       {/* Page Header */}
       <section className="bg-white py-12 border-b border-gray-200">
@@ -150,46 +110,50 @@ const GalleryPage = () => {
           ))}
         </div>
 
-        {/* The Grid (Replaced Masonry with Grid for Stability) */}
-        <motion.div 
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredImages.map((img, index) => (
-              <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                key={img.id}
-                className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl bg-gray-200"
-                onClick={() => openLightbox(index)}
-              >
-                <img 
-                  src={img.src} 
-                  alt={img.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                  loading="lazy"
-                />
-                
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                  <span className="text-sv-gold text-xs font-bold uppercase tracking-wider mb-1">
-                    {img.cat}
-                  </span>
-                  <h3 className="text-white font-bold text-lg flex items-center gap-2">
-                    {img.title} <ZoomIn size={16} className="text-white/70" />
-                  </h3>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        {/* The Grid */}
+        {isLoading ? (
+             <div className="text-center py-20 text-gray-400">Loading gallery...</div>
+        ) : (
+            <motion.div 
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+            <AnimatePresence mode="popLayout">
+                {filteredImages.map((img, index) => (
+                <motion.div
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3 }}
+                    key={img.id}
+                    className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl bg-gray-200"
+                    onClick={() => openLightbox(index)}
+                >
+                    <img 
+                    src={img.src} 
+                    alt={img.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    loading="lazy"
+                    />
+                    
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                    <span className="text-sv-gold text-xs font-bold uppercase tracking-wider mb-1">
+                        {img.cat}
+                    </span>
+                    <h3 className="text-white font-bold text-lg flex items-center gap-2">
+                        {img.title} <ZoomIn size={16} className="text-white/70" />
+                    </h3>
+                    </div>
+                </motion.div>
+                ))}
+            </AnimatePresence>
+            </motion.div>
+        )}
         
         {/* Empty State */}
-        {filteredImages.length === 0 && (
+        {!isLoading && filteredImages.length === 0 && (
           <div className="text-center py-20 text-gray-400">
             <p>No photos found in this category.</p>
           </div>

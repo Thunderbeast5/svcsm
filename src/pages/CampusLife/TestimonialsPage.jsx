@@ -125,12 +125,12 @@ const TestimonialsPage = () => {
   };
 
   return (
-    <div className="pt-20 min-h-screen bg-gray-50">
+    <div className="pt-5 min-h-screen bg-gray-50">
       
       {/* Header */}
       <section className="bg-sv-blue py-20 text-center text-white">
         <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-bold mb-4">Voices of SVCMS</h1>
+            <h1 className="text-4xl font-bold mb-4">Voices of SVICSM</h1>
             <p className="text-xl text-white/80">Hear from our students, alumni, and parents.</p>
         </div>
       </section>

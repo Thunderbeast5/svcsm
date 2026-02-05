@@ -151,7 +151,7 @@ const ActivitiesEvents = () => {
   };
 
   return (
-    <div className="pt-20 min-h-screen bg-gray-50">
+    <div className="pt-5 min-h-screen bg-gray-50">
       
       {/* Header */}
       <section className="bg-sv-blue py-20 text-center">
