@@ -90,6 +90,17 @@ const SeniorAdmissionForm = () => {
 
     try {
       const docRef = await addDoc(collection(db, 'seniorAdmissions'), payload);
+      
+      // Create notification
+      await addDoc(collection(db, 'notifications'), {
+        type: 'senior_admission',
+        title: 'New Senior Admission',
+        message: `${data.firstName || ''} ${data.lastName || ''} - ${data.year} ${data.course}`,
+        createdAt: serverTimestamp(),
+        read: false,
+        link: '/admin/senior-admissions'
+      });
+
       data.submissionId = docRef.id;
       setFormData(data);
       setIsSubmitted(true);

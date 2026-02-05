@@ -17,6 +17,7 @@ import {
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
+import AdminNotifications from '../../components/Admin/AdminNotifications';
 
 const MotionAside = motion.aside;
 
@@ -119,10 +120,9 @@ const AdminLayout = () => {
               />
             </div>
 
-            <button className="relative p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors">
-              <Bell size={20} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
-            </button>
+            <div className="z-50">
+              <AdminNotifications />
+            </div>
 
             <div className="flex items-center gap-3 pl-4 border-l border-gray-200 ml-2">
               <div className="text-right hidden md:block leading-tight">

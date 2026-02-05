@@ -155,6 +155,17 @@ const JuniorAdmissionForm = () => {
 
     try {
       const docRef = await addDoc(collection(db, 'juniorAdmissions'), payload);
+      
+      // Create notification
+      await addDoc(collection(db, 'notifications'), {
+        type: 'junior_admission',
+        title: 'New Junior Admission',
+        message: `${data.surname || ''} ${data.middleName || ''} - ${data.standard} ${data.stream}`,
+        createdAt: serverTimestamp(),
+        read: false,
+        link: '/admin/junior-admissions'
+      });
+
       data.submissionId = docRef.id;
       setFormData(data);
       setIsSubmitted(true);
