@@ -1,117 +1,252 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap, Mail } from 'lucide-react';
-
-const facultyMembers = [
+import { GraduationCap, Briefcase, Award } from 'lucide-react';
+import PricipalImg from '../../assets/img.png';
+import Mapari from '../../assets/mp3.png';
+import Mahale from '../../assets/mh3.png';
+import Pardeshi from '../../assets/p1.png';
+import Saiyyad from '../../assets/saiyyad.png';
+import Pagare from '../../assets/pagare.png';
+// --- DATA CONFIGURATION ---
+const leadershipData = [
   {
-    name: "Dr. Suresh Patil",
-    dept: "Science",
-    subject: "Physics",
-    qual: "M.Sc, Ph.D, B.Ed",
-    exp: "15 Years",
-    image: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?q=80&w=1887&auto=format&fit=crop"
-  },
-  {
-    name: "Mrs. Priya Sharma",
-    dept: "Science",
-    subject: "Biology",
-    qual: "M.Sc (Botany), SET",
+    name: "Mr. Chetan N. Bargal",
+    role: "Principal",
+    qual: "B.E. (Mechanical), MBA",
     exp: "10 Years",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop"
+    image: PricipalImg
   },
   {
-    name: "Mr. Amit Verma",
-    dept: "Commerce",
-    subject: "Accountancy",
-    qual: "M.Com, CA Inter",
+    name: "Mr. Vivek S. Mapari",
+    role: "HR & Management",
+    qual: "B.E. (Mechanical), MBA",
+    exp: "10 Years",
+    image: Mapari
+  },
+  {
+    name: "Mrs. Prachi Mahale",
+    role: "Administration",
+    qual: "M.Com",
+    exp: "5 Years",
+    image: Mahale
+  },
+  {
+    name: "Mr. Akshay Pardeshi",
+    role: "Campus In-charge",
+    qual: "M.Com",
     exp: "8 Years",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop"
-  },
-  {
-    name: "Ms. Neha Gupta",
-    dept: "Commerce",
-    subject: "Economics",
-    qual: "MA (Economics), B.Ed",
-    exp: "12 Years",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop"
-  },
-  {
-    name: "Mr. Rajan Kulkarni",
-    dept: "Arts",
-    subject: "History",
-    qual: "MA (History), NET/SET",
-    exp: "20 Years",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    name: "Mrs. Kavita Joshi",
-    dept: "Languages",
-    subject: "English",
-    qual: "MA (English Lit)",
-    exp: "6 Years",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop"
+    image: Pardeshi
   }
 ];
 
+const facultyData = [
+  {
+    name: "Mr. Chetan N. Bargal",
+    role: "HOD: Business Management",
+    qual: "B.E. (Mechanical), MBA",
+    exp: "10 Years",
+    image: PricipalImg
+  },
+  {
+    name: "Mr. Vivek S. Mapari",
+    role: "HOD: Science",
+    qual: "B.E. (Mechanical), MBA",
+    exp: "10 Years",
+    image: Mapari 
+  },
+  {
+    name: "Mrs. Samina Saiyyad",
+    role: "HOD: Arts & Humanity",
+    qual: "M.A",
+    exp: "10 Years",
+    image: Saiyyad
+  },
+  {
+    name: "Mr. Akshay Pardeshi",
+    role: "HOD: Commerce (JR)",
+    qual: "M.Com",
+    exp: "8 Years",
+    image: Pardeshi
+  },
+  {
+    name: "Miss. Akankasha Pagare",
+    role: "HOD: Commerce (SR)",
+    qual: "M.Com",
+    exp: "8 Years",
+    image: Pagare
+  },
+  {
+    name: "Mrs. Nilima Jadhav",
+    role: "HOD: Language & Lit.",
+    qual: "M.A (English)",
+    exp: "8 Years",
+    image: Pagare
+  }
+];
+
+// --- COMPONENTS ---
+
+const ProfileCard = ({ person, index }) => {
+  // Theme logic for dynamic colors
+  const themeColors = {
+    maroon: {
+        gradient: "from-sv-maroon/90 to-sv-maroon/70",
+        borderHover: "group-hover:border-sv-maroon",
+        textHover: "group-hover:text-sv-maroon",
+        bgBlob: "bg-sv-maroon"
+    },
+    blue: {
+        gradient: "from-sv-blue/90 to-sv-blue/70",
+        borderHover: "group-hover:border-sv-blue",
+        textHover: "group-hover:text-sv-blue",
+        bgBlob: "bg-sv-blue"
+    }
+  };
+
+  const activeTheme = index % 2 === 0 ? themeColors.maroon : themeColors.blue;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+      viewport={{ once: true }}
+      className="group h-full"
+    >
+      {/* CARD CONTAINER 
+         - Added 'border-2' and 'border-gray-200' for visible border
+         - Added hover transition for border color
+      */}
+      <div className={`relative bg-white rounded-2xl overflow-hidden h-full flex flex-col
+                       border-2 border-gray-200 ${activeTheme.borderHover}
+                       shadow-md hover:shadow-xl transition-all duration-300`}>
+        
+        {/* Image Area */}
+        <div className="relative h-64 w-full bg-gray-50 overflow-hidden flex items-end justify-center pt-8 border-b border-gray-100">
+          {/* Animated Background Blob */}
+          <div className={`absolute bottom-0 w-64 h-64 rounded-t-full opacity-10 ${activeTheme.bgBlob} 
+                          transition-all duration-500 transform scale-90 group-hover:scale-100`}></div>
+          
+          {/* Person Image */}
+          <img 
+            src={person.image} 
+            alt={person.name} 
+            className="relative z-10 h-full w-auto object-contain drop-shadow-md transform group-hover:scale-105 transition-transform duration-500 origin-bottom"
+          />
+        </div>
+
+        {/* Content Area */}
+        <div className="p-5 flex-grow flex flex-col relative">
+          
+          <div className="mb-4">
+            <span className="inline-block py-1 px-3 rounded-full bg-gray-100 text-gray-600 text-[10px] md:text-xs font-bold tracking-wider uppercase mb-2">
+              {person.role}
+            </span>
+            <h3 className={`text-xl font-bold text-gray-800 leading-tight ${activeTheme.textHover} transition-colors`}>
+              {person.name}
+            </h3>
+          </div>
+
+          <div className="space-y-3 mt-auto border-t border-gray-100 pt-4">
+            <div className="flex items-start gap-3">
+              <GraduationCap className="w-5 h-5 text-sv-gold mt-0.5 shrink-0" />
+              <div>
+                <p className="text-[10px] text-gray-400 uppercase font-bold">Qualification</p>
+                <p className="text-sm font-medium text-gray-700">{person.qual}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-3">
+              <Award className="w-5 h-5 text-sv-gold mt-0.5 shrink-0" />
+              <div>
+                <p className="text-[10px] text-gray-400 uppercase font-bold">Experience</p>
+                <p className="text-sm font-medium text-gray-700">{person.exp}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Color Strip */}
+        <div className={`h-1.5 w-full bg-gradient-to-r ${activeTheme.gradient}`}></div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Faculty = () => {
   return (
-    <div className="pt-20 min-h-screen bg-white">
-      <section className="bg-sv-maroon py-20 text-center">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Our Faculty</h1>
-          <p className="text-xl text-white/80">Meet the mentors shaping the future.</p>
+    <div className="pt-5 min-h-screen bg-gray-50">
+      
+      {/* HERO SECTION */}
+      <section className="relative bg-sv-maroon text-white py-24 overflow-hidden">
+        {/* Background Patterns */}
+        <div className="absolute inset-0 opacity-10">
+          <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0 100 C 20 0 50 0 100 100 Z" fill="white" />
+          </svg>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl mx-auto"
+          >
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 font-serif">
+              Meet Our Mentors
+            </h1>
+            <p className="text-xl text-white/90 leading-relaxed">
+              Highly qualified and experienced leadership dedicated to academic excellence and student development.
+            </p>
+          </motion.div>
         </div>
       </section>
 
+      {/* LEADERSHIP SECTION */}
       <section className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {facultyMembers.map((prof, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="group bg-white rounded-xl shadow-md hover:shadow-xl border border-gray-100 overflow-hidden transition-all duration-300"
-            >
-              <div className="h-2 bg-gradient-to-r from-sv-maroon to-sv-gold"></div>
-              <div className="p-6 flex items-start gap-4">
-                <img 
-                  src={prof.image} 
-                  alt={prof.name} 
-                  className="w-20 h-20 rounded-full object-cover border-2 border-gray-100 group-hover:border-sv-gold transition-colors"
-                />
-                <div>
-                  <h3 className="font-bold text-lg text-sv-blue group-hover:text-sv-maroon transition-colors">{prof.name}</h3>
-                  <span className="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded mt-1 font-medium">
-                    {prof.dept} Dept.
-                  </span>
-                  <p className="text-sm text-gray-500 mt-1">{prof.subject}</p>
-                </div>
-              </div>
-              
-              <div className="px-6 pb-6 pt-2">
-                <div className="grid grid-cols-2 gap-4 text-sm border-t border-gray-100 pt-4">
-                  <div>
-                    <p className="text-gray-400 text-xs uppercase tracking-wider font-bold mb-1">Qualification</p>
-                    <p className="font-medium text-gray-700 flex items-center gap-1">
-                      <GraduationCap size={14} className="text-sv-maroon" /> {prof.qual}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-xs uppercase tracking-wider font-bold mb-1">Experience</p>
-                    <p className="font-medium text-gray-700">{prof.exp}</p>
-                  </div>
-                </div>
-                
-                <button className="w-full mt-4 flex items-center justify-center gap-2 border border-gray-200 py-2 rounded-lg text-sm font-bold text-gray-600 hover:bg-sv-blue hover:text-white hover:border-sv-blue transition-all">
-                  <Mail size={16} /> Contact Faculty
-                </button>
-              </div>
-            </motion.div>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-10 text-center">
+          <div className="h-0.5 w-12 bg-sv-gold hidden md:block"></div>
+          <h2 className="text-2xl md:text-3xl font-bold text-sv-blue uppercase tracking-wide">
+            Institute Leadership
+          </h2>
+          <div className="h-0.5 w-12 bg-sv-gold hidden md:block"></div>
+        </div>
+
+        {/* RESPONSIVE GRID:
+           grid-cols-1 (Mobile)
+           md:grid-cols-2 (Tablet)
+           lg:grid-cols-4 (Desktop - Fits all 4 leaders in one row)
+        */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {leadershipData.map((person, index) => (
+            <ProfileCard key={index} person={person} index={index} />
           ))}
         </div>
       </section>
+
+      {/* HOD SECTION */}
+      <section className="bg-white py-16 border-t border-gray-200">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center gap-3 mb-12">
+             <Briefcase className="text-sv-maroon w-6 h-6 md:w-8 md:h-8" />
+             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-center">
+               Heads of Departments
+             </h2>
+          </div>
+
+          {/* RESPONSIVE GRID:
+             grid-cols-1 (Mobile)
+             md:grid-cols-2 (Tablet)
+             lg:grid-cols-3 (Desktop - Standard 3-col layout)
+          */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {facultyData.map((person, index) => (
+              <ProfileCard key={index} person={person} index={index + 4} />
+            ))}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };
