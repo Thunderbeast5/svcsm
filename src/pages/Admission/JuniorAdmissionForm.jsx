@@ -589,15 +589,14 @@ const JuniorAdmissionForm = () => {
                   </div>
 
                   <div className="mt-6">
-                    <label className="block text-sm font-bold mb-2 text-gray-700">Name in Devanagari (नाव देवनागरी लिपीत) *</label>
+                    <label className="block text-sm font-bold mb-2 text-gray-700">Name in Devanagari (नाव देवनागरी लिपीत)</label>
                     <input 
                       type="text" 
-                      {...register("nameDevanagari", { required: "Name in Devanagari is required" })}
+                      {...register("nameDevanagari")}
                       className="w-full p-3 border-2 rounded-lg focus:ring-2"
                       style={{ borderColor: '#B8860B' }}
                       placeholder="देवनागरी लिपीत नाव"
                     />
-                    {errors.nameDevanagari && <p className="text-red-600 text-xs mt-1">{errors.nameDevanagari.message}</p>}
                   </div>
 
                   <div className="mt-6">
