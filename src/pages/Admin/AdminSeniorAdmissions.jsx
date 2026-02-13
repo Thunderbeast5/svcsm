@@ -3,6 +3,7 @@ import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { ChevronLeft, FileText, Download, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { formatCourseName } from '../../utils';
 
 const formatCsvValue = (value) => {
   if (value === null || value === undefined) return '';
@@ -43,7 +44,7 @@ const downloadCsvWithColumns = (filename, columns, rows) => {
 
 const SeniorAdmissionRow = ({ row }) => {
   const year = row.year || '-';
-  const course = row.course || '-';
+  const course = formatCourseName(row.course) || '-';
   const student = `${row.lastName || ''} ${row.firstName || ''}`.trim() || '-';
   const createdAt = row.createdAt?.toDate ? row.createdAt.toDate() : null;
   const date = createdAt ? createdAt.toLocaleDateString() : '-';
@@ -106,7 +107,7 @@ const AdminSeniorAdmissions = () => {
     const exportColumns = [
       { header: 'Application Number', getValue: (r) => r?.appNo },
       { header: 'Year', getValue: (r) => r?.year },
-      { header: 'Course', getValue: (r) => r?.course },
+      { header: 'Course', getValue: (r) => formatCourseName(r?.course) },
       { header: 'Last Name', getValue: (r) => r?.lastName },
       { header: 'First Name', getValue: (r) => r?.firstName },
       { header: 'Middle Name', getValue: (r) => r?.middleName },
@@ -202,7 +203,7 @@ const AdminSeniorAdmissions = () => {
                     <GraduationCap className="text-purple-600" size={24} />
                   </div>
                 </div>
-                <h3 className="text-lg font-bold text-gray-800">{name}</h3>
+                <h3 className="text-lg font-bold text-gray-800">{formatCourseName(name)}</h3>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="text-3xl font-bold text-gray-900">{count}</span>
                   <span className="text-sm text-gray-500">applications</span>
@@ -226,7 +227,7 @@ const AdminSeniorAdmissions = () => {
             <ChevronLeft size={20} />
           </button>
           <div>
-            <h3 className="font-bold text-gray-800 text-lg">{selectedCourse} Applications</h3>
+            <h3 className="font-bold text-gray-800 text-lg">{formatCourseName(selectedCourse)} Applications</h3>
             <p className="text-xs text-gray-500">Showing {filteredAdmissions.length} records</p>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, FileText, GraduationCap, AlertCircle, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { formatCourseName } from '../../utils';
 
 const MotionDiv = motion.div;
 
@@ -44,7 +45,7 @@ const AdminDashboardHome = () => {
         ...doc.data(),
         type: 'Senior',
         studentName: `${doc.data().firstName || ''} ${doc.data().lastName || ''}`.trim() || 'Unknown',
-        courseName: `${doc.data().year} ${doc.data().course}`,
+        courseName: `${doc.data().year} ${formatCourseName(doc.data().course)}`,
         date: doc.data().createdAt?.toDate() || new Date()
       }));
 
