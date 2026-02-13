@@ -41,6 +41,15 @@ const feeData = [
         features: ["Tuition Fee: ₹40,000", "Admission Fee: ₹2,500", "Co-curricular: ₹10,000", "Exam Fee: ₹2,500"]
       },
       {
+        name: "BCA (Computer Appl.)",
+        code: "FY/SY/TY BCA",
+        total: "₹ 55,000",
+        oneTime: "₹ 52,500",
+        // Theme: Blue/Cyan (Tech theme)
+        color: "bg-gradient-to-r from-cyan-500 to-blue-600",
+        features: ["Tuition Fee: ₹40,000", "Admission Fee: ₹2,500", "Co-curricular: ₹10,000", "Exam Fee: ₹2,500"]
+      },
+      {
         name: "B.Com",
         code: "FY/SY/TY B.Com",
         total: "₹ 18,000",
@@ -139,7 +148,7 @@ const FeesStructure = () => {
                   {/* Installment Info */}
                   <div className="p-4 border-t border-gray-200 text-center bg-white">
                     <p className="text-xs text-gray-500">
-                      Installment facility available (40% - 30% - 30%)
+                      Installment facility available (55% - 45%)
                     </p>
                   </div>
                 </motion.div>
