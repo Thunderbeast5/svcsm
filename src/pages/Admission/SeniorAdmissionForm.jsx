@@ -237,7 +237,7 @@ const SeniorAdmissionForm = () => {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              <button
+              {/* <button
                 type="button"
                 onClick={quickFillForm}
                 className="text-sm px-4 py-2 rounded-full transition-all flex items-center justify-center gap-2"
@@ -247,7 +247,7 @@ const SeniorAdmissionForm = () => {
               >
                 <RefreshCcw size={16} />
                 Quick Fill Demo
-              </button>
+              </button> */}
               <span className="text-sm px-4 py-2 rounded-full text-center" style={{ backgroundColor: 'rgba(184, 134, 11, 0.3)' }}>Official Application</span>
             </div>
           </div>
