@@ -20,22 +20,22 @@ const SeniorAdmissionForm = () => {
   // Define courseStructure outside for accessibility
   const courseStructure = {
     'FY': {
-      'BBA': { name: 'FY BBA', admission: 2500, tuition: 40000, coActivity: 10000, exam: 2500, total: 55000, oneTime: 52500, inst1: 35000, inst2: 20000 },
-      'BComCA': { name: 'FY B.Com (CA)', admission: 1000, tuition: 12000, coActivity: 2500, exam: 2500, total: 18000, oneTime: 17000, inst1: 10000, inst2: 8000 },
-      'BComBM': { name: 'FY B.Com BM', admission: 1000, tuition: 7000, coActivity: 3000, exam: 1500, total: 12500, oneTime: 11000, inst1: 7500, inst2: 5000 },
-      'BA': { name: 'FY BA', admission: 1000, tuition: 7000, coActivity: 3000, exam: 1500, total: 12500, oneTime: 11000, inst1: 7500, inst2: 5000 }
+      'BBA': { name: 'FY BBA', admission: 2500, tuition: 40000, coActivity: 10000, exam: 2500, total: 55000, oneTime: 52500, inst1: 30250, inst2: 24750 },
+      'BCA': { name: 'FY BCA', admission: 2500, tuition: 40000, coActivity: 10000, exam: 2500, total: 55000, oneTime: 52500, inst1: 30250, inst2: 24750 },
+      'BCOM': { name: 'FY B.COM', admission: 1000, tuition: 12000, coActivity: 2500, exam: 2500, total: 18000, oneTime: 17000, inst1: 9900, inst2: 8100 },
+      'BA': { name: 'FY BA', admission: 1000, tuition: 7000, coActivity: 3000, exam: 1500, total: 12500, oneTime: 11000, inst1: 6875, inst2: 5625 }
     },
     'SY': {
-      'BBA': { name: 'SY BBA', admission: 2500, tuition: 40000, coActivity: 10000, exam: 2500, total: 55000, oneTime: 52500, inst1: 35000, inst2: 20000 },
-      'BComCA': { name: 'SY B.Com (CA)', admission: 1000, tuition: 12000, coActivity: 2500, exam: 2500, total: 18000, oneTime: 17000, inst1: 10000, inst2: 8000 },
-      'BComBM': { name: 'SY B.Com BM', admission: 1000, tuition: 7000, coActivity: 3000, exam: 1500, total: 12500, oneTime: 11000, inst1: 7500, inst2: 5000 },
-      'BA': { name: 'SY BA', admission: 1000, tuition: 7000, coActivity: 3000, exam: 1500, total: 12500, oneTime: 11000, inst1: 7500, inst2: 5000 }
+      'BBA': { name: 'SY BBA', admission: 2500, tuition: 40000, coActivity: 10000, exam: 2500, total: 55000, oneTime: 52500, inst1: 30250, inst2: 24750 },
+      'BCA': { name: 'SY BCA', admission: 2500, tuition: 40000, coActivity: 10000, exam: 2500, total: 55000, oneTime: 52500, inst1: 30250, inst2: 24750 },
+      'BCOM': { name: 'SY B.COM', admission: 1000, tuition: 12000, coActivity: 2500, exam: 2500, total: 18000, oneTime: 17000, inst1: 9900, inst2: 8100 },
+      'BA': { name: 'SY BA', admission: 1000, tuition: 7000, coActivity: 3000, exam: 1500, total: 12500, oneTime: 11000, inst1: 6875, inst2: 5625 }
     },
     'TY': {
-      'BBA': { name: 'TY BBA', admission: 2500, tuition: 40000, coActivity: 10000, exam: 2500, total: 55000, oneTime: 52500, inst1: 35000, inst2: 20000 },
-      'BComCA': { name: 'TY B.Com (CA)', admission: 1000, tuition: 12000, coActivity: 2500, exam: 2500, total: 18000, oneTime: 17000, inst1: 10000, inst2: 8000 },
-      'BComBM': { name: 'TY B.Com BM', admission: 1000, tuition: 7000, coActivity: 3000, exam: 1500, total: 12500, oneTime: 11000, inst1: 7500, inst2: 5000 },
-      'BA': { name: 'TY BA', admission: 1000, tuition: 7000, coActivity: 3000, exam: 1500, total: 12500, oneTime: 11000, inst1: 7500, inst2: 5000 }
+      'BBA': { name: 'TY BBA', admission: 2500, tuition: 40000, coActivity: 10000, exam: 2500, total: 55000, oneTime: 52500, inst1: 30250, inst2: 24750 },
+      'BCA': { name: 'TY BCA', admission: 2500, tuition: 40000, coActivity: 10000, exam: 2500, total: 55000, oneTime: 52500, inst1: 30250, inst2: 24750 },
+      'BCOM': { name: 'TY B.COM', admission: 1000, tuition: 12000, coActivity: 2500, exam: 2500, total: 18000, oneTime: 17000, inst1: 9900, inst2: 8100 },
+      'BA': { name: 'TY BA', admission: 1000, tuition: 7000, coActivity: 3000, exam: 1500, total: 12500, oneTime: 11000, inst1: 6875, inst2: 5625 }
     }
   };
 
@@ -181,7 +181,7 @@ const SeniorAdmissionForm = () => {
     setValue("applyScholarship", true);
     
     setValue("year", "FY");
-    setValue("course", "BComCA");
+    setValue("course", "BCA");
     
     setValue("bankAccountNumber", "1234567890123456");
     setValue("bankIFSC", "SBIN0001234");
@@ -290,8 +290,8 @@ const SeniorAdmissionForm = () => {
                       >
                         <option value="">Select Course</option>
                         <option value="BBA">BBA</option>
-                        <option value="BComCA">B.Com (CA)</option>
-                        <option value="BComBM">B.Com BM</option>
+                        <option value="BCA">BCA</option>
+                        <option value="BCOM">B.COM</option>
                         <option value="BA">BA</option>
                       </select>
                       {errors.course && <p className="text-red-600 text-xs mt-2">{errors.course.message}</p>}
