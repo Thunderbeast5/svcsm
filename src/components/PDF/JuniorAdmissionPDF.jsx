@@ -445,6 +445,34 @@ const JuniorAdmissionPDF = ({ data }) => {
       '12thSci': { admission: 1000, tuition: 25000, coActivity: 6000, exam: 3000, total: 35000, oneTime: 32500, inst1: 20000, inst2: 15000 }
     };
 
+    const hybridFees = {
+      'Commerce': {
+        admission: 1000,
+        tuition: 19500,
+        coActivity: 3000,
+        exam: 3000,
+        total: 26500,
+        oneTime: 25000,
+        inst1: 16500,
+        inst2: 10000
+      },
+      'Science': {
+        admission: 1000,
+        tuition: 30000,
+        coActivity: 6000,
+        exam: 3000,
+        total: 40000,
+        oneTime: 37500,
+        inst1: 25000,
+        inst2: 15000
+      }
+    };
+
+    if (data.isHybrid) {
+       const fees = hybridFees[stream];
+       if (fees) return fees;
+    }
+
     const courseKey = `${standard}${stream === 'Science' ? 'Sci' : 'Com'}`;
     return fees[courseKey] || fees['11thCom'];
   };
@@ -489,7 +517,7 @@ const JuniorAdmissionPDF = ({ data }) => {
         </View>
 
         <Text style={styles.formTitle}>
-          Swami Vivekananda Institute of Arts, Commerce & Science, Pimpalgaon Baswant, Nashik
+          Swami Vivekananda Institute of Arts, Commerce & Science, Pimpalgaon Baswant, Nashik {data.isHybrid ? '(HYBRID MODE)' : ''}
         </Text>
         <Text style={styles.formFees}>Form Fees: Rs. 100/-</Text>
 
@@ -518,6 +546,13 @@ const JuniorAdmissionPDF = ({ data }) => {
 
           <View style={data.boardStateBoard ? styles.checkedBox : styles.checkbox} />
           <Text style={{ fontSize: 9, marginLeft: 4 }}>State Board</Text>
+
+          {data.isHybrid && (
+            <View style={{ ...styles.courseItem, marginLeft: 10 }}>
+              <View style={styles.checkedBox} />
+              <Text style={{ ...styles.checkboxLabel, fontFamily: 'Times-Bold', color: '#800020' }}>HYBRID MODE</Text>
+            </View>
+          )}
         </View>
 
         {/* Section 1: Personal Information */}

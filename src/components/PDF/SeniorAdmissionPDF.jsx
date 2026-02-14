@@ -414,7 +414,26 @@ const SeniorAdmissionPDF = ({ data }) => {
     }
   };
 
-  const currentFees = courseStructure[data.year]?.[data.course];
+  const hybridFees = {
+    'BBA': { admission: 2500, tuition: 45000, coActivity: 10000, exam: 2500, total: 60000, oneTime: 57500, inst1: 35000, inst2: 25000 },
+    'BCA': { admission: 2500, tuition: 45000, coActivity: 10000, exam: 2500, total: 60000, oneTime: 57500, inst1: 35000, inst2: 25000 },
+    'BCOM': { admission: 1000, tuition: 14000, coActivity: 2500, exam: 2500, total: 20000, oneTime: 19000, inst1: 12000, inst2: 8000 },
+    'BA': { admission: 1000, tuition: 8500, coActivity: 3000, exam: 1500, total: 14000, oneTime: 12500, inst1: 9000, inst2: 5000 }
+  };
+
+  const getFees = () => {
+    const baseFees = courseStructure[data.year]?.[data.course];
+    if (data.isHybrid && hybridFees[data.course] && baseFees) {
+      return { 
+        ...baseFees, 
+        ...hybridFees[data.course], 
+        name: `${baseFees.name} (Hybrid)`
+      };
+    }
+    return baseFees;
+  };
+
+  const currentFees = getFees();
 
   return (
     <Document>
@@ -456,7 +475,7 @@ const SeniorAdmissionPDF = ({ data }) => {
         </View>
 
         <Text style={styles.formTitle}>
-          Senior College Admission Form
+          Senior College Admission Form {data.isHybrid ? '(HYBRID MODE)' : ''}
         </Text>
 
         {/* Office Use Section */}
@@ -503,6 +522,13 @@ const SeniorAdmissionPDF = ({ data }) => {
             <View style={data.course === 'BA' ? styles.checkedBox : styles.checkbox} />
             <Text style={styles.checkboxLabel}>BA</Text>
           </View>
+
+          {data.isHybrid && (
+            <View style={{ ...styles.courseItem, marginLeft: 10 }}>
+              <View style={styles.checkedBox} />
+              <Text style={{ ...styles.checkboxLabel, fontFamily: 'Times-Bold', color: '#800020' }}>HYBRID MODE</Text>
+            </View>
+          )}
         </View>
 
         {/* Section 1: Personal Information */}
