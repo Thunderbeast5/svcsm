@@ -44,7 +44,7 @@ const downloadCsvWithColumns = (filename, columns, rows) => {
 
 const SeniorAdmissionRow = ({ row }) => {
   const year = row.year || '-';
-  const course = formatCourseName(row.course) || '-';
+  const course = `${formatCourseName(row.course)}${row.isHybrid ? ' (Hybrid)' : ''}` || '-';
   const student = `${row.lastName || ''} ${row.firstName || ''}`.trim() || '-';
   const createdAt = row.createdAt?.toDate ? row.createdAt.toDate() : null;
   const date = createdAt ? createdAt.toLocaleDateString() : '-';
@@ -89,7 +89,10 @@ const AdminSeniorAdmissions = () => {
     const counts = {};
     
     seniorAdmissions.forEach(admission => {
-      const course = admission.course || 'Unknown';
+      let course = formatCourseName(admission.course || 'Unknown');
+      if (admission.isHybrid) {
+        course += ' (Hybrid)';
+      }
       counts[course] = (counts[course] || 0) + 1;
     });
 
@@ -98,7 +101,13 @@ const AdminSeniorAdmissions = () => {
 
   const filteredAdmissions = useMemo(() => {
     if (!selectedCourse) return [];
-    return seniorAdmissions.filter(admission => (admission.course || 'Unknown') === selectedCourse);
+    return seniorAdmissions.filter(admission => {
+      let course = formatCourseName(admission.course || 'Unknown');
+      if (admission.isHybrid) {
+        course += ' (Hybrid)';
+      }
+      return course === selectedCourse;
+    });
   }, [seniorAdmissions, selectedCourse]);
 
   const handleExport = () => {
@@ -107,7 +116,7 @@ const AdminSeniorAdmissions = () => {
     const exportColumns = [
       { header: 'Application Number', getValue: (r) => r?.appNo },
       { header: 'Year', getValue: (r) => r?.year },
-      { header: 'Course', getValue: (r) => formatCourseName(r?.course) },
+      { header: 'Course', getValue: (r) => `${formatCourseName(r?.course)}${r?.isHybrid ? ' (Hybrid)' : ''}` },
       { header: 'Last Name', getValue: (r) => r?.lastName },
       { header: 'First Name', getValue: (r) => r?.firstName },
       { header: 'Middle Name', getValue: (r) => r?.middleName },
@@ -203,7 +212,7 @@ const AdminSeniorAdmissions = () => {
                     <GraduationCap className="text-purple-600" size={24} />
                   </div>
                 </div>
-                <h3 className="text-lg font-bold text-gray-800">{formatCourseName(name)}</h3>
+                <h3 className="text-lg font-bold text-gray-800">{name}</h3>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="text-3xl font-bold text-gray-900">{count}</span>
                   <span className="text-sm text-gray-500">applications</span>
@@ -227,7 +236,7 @@ const AdminSeniorAdmissions = () => {
             <ChevronLeft size={20} />
           </button>
           <div>
-            <h3 className="font-bold text-gray-800 text-lg">{formatCourseName(selectedCourse)} Applications</h3>
+            <h3 className="font-bold text-gray-800 text-lg">{selectedCourse} Applications</h3>
             <p className="text-xs text-gray-500">Showing {filteredAdmissions.length} records</p>
           </div>
         </div>

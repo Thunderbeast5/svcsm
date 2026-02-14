@@ -16,6 +16,7 @@ const SeniorAdmissionForm = () => {
 
   const selectedYear = watch("year");
   const selectedCourse = watch("course");
+  const isHybrid = watch("isHybrid");
 
   // Define courseStructure outside for accessibility
   const courseStructure = {
@@ -39,9 +40,24 @@ const SeniorAdmissionForm = () => {
     }
   };
 
+  const hybridFees = {
+    'BBA': { admission: 2500, tuition: 45000, coActivity: 10000, exam: 2500, total: 60000, oneTime: 57500, inst1: 35000, inst2: 25000 },
+    'BCA': { admission: 2500, tuition: 45000, coActivity: 10000, exam: 2500, total: 60000, oneTime: 57500, inst1: 35000, inst2: 25000 },
+    'BCOM': { admission: 1000, tuition: 14000, coActivity: 2500, exam: 2500, total: 20000, oneTime: 19000, inst1: 12000, inst2: 8000 },
+    'BA': { admission: 1000, tuition: 8500, coActivity: 3000, exam: 1500, total: 14000, oneTime: 12500, inst1: 9000, inst2: 5000 }
+  };
+
   const getSelectedCourseFees = () => {
     if (selectedYear && selectedCourse) {
-      return courseStructure[selectedYear]?.[selectedCourse];
+      const baseFees = courseStructure[selectedYear]?.[selectedCourse];
+      if (isHybrid && hybridFees[selectedCourse]) {
+        return { 
+          ...baseFees, 
+          ...hybridFees[selectedCourse], 
+          name: `${baseFees.name} (Hybrid)`
+        };
+      }
+      return baseFees;
     }
     return null;
   };
@@ -81,6 +97,7 @@ const SeniorAdmissionForm = () => {
       formType: 'senior',
       status: 'Pending',
       createdAt: serverTimestamp(),
+      isHybrid: !!data.isHybrid
     };
 
     delete payload.photoData;
@@ -96,7 +113,7 @@ const SeniorAdmissionForm = () => {
       await addDoc(collection(db, 'notifications'), {
         type: 'senior_admission',
         title: 'New Senior Admission',
-        message: `${data.firstName || ''} ${data.lastName || ''} - ${data.year} ${data.course}`,
+        message: `${data.firstName || ''} ${data.lastName || ''} - ${data.year} ${data.course}${data.isHybrid ? ' (Hybrid)' : ''}`,
         createdAt: serverTimestamp(),
         read: false,
         link: '/admin/senior-admissions'
@@ -237,7 +254,7 @@ const SeniorAdmissionForm = () => {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              {/* <button
+              <button
                 type="button"
                 onClick={quickFillForm}
                 className="text-sm px-4 py-2 rounded-full transition-all flex items-center justify-center gap-2"
@@ -247,7 +264,7 @@ const SeniorAdmissionForm = () => {
               >
                 <RefreshCcw size={16} />
                 Quick Fill Demo
-              </button> */}
+              </button>
               <span className="text-sm px-4 py-2 rounded-full text-center" style={{ backgroundColor: 'rgba(184, 134, 11, 0.3)' }}>Official Application</span>
             </div>
           </div>
@@ -295,6 +312,22 @@ const SeniorAdmissionForm = () => {
                         <option value="BA">BA</option>
                       </select>
                       {errors.course && <p className="text-red-600 text-xs mt-2">{errors.course.message}</p>}
+                    </div>
+
+                    {/* Hybrid Checkbox */}
+                    <div className="md:col-span-2">
+                       <label className="flex items-center gap-2 cursor-pointer p-4 rounded-lg bg-orange-50 border-2" style={{ borderColor: '#B8860B' }}>
+                          <input 
+                            type="checkbox" 
+                            {...register("isHybrid")}
+                            className="w-6 h-6 cursor-pointer"
+                            style={{ accentColor: '#B8860B' }}
+                          />
+                          <div>
+                            <span className="font-bold text-gray-800 text-lg">Apply for Hybrid Mode</span>
+                            <p className="text-sm text-gray-600">Students can only visit institute for exams. Fees structure is different for hybrid mode.</p>
+                          </div>
+                       </label>
                     </div>
                   </div>
 

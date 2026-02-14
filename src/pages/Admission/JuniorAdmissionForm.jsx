@@ -16,6 +16,7 @@ const JuniorAdmissionForm = () => {
 
   const selectedStandard = watch("standard");
   const selectedStream = watch("stream");
+  const isHybrid = watch("isHybrid");
 
   const feeStructure = {
     '11thCom': {
@@ -64,6 +65,29 @@ const JuniorAdmissionForm = () => {
     }
   };
 
+  const hybridFees = {
+    'Commerce': {
+      admission: 1000,
+      tuition: 19500,
+      coActivity: 3000,
+      exam: 3000,
+      total: 26500,
+      oneTime: 25000,
+      inst1: 16500,
+      inst2: 10000
+    },
+    'Science': {
+      admission: 1000,
+      tuition: 30000,
+      coActivity: 6000,
+      exam: 3000,
+      total: 40000,
+      oneTime: 37500,
+      inst1: 25000,
+      inst2: 15000
+    }
+  };
+
   const onInvalid = (invalidErrors) => {
     const firstField = Object.keys(invalidErrors || {})[0];
     if (!firstField) return;
@@ -76,6 +100,16 @@ const JuniorAdmissionForm = () => {
 
   const getSelectedCourseFees = () => {
     if (selectedStandard && selectedStream) {
+      if (isHybrid) {
+         const fees = hybridFees[selectedStream];
+         if (fees) {
+             return {
+                 ...fees,
+                 name: `${selectedStandard} ${selectedStream} (Hybrid)`
+             };
+         }
+      }
+
       const courseKey = `${selectedStandard}${selectedStream === 'Science' ? 'Sci' : 'Com'}`;
       return feeStructure[courseKey];
     }
@@ -146,6 +180,7 @@ const JuniorAdmissionForm = () => {
       formType: 'junior',
       status: 'Pending',
       createdAt: serverTimestamp(),
+      isHybrid: !!data.isHybrid
     };
 
     delete payload.photoData;
@@ -161,7 +196,7 @@ const JuniorAdmissionForm = () => {
       await addDoc(collection(db, 'notifications'), {
         type: 'junior_admission',
         title: 'New Junior Admission',
-        message: `${data.surname || ''} ${data.middleName || ''} - ${data.standard} ${data.stream}`,
+        message: `${data.surname || ''} ${data.middleName || ''} - ${data.standard} ${data.stream}${data.isHybrid ? ' (Hybrid)' : ''}`,
         createdAt: serverTimestamp(),
         read: false,
         link: '/admin/junior-admissions'
@@ -338,7 +373,7 @@ const JuniorAdmissionForm = () => {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              {/* <button
+              <button
                 type="button"
                 onClick={quickFillForm}
                 className="text-sm px-4 py-2 rounded-full transition-all flex items-center justify-center gap-2"
@@ -348,7 +383,7 @@ const JuniorAdmissionForm = () => {
               >
                 <RefreshCcw size={16} />
                 Quick Fill Demo
-              </button> */}
+              </button>
               <span className="text-sm px-4 py-2 rounded-full text-center" style={{ backgroundColor: 'rgba(184, 134, 11, 0.3)' }}>Official Application</span>
             </div>
           </div>
@@ -433,6 +468,22 @@ const JuniorAdmissionForm = () => {
                         />
                         <span className="text-gray-800 font-medium">State Board (HSC)</span>
                       </label>
+                    </div>
+
+                    {/* Hybrid Checkbox */}
+                    <div>
+                       <label className="flex items-center gap-2 cursor-pointer p-4 rounded-lg bg-orange-50 border-2" style={{ borderColor: '#B8860B' }}>
+                          <input 
+                            type="checkbox" 
+                            {...register("isHybrid")}
+                            className="w-6 h-6 cursor-pointer"
+                            style={{ accentColor: '#B8860B' }}
+                          />
+                          <div>
+                            <span className="font-bold text-gray-800 text-lg">Apply for Hybrid Mode</span>
+                            <p className="text-sm text-gray-600">Students can only visit institute for exams. Fees structure is different for hybrid mode.</p>
+                          </div>
+                       </label>
                     </div>
 
                     {/* Photo Upload */}

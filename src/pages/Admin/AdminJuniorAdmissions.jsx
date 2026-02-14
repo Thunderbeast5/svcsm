@@ -43,7 +43,7 @@ const downloadCsvWithColumns = (filename, columns, rows) => {
 
 const JuniorAdmissionRow = ({ row }) => {
   const standard = row.standard || '-';
-  const stream = row.streamScience ? 'Science' : row.streamCommerce ? 'Commerce' : row.stream || '-';
+  const stream = (row.streamScience ? 'Science' : row.streamCommerce ? 'Commerce' : row.stream || '-') + (row.isHybrid ? ' (Hybrid)' : '');
   const student = `${row.surname || ''} ${row.fathersName || ''}`.trim() || '-';
   const createdAt = row.createdAt?.toDate ? row.createdAt.toDate() : null;
   const date = createdAt ? createdAt.toLocaleDateString() : '-';
@@ -97,30 +97,32 @@ const AdminJuniorAdmissions = () => {
       const std = admission.standard;
       const stream = admission.streamScience ? 'Science' : admission.streamCommerce ? 'Commerce' : admission.stream;
       
-      const key = `${std} ${stream}`;
-      if (cats[key] !== undefined) {
-        cats[key]++;
-      } else {
-        cats['Other']++;
+      let key = `${std} ${stream}`;
+      if (admission.isHybrid) {
+        key += ' (Hybrid)';
       }
+
+      cats[key] = (cats[key] || 0) + 1;
     });
 
-    return Object.entries(cats).filter(([_, count]) => count > 0 || true); // Keep all for structure or filter empty
+    return Object.entries(cats).filter(([_, count]) => count > 0 || true).sort((a, b) => {
+        // specific sort to keep 11th/12th together, maybe just alpha sort
+        if (a[0] < b[0]) return -1;
+        if (a[0] > b[0]) return 1;
+        return 0;
+    }); 
   }, [juniorAdmissions]);
 
   const filteredAdmissions = useMemo(() => {
     if (!selectedCategory) return [];
     return juniorAdmissions.filter(admission => {
-      if (selectedCategory === 'Other') {
-        const std = admission.standard;
-        const stream = admission.streamScience ? 'Science' : admission.streamCommerce ? 'Commerce' : admission.stream;
-        const key = `${std} ${stream}`;
-        return !['11th Science', '11th Commerce', '12th Science', '12th Commerce'].includes(key);
-      }
-      
       const std = admission.standard;
       const stream = admission.streamScience ? 'Science' : admission.streamCommerce ? 'Commerce' : admission.stream;
-      return `${std} ${stream}` === selectedCategory;
+      let key = `${std} ${stream}`;
+      if (admission.isHybrid) {
+        key += ' (Hybrid)';
+      }
+      return key === selectedCategory;
     });
   }, [juniorAdmissions, selectedCategory]);
 
@@ -133,7 +135,11 @@ const AdminJuniorAdmissions = () => {
       { header: 'Std', getValue: (r) => r?.standard },
       {
         header: 'Stream',
-        getValue: (r) => (r?.streamScience ? 'Science' : r?.streamCommerce ? 'Commerce' : r?.stream || ''),
+        getValue: (r) => {
+          let s = r?.streamScience ? 'Science' : r?.streamCommerce ? 'Commerce' : r?.stream || '';
+          if (r?.isHybrid) s += ' (Hybrid)';
+          return s;
+        },
       },
       { header: 'Last Name', getValue: (r) => r?.surname },
       { header: 'First Name', getValue: (r) => r?.firstName },
@@ -206,8 +212,9 @@ const AdminJuniorAdmissions = () => {
                 <div className="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
                   <FileText className="text-sv-blue" size={24} />
                 </div>
-                <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-bold">
+                <span className={`bg-gray-100 px-2 py-1 rounded text-xs font-bold ${name.includes('Hybrid') ? 'text-orange-600 bg-orange-100' : 'text-gray-600'}`}>
                   {name.includes('Science') ? 'SCI' : name.includes('Commerce') ? 'COM' : 'GEN'}
+                  {name.includes('Hybrid') ? ' (H)' : ''}
                 </span>
               </div>
               <h3 className="text-lg font-bold text-gray-800">{name}</h3>
